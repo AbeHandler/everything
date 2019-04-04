@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+  </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet" type="text/css">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</head>
+
+<!--<body scroll="no" style="overflow: hidden">-->
+<body scroll="no">
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+<style>
+svg {
+    font: 10px sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+ <script>
+ var svg = document.getElementById("svg");
+ var global_b = global_a = global_c = 0;
+
+ var global_y = ['y',5.88235294117647, 5.555555555555555, 5.2631578947368425, 5.0, 4.761904761904762, 4.545454545454546, 4.3478260869565215, 4.166666666666667, 4.0, 3.846153846153846, 3.7037037037037033, 3.571428571428571, 3.4482758620689657, 3.3333333333333335, 3.2258064516129035, 3.125, 3.0303030303030303, 2.941176470588235, 2.857142857142857, 2.7777777777777777, 2.7027027027027026, 2.6315789473684212, 2.564102564102564, 2.5, 2.4390243902439024, 2.380952380952381, 2.3255813953488373, 2.272727272727273, 2.2222222222222223, 2.1739130434782608, 2.127659574468085, 2.0833333333333335, 2.0408163265306123, 2.0, 1.9607843137254901, 1.923076923076923, 1.8867924528301885, 1.8518518518518516, 1.8181818181818181, 1.7857142857142856, 1.7543859649122808, 1.7241379310344829, 1.6949152542372883, 1.6666666666666667, 1.639344262295082, 1.6129032258064517, 1.5873015873015872, 1.5625, 1.5384615384615383, 1.5151515151515151, 1.4925373134328357, 1.4705882352941175, 1.4492753623188408, 1.4285714285714286, 1.4084507042253522, 1.3888888888888888, 1.36986301369863, 1.3513513513513513, 1.3333333333333333, 1.3157894736842106, 1.2987012987012987, 1.282051282051282, 1.2658227848101264, 1.25, 1.2345679012345678, 1.2195121951219512, 1.2048192771084338, 1.1904761904761905, 1.1764705882352942, 1.1627906976744187, 1.1494252873563218, 1.1363636363636365, 1.1235955056179776, 1.1111111111111112, 1.0989010989010988, 1.0869565217391304, 1.075268817204301, 1.0638297872340425, 1.0526315789473684, 1.0416666666666667, 1.0309278350515465, 1.0204081632653061, 1.0101010101010102]
+
+
+ </script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+<div class="container center-block">
+  <div id="headrow3"  class="center-block">
+    $F_1$ <a href="https://en.wikipedia.org/wiki/F1_score">scores</a> are common across natural language processing. Although $F_1$ is easy to compute, the formula is slightly less interpretable than simpler measures like accuracy.
+
+    Recall the formula $F_1= \frac{2}{\frac{1}{P} + \frac{1}{R}} =  \frac{1}{\frac{1}{2}(\frac{1}{P} + \frac{1}{R})} = \frac{1}{M}$. This expression is a <a href="https://en.wikipedia.org/wiki/Harmonic_mean">harmonic mean</a>. I use the mnemonic ''harmonic mean of precision and recall'' to remember what $F_1$ is. 
+</div>
+<div class="row">
+  <div class="col-md-12 bs-linebreak">
+  </div>
+</div>
+
+<div id="headrow4"  class="center-block">
+  <p>
+    This widget tries to build intuition for $F_1$. Drag the red dot to examine different values of precision $P$ and recall $R$, and observe the change in $F_1$. The graph to the right shows the values $\frac{1}{P}$ and $\frac{1}{R}$ as small dots, along with the average of these reciprocals $M$ as a big blue dot. $F_1$ is $\frac{1}{M}$, i.e. 1 divided by the average height of the small blue dots. (Note: does not support mobile). 
+ </p>
+  </div>
+</div>
+
+<div class="container">
+   <div class="row">
+   <div class="col-md-6">
+       <div class="row">
+         <div class="col-md-1">
+           <svg style="width: 45px;height: 300px;">
+                <text x="120" y="10" ill="black" fontFamily="Verdana" font-style="italic" font-size="10" transform="rotate(90 10,25)">Precision</text>
+            </svg>
+         </div>
+         <div class="col-md-11">
+          <div id="root"></div>
+        </div>
+      </div>
+    </div>
+   <div class="col-md-6"><div id="chart" style='width:500px'></div></div>
+   </div>
+</div>
+
+<script type="text/babel">
+
+
+class InteractiveF1 extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    return <svg onMouseUp={this.props._onMouseUp} onMouseDown={this.props._onMouseDown}
+                style={{width:300, height:300,
+                borderTop: '1px solid grey',
+                borderRight: '1px solid grey',
+                borderLeft: '5px solid black',
+                borderBottom: '5px solid black',
+                hover: "green"}}>
+        <circle fillOpacity="0.8" cy={this.props.y}
+            cx={this.props.x} r="7"
+             stroke="black"
+            fill="red"/>
+
+      <rect x="1" y={this.props.tent_3} width='5' height='1'/>
+      <rect x="1" y={this.props.tent} width='5' height='1'/>
+      <rect x="1" y={this.props.fif} width='5' height='1'/>
+
+      <rect y="292" x={this.props.tent_3} width='1' height='7'/>
+      <rect y="292" x={this.props.tent}  width='1' height='7'/>
+      <rect y="292" x={this.props.fif}  width='1' height='7'/>
+
+
+    </svg>
+  }
+}
+
+
+class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { x: 50, y: 50, pagex:0, f1_mode:false };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChange_f1 = this.handleChange_f1.bind(this);
+  }
+
+  _onMouseMove(e) {
+    if (this.state.moveable == "1"){
+      this.setState({ f1_mode:false,
+                      moveable:"1",
+                      x: e.pageX - document.getElementById("rect").getBoundingClientRect().x,
+                      y: e.pageY - document.getElementById("rect").getBoundingClientRect().y,
+                      pagex:document.getElementById("rect").getBoundingClientRect().x,
+                      pagey:document.getElementById("rect").getBoundingClientRect().y });
+    }
+  }
+
+
+  recall_from_p_f1(p, f1){
+    return 1/(-1/p + 2/f1)
+  }
+
+  handleChange(event) {
+    //this.setState({value: event.target.value});
+  }
+
+  handleChange_f1(event) {
+    this.setState({f1_value: event.target.value,
+                  f1_mode:true});
+  }
+
+  _onMouseDown(e){
+    this.setState({moveable:'1'});
+  }
+
+  _onMouseUp(e){
+    this.setState({moveable:'2'});
+  }
+
+  render() {
+
+    let prec = (300 - this.state.y)/300;
+    let rec = (this.state.x)/300; // 100 b/c gutter set to 100
+    if (prec > .98){
+      prec = 1.0;
+    }
+    if (rec > .98){
+      rec = 1.0;
+    }
+    rec = rec.toFixed(2);
+    prec = prec.toFixed(2);
+    let invrec =  Math.log(1/rec);
+    let invprec = Math.log(1/prec);
+
+    let mean = (invprec + invrec)/ 2;
+    let pagex = this.state.pagex;
+    let pagey = this.state.pagey;
+    let x_l = this.state.x;
+    let y_l = this.state.y;
+
+    let f1 = 1/(((1/rec) + (1/prec))/2);
+
+    let f1w = 300 * f1;
+    let midw = 100;
+
+    if (f1 < 0){
+      f1 = 0.0
+    }
+    if (f1 > 1){
+      f1 = 1.0;
+    }
+
+    f1 = f1.toFixed(2).toString();
+    let mid_height = 150;
+    let tent = 300/4;
+    let fif = 300/2;
+    let tent_3 = tent * 3;
+    let tentp = tent;
+    let fifp = fif;
+    let tent_3p = tent_3;
+
+    let tentnp = tent;
+    let fifnp = fif;
+    let tent_3np = tent_3;
+    let aa = 1/((1/parseFloat(prec) + 1/parseFloat(rec))/2);
+    //let v = prec * 100 - 17;
+    global_a = (1/prec).toFixed(2);
+    global_b = (1/rec).toFixed(2);
+    global_c = (1/aa).toFixed(2);
+    chart.resize();
+
+    if (prec > .17 & rec > .17){
+      //17 b/c  curve X axis starts at 17
+      try {
+        let strg = ".c3-circle-" + (prec * 100 - 17).toFixed().toString();
+        $(".c3-circle").each(function(f, i){
+            i.style.r=0;
+        })
+        $(strg)[0].style.r=3;
+        strg = ".c3-circle-" + (rec * 100 - 17).toFixed().toString();
+        $(strg)[0].style.r=3;
+
+        strg = ".c3-circle-" + (aa * 100 - 17).toFixed().toString();
+        $(strg)[0].style.r=6;
+
+      }
+      catch(err) {
+      }
+    }
+    else{
+      $(".c3-circle").each(function(f, i){
+          i.style.r=0;
+      })
+    }
+    let moveable = this.state.moveable;
+
+    let f1_visible = f1;
+    if (this.state.f1_mode){
+      f1_visible = this.state.f1;
+    }
+    let f1m = this.state.f1_mode.toString();
+
+    return <div id="rect" style={{width:300, height:500}}
+            onMouseMove={this._onMouseMove.bind(this)}>
+            <InteractiveF1 x={this.state.x} y={this.state.y}
+                           tent={tent} fif={fif} tent_3={tent_3}
+                           _onMouseDown={this._onMouseDown.bind(this)}
+                           _onMouseUp={this._onMouseUp.bind(this)}/>
+
+             <label style={{fontSize:"10", width:300, textAlign:"center", height:1, fontFamily:"Verdana", fontStyle:"italic"}}>Recall{"\n"}</label>
+
+              <label>
+              Recall:
+              <input type="text" value={rec} style={{border:"white"}} onChange={this.handleChange} />
+              </label>
+
+              <label>
+              Precision:
+              <input type="text" value={prec} style={{border:"white"}} onChange={this.handleChange} />
+              </label>
+
+              <label >
+              F1:
+              <input type="text" value={f1_visible} style={{border:"white"}} onChange={this.handleChange_f1} />
+              </label>
+
+            </div>;
+  }
+}
+
+ReactDOM.render(
+      <Application/>,
+      document.getElementById('root')
+  );
+
+</script>
+
+
+
+<script>
+
+      //These are the inverses of precision and recalls
+      //[1/(i/100) for i in range(17,100)]
+      var chart = c3.generate({
+            legend: {
+                show: false
+            },
+            size: {
+                width: 100
+            },
+            tooltip: {
+                show: false
+            },
+            data: {
+              x: 'x',
+              columns: [
+                ['x', 0.17, 0.18, 0.19, 0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.6, 0.61, 0.62, 0.63, 0.64, 0.65, 0.66, 0.67, 0.68, 0.69, 0.7, 0.71, 0.72, 0.73, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8, 0.81, 0.82, 0.83, 0.84, 0.85, 0.86, 0.87, 0.88, 0.89, 0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99],
+                global_y
+              ],
+              tooltip: {
+                  show: false
+              },
+              labels: {
+                format: {
+                  y: function (x) {
+
+                      var min_c = 10000;
+                      for (var i = 1; i < global_y.length; i++) {
+                        if (Math.abs(global_c - global_y[i]) < min_c){
+                            min_c = Math.abs(global_c - global_y[i]);
+                        }
+                      }
+
+                      var min_b = 10000;
+                      for (var i = 1; i < global_y.length; i++) {
+                        if (Math.abs(global_b - global_y[i]) < min_b){
+                            min_b = Math.abs(global_b - global_y[i]);
+                        }
+                      }
+
+                      var min_a = 10000;
+                      for (var i = 1; i < global_y.length; i++) {
+                        if (Math.abs(global_a - global_y[i]) < min_a){
+                            min_a = Math.abs(global_a - global_y[i]);
+                        }
+                      }
+
+                      if (x > 5.8){
+                        return "";
+                      }
+                      else if(Math.abs(x -  global_b) == min_b)
+                      {
+                        return "1/rec: " + global_b.toString();
+                      }
+                      else if(Math.abs(x -  global_a) == min_a){
+                        return "1/prec: " + global_a.toString();
+                      }
+                      else if(Math.abs(x - global_c) == min_c){
+                        return "avg (M): " + global_c.toString();
+                      }
+                      else{
+                        return "";
+                      }
+                    }
+                }
+              }
+            },
+            axis: {
+                x: {
+                    label: {text: 'Precision/recall',position: 'outer-center'},
+                    tick: {
+                        format: function (x) {
+                            if (x.toString().substr(-1) === "5" ||
+                                x.toFixed(2).toString().substr(-1) === "0"){
+                              return x.toString();
+                            }else{
+                              return "";
+                            }
+                        },
+                        culling: {
+                            max: 1000 // the number of tick texts will be adjusted to less than this value
+                        }
+                        // for normal axis, default on
+                        // for category axis, default off
+                    }
+                }
+            }
+        });
+</script>
+
+<script>
+//turn off the dots in the graph
+$(".c3-circle").each(function(f, i){
+    i.style.r=0;
+})
+
+</script>
+
+
+
+</body>

@@ -18,7 +18,11 @@
 
 - Set the attention $p(\alpha_j^{~i}| x_i, y_{1:j-1})$ if $q_i > \epsilon$ and 0 otherwise, applying some form of normalization to ensure it is a valid distribution.
 
-- Following See and Mannings pointer generator model, they set the copy probabilty to the sum of the attention over the unit.
+- Following See and Manning's pointer generator model, they set the copy probabilty to the sum of the attention over the unit. In the See and Manning framework, $p(w) = p_{gen}P(w) - (1 - p_{gen})\sum_{1:w_i}a_t^t$. What Rush & coauthors are doing is I think zeroing out some of the input sequence based on $q_i$.
+
+- In section 5 they discuss adding a length and repeat penalty for inference. These might be a bit hacky. I would be curious to see how they change results.
+
+- They do some domain transfer results from CNN to NYT corpus.
 
 ##### Other notes
 
