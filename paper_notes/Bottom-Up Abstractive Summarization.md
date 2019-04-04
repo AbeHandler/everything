@@ -22,7 +22,7 @@
 
 - In section 5 they discuss adding a length and repeat penalty for inference. These might be a bit hacky. I would be curious to see how they change results.
 
-- They do some domain transfer results from CNN to NYT corpus.
+- They do some domain transfer results from CNN to NYT corpus. This is a very lightweight form of domain transfer I think. I am not sure how convincing this is really. It would be interesting to see this w/ far different domains. But I think it is an interesting aspsect of the model.
 
 ##### Other notes
 
