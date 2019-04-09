@@ -60,7 +60,28 @@ because a constant -x can be pulled out from the integral.
 
 Because the first term tends to zero we have 
 
-
 $$
 \int^{\infty}_0 t^{x}e^{-1} dt = pq - \int^{\infty}_0 q' p = x\int_{0}^{\infty} t ^{x-1} (e^{-t})dt
 $$ (5)
+
+Thus, $\Gamma(x + 1)=x\Gamma(x)$ noting the definition of $\Gamma(x)$.
+
+#### Putting it together 
+
+Let $x$ = $n-1$. We know that $\Gamma(x)= x\Gamma(x)$. Filling in $n-1$ we have 
+
+$$\Gamma(n-1 + 1)= \Gamma(n) = (n-1)\Gamma(n-1)$$
+
+By the same logic let $x=n-2$ and we have 
+
+$$\Gamma(n-1)= (n-2)\Gamma(n-2)$$
+
+Or we say that  $x=n-3$ and we have 
+
+$$\Gamma(n-2)= (n-3)\Gamma(n-3)$$ 
+
+If we keep applying this rule we have 
+
+$$\Gamma(n)= (n-1)(n-2)(n-3)(n-4).... $$ 
+
+Thus the $\Gamma$ is a generalization of the factorial.
