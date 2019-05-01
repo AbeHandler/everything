@@ -1,0 +1,55 @@
+
+\documentclass[12pt]{amsart}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\usepackage{amssymb}
+\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+
+% See the ``Article customise'' template for come common customisations
+
+\title{}
+\author{}
+\date{} % delete this line to display the current date
+
+\newcommand{\fhat}{\frac{1}{h}\int_{x-(h/2)}^{x+(h/2)}f(y)dy}
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+Wasserman Chapter 20, Exercise 1
+
+We know that: E$(\hat{f}(x))$ = $\fhat$
+
+\begin{align}
+\text{Var}(\hat{f}(x)) &= \text{Var} (\frac{1}{n}\sum^n\frac{1}{h}K(x)) \tag{By definition} \\ 
+                                &= \text{Var} (\frac{1}{n}\sum^n\frac{1}{h} K(x)) \tag{Pulling out constants} \\
+                                &= \frac{1}{n^2}\frac{1}{h^2} \text{Var} [(\sum^nK(x))] \tag{b/c Var$(aX)$=$a^2$Var$(X)$} \\
+			       &= \frac{1}{n^2} \text{E} \bigg[ \sum^n\frac{1}{h}K(x)^2 \bigg] -  \frac{1}{n^2}\frac{1}{h} \text{E} \bigg[\sum^n\frac{1}{h}K(x))\bigg] ^2  \tag{By definition, push in $\frac{1}{h}$} \\
+			       &= \frac{1}{n^2} \text{E} \bigg[ \sum^n\frac{1}{h}K(x)^2 \bigg] -  \frac{1}{n^2} \frac{1}{h} n \bigg[ \fhat \bigg]^2 \tag{By definition, linearity of expectation} \\
+			       &= \frac{1}{n^2} \text{E} \bigg[ \sum^n\frac{1}{h}K(x)^2 \bigg] -  \frac{1}{n} \frac{1}{h^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2 \tag{Pull out $\frac{1}{h}$, cancel $n$} \\
+			     &= \frac{1}{n^2} n \text{E} \bigg[\frac{1}{h}K(x)^2 \bigg] -  \frac{1}{n} \frac{1}{h^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2 \tag{Linearity of expectation} \\
+			     &= \frac{1}{n^2} n \text{E} \bigg[\frac{1}{h}K(x)^2 \bigg] -  \frac{1}{n} \frac{1}{h^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2 \tag{Linearity of expectation} \\
+			    &= \frac{1}{n^2} n  \int \frac{1}{h}K(x)^2 f(y)dy -  \frac{1}{nh^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2 \tag{Definition of expectation} 
+\end{align}
+
+We know that $K(x)$ is $1$ if $-\frac{1}{2} < x < \frac{1}{2}$ so we can ask when does $K(\frac{x-X_i}{h}) = \frac{1}{2}$? Answer  $\rightarrow K(X_i) = \frac{2}{h} + x$. Thus this is the upper bound for the integral. The same logic establishes the lower bound. Thus we have:
+
+$$
+\frac{1}{n}\frac{1}{h^2} \int^{x+\frac{2}{h} }_{x-\frac{2}{h}} K(x)^2 f(y)dy -  \frac{1}{nh^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2
+$$
+
+Because $K(x)^2 = 1$ we have:
+
+$$
+\frac{1}{n}\frac{1}{h^2} \int^{x+\frac{2}{h} }_{x-\frac{2}{h}} f(y)dy -  \frac{1}{nh^2} \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2
+$$
+
+$$
+\frac{1}{n}\frac{1}{h^2} \bigg( \int^{x+\frac{2}{h} }_{x-\frac{2}{h}} f(y)dy -  \bigg[ \int_{x-(h/2)}^{x+(h/2)}f(y)dy \bigg]^2 \bigg)
+$$
+
+$\blacksquare$
+
+\end{document}
