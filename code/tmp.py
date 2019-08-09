@@ -130,15 +130,9 @@ def observed_data_LL(pi_hat, phi_hat, K, D):
     
     return sum_of_n
     
-    
-seed = random.randint(2,10)
-
-#print(seed)
-seed = 3
-#np.random.seed(seed)
 
 N = 10000
-K = 2
+K = 6
 V = 3
 C = 4 # context size
 
@@ -147,22 +141,16 @@ real_phi = init_phi(K,V)
 
 D, ks = generate_data(N, K, V, real_pi, real_phi, C)
 
-# add pseudo counts
-#D += 1
-
 phi_hat = init_phi(K, V)
 
 pi_hat = init_pi(K)
-
-q = init_pi(K)
 
 lambda_d = init_lambda_d(N, K)
 
 
 for i in range(4):
-    #print(observed_data_LL(pi_hat, phi_hat, K))
 
-    this_expected_complete = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
@@ -187,9 +175,6 @@ for i in range(4):
 
     if not np.allclose(b4, aft, rtol=1e10):
         assert(b4 <= aft)
-
-    #print(k)
-    #print(elbo(lambda_d, pi_hat, phi_hat, D))
     
     # BP: observed data LL should be less than 0
     assert observed_data_LL(pi_hat, phi_hat, K, D) < 0
@@ -204,6 +189,10 @@ for i in range(4):
     
     kl_phi = np.sum(real_phi * np.log(real_phi/phi_hat))
     kl_pi = np.sum(real_pi * np.log(real_pi/pi_hat))
-    #print('kl', kl_pi + kl_phi) # assuming you have enuf points, this should go down too.
+    print('kl', kl_pi + kl_phi) # assuming you have enuf points, this should go down too.
     #                            # if you dont have enuf points, there will be variance in the draw from the
      #                           # true parameters
+        
+    next_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
+    
+    assert next_observed_ll >= this_observed_ll
