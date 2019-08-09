@@ -178,29 +178,35 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
     
     assert next_observed_ll >= this_observed_ll
 
-def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False):
-    this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
-
-    #### e step
+    
+def safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
     lambda_d = e_step(pi_hat, phi_hat, D, N, K)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e7):
         assert(b4 <= aft)
+        
+    return lambda_d
+    
+def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False):
+    
+    this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
+    #### e step
+    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K)
+    
     #### m step
-
     pi_hat = m_pi(lambda_d, pi_hat, phi_hat, D)
-
     phi_hat = m_phi(lambda_d, pi_hat, phi_hat, D)
     
     if reckless == False:
         sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
     
+    # BP: elbo should be climbing, observed data LL should be climbing
+    # BP: do a graph
+    
     if verbose:
-        # BP: elbo should be climbing, observed data LL should be climbing
-        # BP: do a graph
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         print(iter_no, elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), klsum)
     
@@ -220,12 +226,14 @@ def run_em(N, K, V, C, iters=10):
     lambda_d = init_lambda_d(N, K)
 
     for iter_no in range(iters):
-        pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=True)
+        pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
+                                             K, D, iter_no, real_pi,
+                                             real_phi, verbose=True)
 
 if __name__ == "__main__":
-    N = 100000
+    N = 9000
     K = 2
     V = 3
     C = 4 # context size
-    run_em(N, K, V, C, iters=100)
+    run_em(N, K, V, C, iters=10)
 
