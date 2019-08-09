@@ -191,7 +191,7 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     return pi_hat, phi_hat, lambda_d
 
 
-def run_em(N, K, V, C):
+def run_em(N, K, V, C, iters=10):
     real_pi = init_pi(K)
     real_phi = init_phi(K,V)
 
@@ -203,7 +203,7 @@ def run_em(N, K, V, C):
 
     lambda_d = init_lambda_d(N, K)
 
-    for iter_no in range(10):
+    for iter_no in range(iters):
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=True)
 
 if __name__ == "__main__":
@@ -211,5 +211,5 @@ if __name__ == "__main__":
     K = 19
     V = 30
     C = 4 # context size
-    run_em(N, K, V, C)
+    run_em(N, K, V, C, iters=1000)
 
