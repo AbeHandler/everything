@@ -144,7 +144,6 @@ def report_kl(real_phi, phi_hat, real_pi, pi_hat):
     return kl_pi + kl_phi
 
 
-
 def m_pi(lambda_d, pi_hat, phi_hat, D):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
     pi_hat = m_step_pi(lambda_d)
@@ -153,8 +152,33 @@ def m_pi(lambda_d, pi_hat, phi_hat, D):
     if not np.allclose(b4, aft, rtol=1e10):
         assert(b4 <= aft)
     return pi_hat
-        
-def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False):
+
+
+def m_phi(lambda_d, pi_hat, phi_hat, D):
+    b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
+    aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+
+    if not np.allclose(b4, aft, rtol=1e10):
+        assert(b4 <= aft)
+    return phi_hat
+
+
+def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
+    # BP: observed data LL should be less than 0
+    assert observed_data_LL(pi_hat, phi_hat, K, D) < 0
+    
+    # BP: elbo should be below observed data LL
+    if not np.allclose(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), rtol=1e10):
+        print(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D))
+        assert elbo(lambda_d, pi_hat, phi_hat, D) <= observed_data_LL(pi_hat, phi_hat, K, D)
+    
+    # this is important, make sure observed LL goes down
+    next_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
+    
+    assert next_observed_ll >= this_observed_ll
+
+def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False):
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
@@ -169,24 +193,10 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
 
     pi_hat = m_pi(lambda_d, pi_hat, phi_hat, D)
 
-    b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
-    phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
-    aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
-
-    if not np.allclose(b4, aft, rtol=1e10):
-        assert(b4 <= aft)
+    phi_hat = m_phi(lambda_d, pi_hat, phi_hat, D)
     
-    # BP: observed data LL should be less than 0
-    assert observed_data_LL(pi_hat, phi_hat, K, D) < 0
-    
-    # BP: elbo should be below observed data LL
-    if not np.allclose(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), rtol=1e10):
-        print(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D))
-        assert elbo(lambda_d, pi_hat, phi_hat, D) <= observed_data_LL(pi_hat, phi_hat, K, D)
-        
-    next_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
-    
-    assert next_observed_ll >= this_observed_ll
+    if reckless == False:
+        sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
     
     if verbose:
         # BP: elbo should be climbing, observed data LL should be climbing
@@ -215,7 +225,7 @@ def run_em(N, K, V, C, iters=10):
 if __name__ == "__main__":
     N = 100000
     K = 2
-    V = 9
+    V = 3
     C = 4 # context size
     run_em(N, K, V, C, iters=100)
 
