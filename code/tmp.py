@@ -129,27 +129,22 @@ def observed_data_LL(pi_hat, phi_hat, K, D):
     assert sum_of_n <= 0
     
     return sum_of_n
-    
-
-N = 10000
-K = 6
-V = 3
-C = 4 # context size
-
-real_pi = init_pi(K)
-real_phi = init_phi(K,V)
-
-D, ks = generate_data(N, K, V, real_pi, real_phi, C)
-
-phi_hat = init_phi(K, V)
-
-pi_hat = init_pi(K)
-
-lambda_d = init_lambda_d(N, K)
 
 
-for i in range(4):
+def kl(p, q):
+    return np.sum(p * np.log(p/q))
 
+
+def report_kl(real_phi, phi_hat, real_pi, pi_hat):
+    # assuming you have enuf N, this should go down too.
+    # if you dont have enuf points, there will be variance in the draw from the
+    # true parameters
+    kl_phi = kl(real_phi, phi_hat)
+    kl_pi = kl(real_pi, pi_hat)
+    return kl_pi + kl_phi
+
+
+def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False):
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
@@ -182,17 +177,39 @@ for i in range(4):
     # BP: elbo should be below observed data LL
     if not np.allclose(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), rtol=1e10):
         assert elbo(lambda_d, pi_hat, phi_hat, D) <= observed_data_LL(pi_hat, phi_hat, K, D)
-    
-    # BP: elbo should be climbing, observed data LL should be climbing
-    # BP: do a graph
-    print(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D))
-    
-    kl_phi = np.sum(real_phi * np.log(real_phi/phi_hat))
-    kl_pi = np.sum(real_pi * np.log(real_pi/pi_hat))
-    print('kl', kl_pi + kl_phi) # assuming you have enuf points, this should go down too.
-    #                            # if you dont have enuf points, there will be variance in the draw from the
-     #                           # true parameters
         
     next_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
     
     assert next_observed_ll >= this_observed_ll
+    
+    if verbose:
+        # BP: elbo should be climbing, observed data LL should be climbing
+        # BP: do a graph
+        klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
+        print(iter_no, elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), klsum)
+    
+    return pi_hat, phi_hat, lambda_d
+
+
+def run_em(N, K, V, C):
+    real_pi = init_pi(K)
+    real_phi = init_phi(K,V)
+
+    D, ks = generate_data(N, K, V, real_pi, real_phi, C)
+
+    phi_hat = init_phi(K, V)
+
+    pi_hat = init_pi(K)
+
+    lambda_d = init_lambda_d(N, K)
+
+    for iter_no in range(10):
+        pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=True)
+
+if __name__ == "__main__":
+    N = 10000
+    K = 19
+    V = 30
+    C = 4 # context size
+    run_em(N, K, V, C)
+
