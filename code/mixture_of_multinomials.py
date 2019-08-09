@@ -144,7 +144,7 @@ def report_kl(real_phi, phi_hat, real_pi, pi_hat):
     return kl_pi + kl_phi
 
 
-def m_pi(lambda_d, pi_hat, phi_hat, D):
+def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
     pi_hat = m_step_pi(lambda_d)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
@@ -154,7 +154,7 @@ def m_pi(lambda_d, pi_hat, phi_hat, D):
     return pi_hat
 
 
-def m_phi(lambda_d, pi_hat, phi_hat, D):
+def safe_m_phi(lambda_d, pi_hat, phi_hat, D):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
     phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
@@ -197,8 +197,8 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K)
     
     #### m step
-    pi_hat = m_pi(lambda_d, pi_hat, phi_hat, D)
-    phi_hat = m_phi(lambda_d, pi_hat, phi_hat, D)
+    pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
+    phi_hat = safe_m_phi(lambda_d, pi_hat, phi_hat, D)
     
     if reckless == False:
         sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
@@ -231,9 +231,9 @@ def run_em(N, K, V, C, iters=10):
                                              real_phi, verbose=True)
 
 if __name__ == "__main__":
-    N = 9000
-    K = 2
-    V = 3
+    N = 10000
+    K = 8
+    V = 30
     C = 4 # context size
-    run_em(N, K, V, C, iters=10)
+    run_em(N, K, V, C, iters=100)
 
