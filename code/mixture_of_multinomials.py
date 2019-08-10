@@ -86,7 +86,7 @@ def e_step(pi_hat_, phi_hat_, D, N, K):
 
     lambda_d_new = np.zeros((N, K), dtype=np.float64)
     for k in range(K):
-        lambda_d_new[:,k] = np.sum((D  * np.log(phi_hat_[k])), axis=1).reshape(N,)
+        lambda_d_new[:,k] = np.sum((D  * np.log(phi_hat_[k])), axis=1).reshape(1,N)
 
     lambda_d_new += np.log(pi_hat_)
 
@@ -231,8 +231,8 @@ def run_em(N, K, V, C, iters=10):
                                              real_phi, verbose=True)
 
 if __name__ == "__main__":
-    N = 10000
-    K = 8
+    N = 40000
+    K = 3
     V = 30
     C = 4 # context size
     run_em(N, K, V, C, iters=100)
