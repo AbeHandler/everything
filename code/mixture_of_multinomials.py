@@ -85,8 +85,11 @@ def elbo(lambda_d, pi_hat, phi_hat, D):
 def e_step(pi_hat_, phi_hat_, D, N, K):
 
     lambda_d_new = np.zeros((N, K), dtype=np.float64)
+
+    tot = D.dot(np.log(phi_hat_).T)
+    
     for k in range(K):
-        lambda_d_new[:,k] = np.sum((D  * np.log(phi_hat_[k])), axis=1).reshape(1,N)
+        lambda_d_new[:,k] = tot[:,k]
 
     lambda_d_new += np.log(pi_hat_)
 
@@ -181,6 +184,7 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
     
 def safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+
     lambda_d = e_step(pi_hat, phi_hat, D, N, K)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
@@ -232,8 +236,8 @@ def run_em(N, K, V, C, iters=10):
 
 if __name__ == "__main__":
     N = 40000
-    K = 3
-    V = 30
+    K = 6
+    V = 13
     C = 4 # context size
     run_em(N, K, V, C, iters=100)
 
