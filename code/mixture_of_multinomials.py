@@ -84,16 +84,11 @@ def elbo(lambda_d, pi_hat, phi_hat, D):
 
 def e_step(pi_hat_, phi_hat_, D, N, K):
 
-    lambda_d_new = np.zeros((N, K), dtype=np.float64)
-
     tot = D.dot(np.log(phi_hat_).T)
     
-    for k in range(K):
-        lambda_d_new[:,k] = tot[:,k]
+    tot += np.log(pi_hat_)
 
-    lambda_d_new += np.log(pi_hat_)
-
-    return normalize_log_probs(lambda_d_new)
+    return normalize_log_probs(tot)
 
 
 def m_step_phi(lambda_d, K_, phi_hat, D):
@@ -236,7 +231,7 @@ def run_em(N, K, V, C, iters=10):
 
 if __name__ == "__main__":
     N = 40000
-    K = 6
+    K = 3
     V = 13
     C = 4 # context size
     run_em(N, K, V, C, iters=100)
