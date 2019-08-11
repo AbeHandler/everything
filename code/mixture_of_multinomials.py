@@ -42,21 +42,21 @@ def normalize_log_probs(lps):
 def log_prob_D_given_k(D, pi_hat_, phi_hat_, k):
     '''
     log prob of the data, given k. i.e.
-    
+
     log( p(x, z | \theta)) =  log( p(x | z, theta) * p(z | theta) )
 
                            = log(p(x | z, theta)) +  log(p(z | theta))+
-                           
+
                            = \sum_V(p(x_v | z, theta) + log(p(z | theta))
     '''
-    
+
     # sum across rows to get the log probability of all words in the instance under phi_hat[k]
     log_prob_of_words = np.sum(D * np.log(phi_hat_[k]), axis=1)
     log_prob_of_class = np.log(pi_hat_[k])
     out = log_prob_of_words + log_prob_of_class
     assert out.shape == (N,)
     return out.reshape(N,1)
-    
+
 
 def expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D):
     '''
@@ -82,12 +82,29 @@ def elbo(lambda_d, pi_hat, phi_hat, D):
     return expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D) + entropy(lambda_d)
 
 
-def e_step(pi_hat_, phi_hat_, D, N, K):
+def e_step(pi_hat_, phi_hat_, D, zero_mask=None):
+    
+    '''
+    Note: the dot prob multiplies the counts in D by their log probs
+
+    The zero_mask is an optional param that can zero out
+    certain values of K for certain N. The mask is an
+    N * K binary array. This is useful for instance if you
+    want to fix one or more possible K for a given data point 
+    (e.g. if data is observed)
+    
+    out: 
+        an N X K matrix, normalized by row
+        
+    '''
 
     tot = D.dot(np.log(phi_hat_).T)
-    
-    tot += np.log(pi_hat_)
 
+    tot += np.log(pi_hat_)
+    
+    if zero_mask is not None:
+        tot *= zero_mask
+    
     return normalize_log_probs(tot)
 
 
@@ -111,20 +128,20 @@ def observed_data_LL(pi_hat, phi_hat, K, D):
     ## note this is the log of the prob of the data! not the sum of the logs 'cuz Jensens
 
     # \ell(theta)
-    
+
     observedD = np.zeros((N,1), dtype='float64')
 
     for k in range(K):
         lp_xz = log_prob_D_given_k(D, pi_hat, phi_hat, k) # log prob of all of the data, given z=k
-        p_xz = np.exp(lp_xz) # exponentiate to get out of log space 
+        p_xz = np.exp(lp_xz) # exponentiate to get out of log space
         observedD += p_xz
 
     log_of_all_N_points = np.log(observedD) # now take the log of the sum over instances
 
     sum_of_n = np.sum(log_of_all_N_points)
-    
+
     assert sum_of_n <= 0
-    
+
     return sum_of_n
 
 
@@ -164,19 +181,19 @@ def safe_m_phi(lambda_d, pi_hat, phi_hat, D):
 def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
     # BP: observed data LL should be less than 0
     assert observed_data_LL(pi_hat, phi_hat, K, D) < 0
-    
+
     # BP: elbo should be below observed data LL
     if not np.allclose(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), rtol=1e10):
         print(elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D))
         assert elbo(lambda_d, pi_hat, phi_hat, D) <= observed_data_LL(pi_hat, phi_hat, K, D)
-    
+
     # this is important, make sure observed LL goes down
     next_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
-    
+
     assert next_observed_ll >= this_observed_ll
 
-    
-def safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K):
+
+def safe_e_step(lambda_d, pi_hat, phi_hat, D):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
     lambda_d = e_step(pi_hat, phi_hat, D, N, K)
@@ -184,30 +201,30 @@ def safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K):
 
     if not np.allclose(b4, aft, rtol=1e7):
         assert(b4 <= aft)
-        
+
     return lambda_d
-    
+
 def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False):
-    
+
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
     lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K)
-    
+
     #### m step
     pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
     phi_hat = safe_m_phi(lambda_d, pi_hat, phi_hat, D)
-    
+
     if reckless == False:
         sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
-    
+
     # BP: elbo should be climbing, observed data LL should be climbing
     # BP: do a graph
-    
+
     if verbose:
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         print(iter_no, elbo(lambda_d, pi_hat, phi_hat, D), observed_data_LL(pi_hat, phi_hat, K, D), klsum)
-    
+
     return pi_hat, phi_hat, lambda_d
 
 
@@ -227,6 +244,7 @@ def run_em(N, K, V, C, iters=10):
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
                                              K, D, iter_no, real_pi,
                                              real_phi, verbose=True)
+
 
 if __name__ == "__main__":
     N = 40000
