@@ -92,14 +92,13 @@ def e_step(pi_hat_, phi_hat_, D, N, K):
 
 
 def m_step_phi(lambda_d, K_, phi_hat, D):
-    phi_hat_new = np.zeros_like(phi_hat)
 
     for k in range(K_):
         nk = np.sum(lambda_d[:,k].reshape(N, 1) * D, axis=0)
         nd = np.sum(nk)
-        phi_hat_new[k] = nk/nd
+        phi_hat[k] = nk/nd
 
-    return phi_hat_new
+    return phi_hat
 
 
 def m_step_pi(lambda_d):
@@ -232,7 +231,7 @@ def run_em(N, K, V, C, iters=10):
 if __name__ == "__main__":
     N = 40000
     K = 3
-    V = 13
+    V = 3
     C = 4 # context size
     run_em(N, K, V, C, iters=100)
 
