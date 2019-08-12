@@ -258,20 +258,22 @@ if __name__ == "__main__":
     parser.add_argument('-V', metavar='V', type=int, default=3) # vocab size
     parser.add_argument('-C', metavar='C', type=int, default=4) # words per doc, aka context size 
     parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
+
+    parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
     args = parser.parse_args()
 
     N = args.N 
-    K = 3
-    V = 3
-    C = 4 # context size
-    runs = 5
+    K = args.K 
+    V = args.V
+    C = args.C # context size
+    runs = args.runs
 
     real_pi = init_pi(K)
     real_phi = init_phi(K,V)
 
     pi_hat_s = np.zeros_like(real_pi)
     phi_hat_s = np.zeros_like(real_phi) 
-    for r in range(1, runs + 1):
+    for r in range(1, args.runs + 1):
         pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=100, verbose=False)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
