@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.special import logsumexp
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm as tqdm
 
 
 def init_pi(K):
@@ -163,8 +163,10 @@ def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
     pi_hat = m_step_pi(lambda_d)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    if not np.allclose(b4, aft, rtol=1e10):
+    if not np.allclose(b4, aft, rtol=1e-10):
         assert(b4 <= aft)
+    else:
+        print("[*] warning: skipping assert {}, {}".format(b4, aft))
     return pi_hat
 
 
@@ -173,8 +175,10 @@ def safe_m_phi(lambda_d, pi_hat, phi_hat, D):
     phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    if not np.allclose(b4, aft, rtol=1e10):
+    if not np.allclose(b4, aft, rtol=1e-10):
         assert(b4 <= aft)
+    else:
+        print("[*] warning: skipping assert {}, {}".format(b4, aft))
     return phi_hat
 
 
@@ -228,9 +232,7 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     return pi_hat, phi_hat, lambda_d
 
 
-def run_em(N, K, V, C, iters=10):
-    real_pi = init_pi(K)
-    real_phi = init_phi(K,V)
+def run_em(real_pi, real_phi, N, K, V, C, iters=10, verbose=True):
 
     D, ks = generate_data(N, K, V, real_pi, real_phi, C)
 
@@ -240,16 +242,37 @@ def run_em(N, K, V, C, iters=10):
 
     lambda_d = init_lambda_d(N, K)
 
-    for iter_no in range(iters):
+    for iter_no in tqdm(range(iters)):
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
                                              K, D, iter_no, real_pi,
-                                             real_phi, verbose=True)
+                                             real_phi, verbose=verbose)
+    return pi_hat, phi_hat    
 
 
 if __name__ == "__main__":
-    N = 40000
+    
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('-N', metavar='N', type=int, default=10000)
+
+    args = parser.parse_args()
+
+    N = args.N 
     K = 3
     V = 3
     C = 4 # context size
-    run_em(N, K, V, C, iters=100)
+    runs = 5
+
+    real_pi = init_pi(K)
+    real_phi = init_phi(K,V)
+
+    pi_hat_s = np.zeros_like(real_pi)
+    phi_hat_s = np.zeros_like(real_phi) 
+    for r in range(1, runs + 1):
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=100, verbose=False)
+        klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
+        phi_hat_s += phi_hat
+        pi_hat_s += pi_hat
+        print(report_kl(real_phi, phi_hat_s/r, real_pi, pi_hat_s/r))
 
