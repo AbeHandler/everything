@@ -196,7 +196,7 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
 def safe_e_step(lambda_d, pi_hat, phi_hat, D):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    lambda_d = e_step(pi_hat, phi_hat, D, N, K)
+    lambda_d = e_step(pi_hat, phi_hat, D)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e7):
@@ -209,7 +209,7 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
-    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, N, K)
+    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D)
 
     #### m step
     pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
