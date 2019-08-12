@@ -163,7 +163,7 @@ def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
     pi_hat = m_step_pi(lambda_d)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    if not np.allclose(b4, aft, rtol=1e-10):
+    if not np.allclose(b4, aft, rtol=1e-12):
         assert(b4 <= aft)
     else:
         print("[*] warning: skipping assert {}, {}".format(b4, aft))
@@ -175,7 +175,7 @@ def safe_m_phi(lambda_d, pi_hat, phi_hat, D):
     phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    if not np.allclose(b4, aft, rtol=1e-10):
+    if not np.allclose(b4, aft, rtol=1e-12):
         assert(b4 <= aft)
     else:
         print("[*] warning: skipping assert {}, {}".format(b4, aft))
@@ -255,7 +255,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('-N', metavar='N', type=int, default=10000)
-
+    parser.add_argument('-V', metavar='V', type=int, default=3) # vocab size
+    parser.add_argument('-C', metavar='C', type=int, default=4) # words per doc, aka context size 
+    parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
     args = parser.parse_args()
 
     N = args.N 
