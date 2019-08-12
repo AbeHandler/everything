@@ -197,10 +197,10 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
     assert next_observed_ll >= this_observed_ll
 
 
-def safe_e_step(lambda_d, pi_hat, phi_hat, D):
+def safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask=None):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    lambda_d = e_step(pi_hat, phi_hat, D)
+    lambda_d = e_step(pi_hat, phi_hat, D, zero_mask=None)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e7):
@@ -208,12 +208,12 @@ def safe_e_step(lambda_d, pi_hat, phi_hat, D):
 
     return lambda_d
 
-def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False):
+def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False, zero_mask=None):
 
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
     #### e step
-    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D)
+    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask)
 
     #### m step
     pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
@@ -232,7 +232,7 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     return pi_hat, phi_hat, lambda_d
 
 
-def run_em(real_pi, real_phi, N, K, V, C, iters=10, verbose=True):
+def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True):
 
     D, ks = generate_data(N, K, V, real_pi, real_phi, C)
 
@@ -245,7 +245,8 @@ def run_em(real_pi, real_phi, N, K, V, C, iters=10, verbose=True):
     for iter_no in tqdm(range(iters)):
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
                                              K, D, iter_no, real_pi,
-                                             real_phi, verbose=verbose)
+                                             real_phi, verbose=verbose,
+                                             zero_mask=zero_mask)
     return pi_hat, phi_hat    
 
 
@@ -258,7 +259,6 @@ if __name__ == "__main__":
     parser.add_argument('-V', metavar='V', type=int, default=3) # vocab size
     parser.add_argument('-C', metavar='C', type=int, default=4) # words per doc, aka context size 
     parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
-
     parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
     args = parser.parse_args()
 
@@ -273,6 +273,9 @@ if __name__ == "__main__":
 
     pi_hat_s = np.zeros_like(real_pi)
     phi_hat_s = np.zeros_like(real_phi) 
+
+    zero_mask = np.ones((N, K)) # init the zero mask
+
     for r in range(1, args.runs + 1):
         pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=100, verbose=False)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
