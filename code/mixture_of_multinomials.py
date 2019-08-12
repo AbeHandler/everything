@@ -200,7 +200,7 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
 def safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask=None):
     b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    lambda_d = e_step(pi_hat, phi_hat, D, zero_mask=None)
+    lambda_d = e_step(pi_hat, phi_hat, D, zero_mask=zero_mask)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e7):
@@ -234,6 +234,8 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
 
 def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True):
 
+    print("[*] Warning: zero mask is not none")
+    
     D, ks = generate_data(N, K, V, real_pi, real_phi, C)
 
     phi_hat = init_phi(K, V)
@@ -248,7 +250,6 @@ def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True
                                              real_phi, verbose=verbose,
                                              zero_mask=zero_mask)
     return pi_hat, phi_hat    
-
 
 if __name__ == "__main__":
     
