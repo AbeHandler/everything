@@ -108,7 +108,7 @@ feats, actual_feats = make_all_feats(d1)
 
 true_feature_counts = np.sum(actual_feats, axis=0)
 
-Y = set([_[0] for _ in dataset])
+Y = set([_[0] for _ in d1])
 
 print(np.exp(get_log_probs(w, dataset, Y, feats, actual_feats, true_feature_counts)))
 
