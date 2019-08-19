@@ -1,7 +1,13 @@
 import numpy as np
+import copy
+import pickle
+
+from tqdm import tqdm_notebook as tqdm
 from scipy.optimize import fmin_l_bfgs_b
+from scipy.special import logsumexp
 # http://cs.jhu.edu/~jason/tutorials/loglin/formulas.pdf
 
+@lru_cache(maxsize=100000)
 def phi(n_i, e, z):    
     '''One feature needs to be the PMI of n_i'''
 
@@ -16,9 +22,9 @@ def phi(n_i, e, z):
 
 def predict_Y_for_point(dno, w, feats):
     '''returns a distribution over the Y labels'''
-    numerators = np.exp(feats[dno].dot(w))
-    D = np.sum(numerators)
-    probs = numerators / D
+    numerators = feats[dno].dot(w)
+    D = logsumexp(numerators, axis=0)
+    probs = np.exp(numerators - D)
     return probs.reshape(len(numerators),1)
     
 
@@ -27,13 +33,18 @@ def get_expected_feats_for_point(dno, w, feats):
 
 
 def get_expected_feats_for_dataset(dataset, w, feats):
-    return np.sum(np.vstack([get_expected_feats_for_point(dno, w, feats) for dno in range(len(dataset))]), axis=0)
+    return np.vstack([get_expected_feats_for_point(dno, w, feats) for dno in range(len(dataset))])
 
 
 def fprime(w, *args):
-    dataset, Y, feats, actual_feats, true_feature_counts = args    
+    '''
+    Big F in Eisners notation
+    
+    This can handle weighted examples via the point_weights argument
+    '''
+    dataset, Y, feats, actual_feats, true_feature_counts, point_weights = args
     expected_feature_counts = get_expected_feats_for_dataset(dataset, w, feats)
-    delta = true_feature_counts - expected_feature_counts
+    delta = np.sum(point_weights * true_feature_counts, axis=0) - np.sum(point_weights * expected_feature_counts, axis=0)
     return -1 * delta
 
 
@@ -42,7 +53,7 @@ def make_feats(dataset):
 
     feats = np.zeros((len(dataset), len(Y), len(w)))
 
-    for ino, p in enumerate(dataset):
+    for ino, p in tqdm(enumerate(dataset), total=len(dataset)):
         ni, e, z = p
         for yno, y in enumerate(Y):
             feats[ino][yno] = phi(y, e, z)
@@ -52,26 +63,30 @@ def make_feats(dataset):
 
 def get_probs(w, *args):
     dataset, Y, feats, actual_feats = args
-    n = np.exp(actual_feats.dot(w))
+    n = actual_feats.dot(w)
     
-    d = 0
+    d = []
     for yno, y in enumerate(Y):
-        d += np.exp(feats[:,yno].dot(w))
-    return n/d
+        d.append(feats[:,yno].dot(w))
+    return np.exp(n - logsumexp(d, axis=0))
 
 
 def get_log_probs(w, *args):
-    '''Big F in Eisners notation'''
+    '''
+    Big F in Eisners notation
     
-    dataset, Y, feats, actual_feats, true_feature_counts = args
+    This can handle weighted examples via the point_weights param
+    '''
     
-    n = np.exp(actual_feats.dot(w))
+    dataset, Y, feats, actual_feats, true_feature_counts, point_weights = args
     
-    d = 0
+    n = actual_feats.dot(w)
+    
+    d = []
     for yno, y in enumerate(Y):
-        d += np.exp(feats[:,yno].dot(w))
+        d.append(feats[:,yno].dot(w))
 
-    return -1 * np.sum(np.log(n/d))
+    return -1 * np.sum((n - logsumexp(d, axis=0)))
 
 
 def make_acutal_feats(dataset, w):
@@ -87,7 +102,6 @@ def make_all_feats(data_set):
     feats = make_feats(data_set)
     
     return feats, actual_feats
-
 
 d0 = [("Ari", "Ariana", 0), 
       ("bill", "Ariana", 0), 
