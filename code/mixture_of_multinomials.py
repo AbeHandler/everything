@@ -51,11 +51,11 @@ def log_prob_D_given_k(D, pi_hat_, phi_hat_, k):
     '''
 
     # sum across rows to get the log probability of all words in the instance under phi_hat[k]
-    log_prob_of_words = np.sum(D.multiply(np.log(phi_hat_[k])), axis=1)
+    log_prob_of_words = np.sum(D * np.log(phi_hat_[k]), axis=1)
     log_prob_of_class = np.log(pi_hat_[k])
     out = log_prob_of_words + log_prob_of_class
-    assert out.size == N
-    return np.array(out.reshape(N,1))
+    assert out.shape == (N,)
+    return out.reshape(N,1)
 
 
 def expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D):
@@ -111,7 +111,7 @@ def e_step(pi_hat_, phi_hat_, D, zero_mask=None):
 def m_step_phi(lambda_d, K_, phi_hat, D):
 
     for k in range(K_):
-        nk = np.sum(D.multiply(lambda_d[:,k].reshape(N, 1)), axis=0)
+        nk = np.sum(lambda_d[:,k].reshape(N, 1) * D, axis=0)
         nd = np.sum(nk)
         phi_hat[k] = nk/nd
 
@@ -234,12 +234,10 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
 
 def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True):
 
-    print("[*] Warning: zero mask is not none")
+    if zero_mask is not None:
+        print("[*] Warning: zero mask is not none")
     
     D, ks = generate_data(N, K, V, real_pi, real_phi, C)
-    from scipy.sparse import csr_matrix
-
-    D2 = csr_matrix(D)
 
     phi_hat = init_phi(K, V)
 
@@ -249,7 +247,7 @@ def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True
 
     for iter_no in tqdm(range(iters)):
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
-                                             K, D2, iter_no, real_pi,
+                                             K, D, iter_no, real_pi,
                                              real_phi, verbose=verbose,
                                              zero_mask=zero_mask)
     return pi_hat, phi_hat    
@@ -263,20 +261,19 @@ if __name__ == "__main__":
     parser.add_argument('-V', metavar='V', type=int, default=3) # vocab size
     parser.add_argument('-C', metavar='C', type=int, default=4) # words per doc, aka context size 
     parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
-
-    parser.add_argument('-seed', metavar='seed', type=int, default=None) # number of K 
     parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
+    parser.add_argument('-seed', metavar='seed', type=int, default=None) # number of K
     args = parser.parse_args()
+
+    if args.seed is not None:
+        print("[*] Warning, random seed")
+        np.random.seed(args.seed)
 
     N = args.N 
     K = args.K 
     V = args.V
     C = args.C # context size
     runs = args.runs
-
-    if args.seed is not None:
-        print("[*] Warning, random seed")
-        np.random.seed(args.seed) 
 
     real_pi = init_pi(K)
     real_phi = init_phi(K,V)
@@ -286,10 +283,11 @@ if __name__ == "__main__":
 
     zero_mask = np.ones((N, K)) # init the zero mask
 
+    zero_mask = None
+
     for r in range(1, args.runs + 1):
         pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=100, verbose=False)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
         print(report_kl(real_phi, phi_hat_s/r, real_pi, pi_hat_s/r))
-
