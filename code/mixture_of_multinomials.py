@@ -263,6 +263,8 @@ if __name__ == "__main__":
     parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
     parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
     parser.add_argument('-seed', metavar='seed', type=int, default=None) # number of K
+
+    parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of K
     args = parser.parse_args()
 
     if args.seed is not None:
@@ -285,8 +287,11 @@ if __name__ == "__main__":
 
     zero_mask = None
 
+
+    print(report_kl(real_phi, init_phi(K,V), real_pi, init_pi(K)))
+
     for r in range(1, args.runs + 1):
-        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=100, verbose=False)
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=False)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
