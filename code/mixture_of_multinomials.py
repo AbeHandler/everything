@@ -1,4 +1,6 @@
 import numpy as np
+
+from scipy.sparse import csr_matrix
 from scipy.special import logsumexp
 from tqdm import tqdm as tqdm
 
@@ -29,6 +31,17 @@ def generate_data(N, K, V, real_pi, real_phi, C):
         D[d] = np.random.multinomial(n=C, pvals=real_phi[k])
         ks.append(k)
     return D, ks
+
+
+def generate_data_sparse(N, K, V, real_pi, real_phi, C):
+    D = np.zeros((N, V))
+    ks = []
+    for d in tqdm(range(N)):
+        k = np.random.choice(K, 1, p=real_pi)[0]
+        D[d] = np.random.multinomial(n=C, pvals=real_phi[k])
+        ks.append(k)
+    return csr_matrix(D), ks
+
 
 
 def normalize_log_probs(lps):
@@ -208,6 +221,54 @@ def safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask=None):
 
     return lambda_d
 
+
+def m_step_phi_sparse(lambda_d, K_, phi_hat, D):
+
+    for k in range(K_):
+        nk = np.sum(D.multiply(lambda_d[:,k].reshape(N, 1)), axis=0)
+        nd = np.sum(nk)
+        phi_hat[k] = nk/nd
+
+    return phi_hat
+
+
+def e_step_sparse(pi_hat_, phi_hat_, D, zero_mask=None):
+    
+    '''
+    Note: the dot prob multiplies the counts in D by their log probs
+
+    The zero_mask is an optional param that can zero out
+    certain values of K for certain N. The mask is an
+    N * K binary array. This is useful for instance if you
+    want to fix one or more possible K for a given data point 
+    (e.g. if data is observed)
+    
+    out: 
+        an N X K matrix, normalized by row
+        
+    '''
+
+    tot = D.dot(np.log(phi_hat_).T)
+
+    tot += np.log(pi_hat_)
+    
+    if zero_mask is not None:
+        tot *= zero_mask
+    
+    return normalize_log_probs(tot)
+
+
+def run_iter_sparse(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False, zero_mask=None):
+
+    assert(reckless) # only reckless mode for now
+
+    lambda_d = e_step_sparse(pi_hat, phi_hat, D)
+    pi_hat = m_step_pi(lambda_d)
+    phi_hat = m_step_phi_sparse(lambda_d, K, phi_hat, D)        
+    
+    return pi_hat, phi_hat, lambda_d
+
+
 def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False, zero_mask=None):
 
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
@@ -232,12 +293,16 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     return pi_hat, phi_hat, lambda_d
 
 
-def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True, reckless=False):
+def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True, reckless=False, sparse=False):
 
     if zero_mask is not None:
         print("[*] Warning: zero mask is not none")
     
-    D, ks = generate_data(N, K, V, real_pi, real_phi, C)
+    if args.sparse:
+        D, ks = generate_data_sparse(N, K, V, real_pi, real_phi, C)
+    else:
+        D, ks = generate_data(N, K, V, real_pi, real_phi, C)
+    
 
     phi_hat = init_phi(K, V)
 
@@ -246,11 +311,18 @@ def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True
     lambda_d = init_lambda_d(N, K)
 
     for iter_no in tqdm(range(iters)):
-        pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
-                                             K, D, iter_no, real_pi,
-                                             real_phi, verbose=verbose,
-                                             zero_mask=zero_mask,
-                                             reckless=reckless)
+        if args.sparse:
+            pi_hat, phi_hat, lambda_d = run_iter_sparse(lambda_d, pi_hat, phi_hat,
+                                                 K, D, iter_no, real_pi,
+                                                 real_phi, verbose=verbose,
+                                                 zero_mask=zero_mask,
+                                                 reckless=reckless)
+        else:
+            pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
+                                                 K, D, iter_no, real_pi,
+                                                 real_phi, verbose=verbose,
+                                                 zero_mask=zero_mask,
+                                                 reckless=reckless)
     return pi_hat, phi_hat    
 
 if __name__ == "__main__":
@@ -269,6 +341,7 @@ if __name__ == "__main__":
     parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of K
     parser.add_argument('-reckless',action='store_true', default=False) # number of runs of EM 
 
+    parser.add_argument('-sparse',action='store_true', default=False) # number of runs of EM 
     args = parser.parse_args()
 
     if args.seed is not None:
@@ -298,7 +371,7 @@ if __name__ == "__main__":
     print(report_kl(real_phi, init_phi(K,V), real_pi, init_pi(K)))
 
     for r in range(1, args.runs + 1):
-        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose, reckless=args.reckless)
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose, reckless=args.reckless, sparse=args.sparse)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
