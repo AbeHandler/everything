@@ -232,7 +232,7 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
     return pi_hat, phi_hat, lambda_d
 
 
-def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True):
+def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True, reckless=False):
 
     if zero_mask is not None:
         print("[*] Warning: zero mask is not none")
@@ -249,7 +249,8 @@ def run_em(real_pi, real_phi, N, K, V, C, zero_mask=None, iters=10, verbose=True
         pi_hat, phi_hat, lambda_d = run_iter(lambda_d, pi_hat, phi_hat,
                                              K, D, iter_no, real_pi,
                                              real_phi, verbose=verbose,
-                                             zero_mask=zero_mask)
+                                             zero_mask=zero_mask,
+                                             reckless=reckless)
     return pi_hat, phi_hat    
 
 if __name__ == "__main__":
@@ -266,11 +267,16 @@ if __name__ == "__main__":
 
     parser.add_argument('-verbose',action='store_true', default=False) # number of runs of EM 
     parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of K
+    parser.add_argument('-reckless',action='store_true', default=False) # number of runs of EM 
+
     args = parser.parse_args()
 
     if args.seed is not None:
         print("[*] Warning, random seed")
         np.random.seed(args.seed)
+
+    if args.reckless:
+        print("[*] Warning, reckless")
 
     N = args.N 
     K = args.K 
@@ -292,7 +298,7 @@ if __name__ == "__main__":
     print(report_kl(real_phi, init_phi(K,V), real_pi, init_pi(K)))
 
     for r in range(1, args.runs + 1):
-        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose)
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose, reckless=args.reckless)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
