@@ -163,7 +163,7 @@ def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
     pi_hat = m_step_pi(lambda_d)
     aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
 
-    if not np.allclose(b4, aft, rtol=1e-12):
+    if not np.allclose(b4, aft, rtol=1e-16):
         assert(b4 <= aft)
     else:
         print("[*] warning: skipping assert {}, {}".format(b4, aft))
@@ -212,14 +212,14 @@ def run_iter(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbos
 
     this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
 
-    #### e step
-    lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask)
-
-    #### m step
-    pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
-    phi_hat = safe_m_phi(lambda_d, pi_hat, phi_hat, D)
-
-    if reckless == False:
+    if reckless:
+        lambda_d = e_step(pi_hat, phi_hat, D)
+        pi_hat = m_step_pi(lambda_d)
+        phi_hat = m_step_phi(lambda_d, K, phi_hat, D)        
+    else: 
+        lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask)
+        pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
+        phi_hat = safe_m_phi(lambda_d, pi_hat, phi_hat, D)
         sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
 
     # BP: elbo should be climbing, observed data LL should be climbing
@@ -264,6 +264,7 @@ if __name__ == "__main__":
     parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
     parser.add_argument('-seed', metavar='seed', type=int, default=None) # number of K
 
+    parser.add_argument('-verbose',action='store_true', default=False) # number of runs of EM 
     parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of K
     args = parser.parse_args()
 
@@ -291,7 +292,7 @@ if __name__ == "__main__":
     print(report_kl(real_phi, init_phi(K,V), real_pi, init_pi(K)))
 
     for r in range(1, args.runs + 1):
-        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=False)
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
