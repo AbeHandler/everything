@@ -261,7 +261,7 @@ def run_iter_sparse(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi,
 
     assert(reckless) # only reckless mode for now
 
-    lambda_d = e_step_sparse(pi_hat, phi_hat, D)
+    lambda_d = e_step_sparse(pi_hat, phi_hat, D, zero_mask)
     pi_hat = m_step_pi(lambda_d)
     phi_hat = m_step_phi_sparse(lambda_d, K, phi_hat, D)        
     
@@ -334,13 +334,11 @@ if __name__ == "__main__":
     parser.add_argument('-C', metavar='C', type=int, default=4) # words per doc, aka context size 
     parser.add_argument('-K', metavar='K', type=int, default=3) # number of K 
     parser.add_argument('-runs', metavar='runs', type=int, default=1) # number of runs of EM 
-    parser.add_argument('-seed', metavar='seed', type=int, default=None) # number of K
-
-    parser.add_argument('-verbose',action='store_true', default=False) # number of runs of EM 
-    parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of K
-    parser.add_argument('-reckless',action='store_true', default=False) # number of runs of EM 
-
-    parser.add_argument('-sparse',action='store_true', default=False) # number of runs of EM 
+    parser.add_argument('-seed', metavar='seed', type=int, default=None) # seed parameter 
+    parser.add_argument('-verbose',action='store_true', default=False) # verbosity 
+    parser.add_argument('-iters', metavar='iters', type=int, default=100) # number of iterations, TODO: add real stopping criteria
+    parser.add_argument('-reckless', action='store_true', default=False) # run w/o assertions to check correctness 
+    parser.add_argument('-sparse', action='store_true', default=True) # use sparse matrixes. 
     args = parser.parse_args()
 
     if args.seed is not None:
@@ -370,7 +368,7 @@ if __name__ == "__main__":
     print(report_kl(real_phi, init_phi(K,V), real_pi, init_pi(K)))
 
     for r in range(1, args.runs + 1):
-        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose, reckless=args.reckless, sparse=args.sparse)
+        pi_hat, phi_hat = run_em(real_pi, real_phi, N, K, V, C, iters=args.iters, verbose=args.verbose, reckless=args.reckless, zero_mask=zero_mask, sparse=args.sparse)
         klsum = report_kl(real_phi, phi_hat, real_pi, pi_hat)
         phi_hat_s += phi_hat
         pi_hat_s += pi_hat
