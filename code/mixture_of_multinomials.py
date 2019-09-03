@@ -5,6 +5,43 @@ from scipy.special import logsumexp
 from tqdm import tqdm as tqdm
 
 
+def log_prob_D_given_k_sparse(D, pi_hat_, phi_hat_, k):
+    '''
+    log prob of the data, given k. i.e.
+
+    log( p(x, z | \theta)) =  log( p(x | z, theta) * p(z | theta) )
+
+                           = log(p(x | z, theta)) +  log(p(z | theta))+
+
+                           = \sum_V(p(x_v | z, theta) + log(p(z | theta))
+    '''
+
+    # sum across rows to get the log probability of all words in the instance under phi_hat[k]
+    log_prob_of_words = np.sum(np.asarray(D.todense()) * np.log(phi_hat_[k]), axis=1)
+    log_prob_of_class = np.log(pi_hat_[k])
+    out = log_prob_of_words + log_prob_of_class
+    assert out.shape == (N,)
+    return out.reshape(N,1)
+
+
+def expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D):
+    '''
+    The first term in the ELBO \sum_z q(z) log p(x,z|\theta)
+
+    This is not implemented efficiently b/c converts sparse matrix to dense but that is fine as it is only for checking correctness
+    '''
+
+    sum_ = 0
+
+    K = pi_hat.shape[0]
+
+    for k in range(K):
+        sum_ += np.sum(lambda_d[:,k].reshape(N,1) * (log_prob_D_given_k_sparse(D, pi_hat, phi_hat, k=k)))
+
+    assert sum_ < 0
+    return sum_
+
+
 def init_pi(K):
     t = np.random.uniform(0,1,size=K)
     return t/np.sum(t)
@@ -91,7 +128,7 @@ def entropy(q):
 
 
 def elbo(lambda_d, pi_hat, phi_hat, D):
-    return expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D) + entropy(lambda_d)
+    return expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D) + entropy(lambda_d)
 
 
 def e_step(pi_hat_, phi_hat_, D, zero_mask=None):
@@ -144,7 +181,7 @@ def observed_data_LL(pi_hat, phi_hat, K, D):
     observedD = np.zeros((N,1), dtype='float64')
 
     for k in range(K):
-        lp_xz = log_prob_D_given_k(D, pi_hat, phi_hat, k) # log prob of all of the data, given z=k
+        lp_xz = log_prob_D_given_k_sparse(D, pi_hat, phi_hat, k) # log prob of all of the data, given z=k
         p_xz = np.exp(lp_xz) # exponentiate to get out of log space
         observedD += p_xz
 
@@ -171,9 +208,9 @@ def report_kl(real_phi, phi_hat, real_pi, pi_hat):
 
 
 def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
-    b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    b4 = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
     pi_hat = m_step_pi(lambda_d)
-    aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    aft = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e-16):
         assert(b4 <= aft)
@@ -183,9 +220,9 @@ def safe_m_pi(lambda_d, pi_hat, phi_hat, D):
 
 
 def safe_m_phi(lambda_d, pi_hat, phi_hat, D):
-    b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
-    phi_hat = m_step_phi(lambda_d, K, phi_hat, D)
-    aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    b4 = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
+    phi_hat = m_step_phi_sparse(lambda_d, K, phi_hat, D)
+    aft = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e-12):
         assert(b4 <= aft)
@@ -210,10 +247,10 @@ def sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll):
 
 
 def safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask=None):
-    b4 = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    b4 = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
 
     lambda_d = e_step(pi_hat, phi_hat, D, zero_mask=zero_mask)
-    aft = expected_complete_log_likelihood(lambda_d, pi_hat, phi_hat, D)
+    aft = expected_complete_log_likelihood_sparse(lambda_d, pi_hat, phi_hat, D)
 
     if not np.allclose(b4, aft, rtol=1e7):
         assert(b4 <= aft)
@@ -259,12 +296,20 @@ def e_step_sparse(pi_hat_, phi_hat_, D, zero_mask=None):
 
 def run_iter_sparse(lambda_d, pi_hat, phi_hat, K, D, iter_no, real_pi, real_phi, verbose=False, reckless=False, zero_mask=None):
 
-    assert(reckless) # only reckless mode for now
+    #assert(reckless) # only reckless mode for now
 
-    lambda_d = e_step_sparse(pi_hat, phi_hat, D, zero_mask)
-    pi_hat = m_step_pi(lambda_d)
-    phi_hat = m_step_phi_sparse(lambda_d, K, phi_hat, D)        
-    
+    this_observed_ll = observed_data_LL(pi_hat, phi_hat, K, D)
+
+    if reckless:
+        lambda_d = e_step_sparse(pi_hat, phi_hat, D, zero_mask)
+        pi_hat = m_step_pi(lambda_d)
+        phi_hat = m_step_phi_sparse(lambda_d, K, phi_hat, D)        
+    else:
+        lambda_d = safe_e_step(lambda_d, pi_hat, phi_hat, D, zero_mask)
+        pi_hat = safe_m_pi(lambda_d, pi_hat, phi_hat, D)
+        phi_hat = safe_m_phi(lambda_d, pi_hat, phi_hat, D)
+        sanity_checks(lambda_d, pi_hat, phi_hat, K, D, this_observed_ll)
+
     return pi_hat, phi_hat, lambda_d
 
 
