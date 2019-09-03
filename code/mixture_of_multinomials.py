@@ -43,7 +43,6 @@ def generate_data_sparse(N, K, V, real_pi, real_phi, C):
     return csr_matrix(D), ks
 
 
-
 def normalize_log_probs(lps):
     N_, K_ = lps.shape
     p = np.exp(lps - np.max(lps,axis=1).reshape(N_,1))
