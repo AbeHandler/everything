@@ -86,10 +86,16 @@ def normalize_log_probs(lps):
     # any 0 log probs need to get converted to non or max will be zero
     lps[lps == 0] = 'nan'
 
-    p = np.exp(lps - np.nanmax(lps,axis=1).reshape(N_,1))
-    p = p/np.sum(p, axis=1).reshape(N_,1)
-    assert np.sum(p, axis=1).all() == 1.0
-    return p
+    diffs = lps - np.nanmax(lps,axis=1).reshape(N_,1)
+
+    diffs = np.exp(diffs)
+
+    diffs[np.isnan(diffs)] = 0
+
+    diffs = diffs/np.sum(diffs, axis=1).reshape(N_,1)
+
+    assert np.sum(diffs, axis=1).all() == 1.0
+    return diffs
 
 
 def log_prob_D_given_k(D, pi_hat_, phi_hat_, k):
