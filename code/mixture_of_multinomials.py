@@ -82,7 +82,11 @@ def generate_data_sparse(N, K, V, real_pi, real_phi, C):
 
 def normalize_log_probs(lps):
     N_, K_ = lps.shape
-    p = np.exp(lps - np.max(lps,axis=1).reshape(N_,1))
+
+    # any 0 log probs need to get converted to non or max will be zero
+    lps[lps == 0] = 'nan'
+
+    p = np.exp(lps - np.nanmax(lps,axis=1).reshape(N_,1))
     p = p/np.sum(p, axis=1).reshape(N_,1)
     assert np.sum(p, axis=1).all() == 1.0
     return p
