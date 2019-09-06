@@ -26,10 +26,13 @@ navigation_weight: 1
                 5th-year PhD student in Computer Science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>
             </h5>
             <h5 class="mt-4">
-            Interetested in user-facing natural language processing applications.
+            I research natural language processing methods for search applications
             </h5>
             <h5 class="mt-4">
-            Email: abram.handler@gmail.com
+            More info: CV, Github, LinkedIn, Twitter
+            </h5>
+            <h5>
+                The best way to reach me is via abram.handler@gmail.com
             </h5>
 		</div>
 		<div class="col-sm-3">
@@ -38,15 +41,19 @@ navigation_weight: 1
 	</div>
 </div>
 
+
 <div class="conatiner">
 
-<div class="row align-items-center justify-content-center">
-<h4>Publications and software</h4>
+<div class="row mt-4 align-items-center justify-content-center">
+<h4>Publications, projects and software</h4>
 </div>
 
 <div class="row mt-4 align-items-center justify-content-center">
   <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/N18-1159.pdf">Relational Summarization for Corpus Analysis.</a>
-  <br>Abram Handler and Brendan O’Connor at NAACL 2018
+</div>
+
+<div class="row align-items-center justify-content-center">
+  Abram Handler and Brendan O’Connor at NAACL 2018
 </div>
 
 <div class="row mt-4 align-items-center justify-content-center">
