@@ -29,7 +29,7 @@ navigation_weight: 1
             I study natural language processing methods for new search applications. I am interested in applied research.
             </h5>
             <h5 class="mt-4">
-            More info: CV, <a href="https://github.com/abehandler">Github</a>, <a href='https://www.linkedin.com/in/abram-handler/'>LinkedIn</a>, <a href="https://twitter.com/AbeHandler/">Twitter</a>
+            More info: <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/cv.pdf">CV</a>, <a href="https://github.com/abehandler">Github</a>, <a href='https://www.linkedin.com/in/abram-handler/'>LinkedIn</a>, <a href="https://twitter.com/AbeHandler/">Twitter</a>
             </h5>
             <h5>
                 The best way to reach me: <code>abram.handler@gmail.com</code>
@@ -54,16 +54,20 @@ navigation_weight: 1
 </div>
 
 <div class="row">
-  Abram Handler and Brendan O’Connor at EMNLP 2019
+    <div class="col-sm-12">
+    Abram Handler and Brendan O’Connor at EMNLP 2019
+    </div>
 </div>
 
 <div class="row mt-4">
-   Investigating Sports Commentator Bias within a Large Corpus ofAmerican Football Broadcasts
+   Investigating Sports Commentator Bias within a Large Corpus of American Football Broadcasts
 </div>
 
 
 <div class="row">
+    <div class="col-sm-12">
      Jack Merullo, Luke Yeh, Abram Handler, Alvin Grissom II, Brendan O’Connor, Mohit Iyyer at EMNLP 2019
+     </div>
 </div>
 
 <div class="row mt-4">
@@ -71,7 +75,9 @@ navigation_weight: 1
 </div>
 
 <div class="row">
-  Abram Handler and Brendan O’Connor at NAACL 2018
+    <div class="col-sm-12">
+      Abram Handler and Brendan O’Connor at NAACL 2018
+    </div>
 </div>
 
 <div class="row mt-4">
@@ -81,37 +87,41 @@ navigation_weight: 1
 
 
 <div class="row">
+    <div class="col-sm-12">
      Katherine A. Keith, Abram Handler, Michael Pinkham,
-Cara Magliozzi, Joshua McDuffie, and Brendan O’Connor at EMNLP 2017
+    Cara Magliozzi, Joshua McDuffie, and Brendan O’Connor at EMNLP 2017
+    </div>
 </div>
-
 
 <div class="row mt-4">
         <a href="https://slanglab.cs.umass.edu/Rookie"> Rookie: a unique approach for exploring news archives</a>
 </div>
 
 <div class="row">
-    Abram Handler and Brendan O'Connor, Data Science + Journalism (KDD, 2017).
-</div>
-
-<div class="row">
-    Funded through <a href="https://thelensnola.org"> The Lens </a> on a Knight <a href="https://www.knightfoundation.org/grants/201550791/">prototype</a> grant.
-</div>
-
-
-<div class="row mt-4">
-    <code><a href="https://github.com/slanglab/phrasemachine">phrasemachine</a></code> software: extracts multiword phrases for downstream analysis
-</div>
-
-<div class="row">
-    Companion paper: <a href="http://brenocon.com/handler2016phrases.pdf"> Bag of What? Simple Noun Phrase Extraction for Text Analysis.</a>
-    Abram Handler, Matthew J. Denny, Hanna Wallach, and Brendan O'Connor.
-    Text as Data 2016.
+    <div class="col-sm-12">
+        Abram Handler and Brendan O'Connor, Data Science + Journalism (KDD, 2017). 
+    Funded with a <a href="https://www.knightfoundation.org/grants/201550791/">Knight prototype grant</a>.
+    </div>
 </div>
 
 
 <div class="row mt-4">
-Before I became a PhD student I worked as data journalist at <a href="http://thelensnola.org/">The Lens</a> in New Orleans, where I lead development of <a href="http://thelensnola.org/thevault/">The Vault</a>, a collection of applications which which helped citizens better find and make use of public records. I also helped create the first <a href="http://elections.thelensnola.org">live election maps</a> in Louisiana. It was a lot of fun!
+    <code style="font-size:100%"><a href="https://github.com/slanglab/phrasemachine">phrasemachine</a></code>
+</div>
+<div class="row mt-4">
+    <div class="col-sm-12">
+    Software to extract multiword phrases for downstream analysis, with a
+    <a href="http://brenocon.com/handler2016phrases.pdf">companion paper</a> at Text as Data 2016 from Abram Handler, Matthew J. Denny, Hanna Wallach, and Brendan O'Connor.
+    </div>
+</div>
+
+<div class="row mt-4">
+    <a href="http://thelensnola.org/thevault/">The Vault</a>
+</div>
+<div class="row mt-4">
+    <div class="col-sm-12">
+    Before I became a PhD student I worked as data journalist, where I lead development of The Vault: a collection of applications which which helped citizens better find and make use of public records. I also helped create the first <a href="http://elections.thelensnola.org">live election maps</a> in Louisiana.
+    </div>
 </div>
 
 </div>
