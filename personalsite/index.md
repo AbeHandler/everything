@@ -16,7 +16,7 @@ navigation_weight: 1
 
 
 
-<div class="container">
+<div class="container-fluid">
 	<div class="row mt-4">
 		<div class="col-sm-9">
             <h3>
@@ -42,7 +42,7 @@ navigation_weight: 1
 </div>
 
 
-<div class="conatiner">
+<div class="conatiner-fluid">
 
 <div class="row mt-4 align-items-center justify-content-center">
 <h4>Publications, projects and software</h4>
@@ -110,6 +110,8 @@ Cara Magliozzi, Joshua McDuffie, and Brendan O’Connor at EMNLP 2017
 </div>
 
 
-<div class="row mt-4 align-items-center justify-content-center">
-Before I became a PhD student I worked as data journalist at <a href="http://thelensnola.org/">The Lens</a> in New Orleans where I lead development of <a href="http://thelensnola.org/thevault/">The Vault</a>, a collection of applications which which helped citizens better find and make use of public records. I also helped our team create the first <a href="http://elections.thelensnola.org">live election maps</a> in Louisiana. It was a lot of fun!
+<div class="row align-items-center mt-4 justify-content-center">
+Before I became a PhD student I worked as data journalist at <a href="http://thelensnola.org/">The Lens</a> in New Orleans, where I lead development of <a href="http://thelensnola.org/thevault/">The Vault</a>, a collection of applications which which helped citizens better find and make use of public records. I also helped create the first <a href="http://elections.thelensnola.org">live election maps</a> in Louisiana. It was a lot of fun!
+</div>
+
 </div>
