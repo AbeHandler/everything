@@ -50,7 +50,7 @@ navigation_weight: 1
 
 
 <div class="row mt-4">
-  Query-focused sentence compression in linear time
+  Query-focused sentence compression in linear time (forthcoming)
 </div>
 
 <div class="row">
@@ -60,7 +60,7 @@ navigation_weight: 1
 </div>
 
 <div class="row mt-4">
-   Investigating Sports Commentator Bias within a Large Corpus of American Football Broadcasts
+   Investigating Sports Commentator Bias within a Large Corpus of American Football Broadcasts (forthcoming)
 </div>
 
 
