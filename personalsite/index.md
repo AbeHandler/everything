@@ -26,13 +26,13 @@ navigation_weight: 1
                 5th-year PhD student in Computer Science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>
             </h5>
             <h5 class="mt-4">
-            I research natural language processing methods for new search applications
+            I research natural language processing (NLP) methods for new search applications. I am interested in applied NLP.
             </h5>
             <h5 class="mt-4">
             More info: CV, Github, LinkedIn, Twitter
             </h5>
             <h5>
-                The best way to reach me is via abram.handler@gmail.com
+                The best way to reach me: <code>abram.handler@gmail.com</code>
             </h5>
 		</div>
 		<div class="col-sm-3">
