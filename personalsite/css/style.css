@@ -1,18 +1,34 @@
+a {
+    text-decoration: underline;
+    color: darkblue;
+}
+
 body {
 	font-family: "Source Sans Pro", sans-serif;
 	padding: 0;
 	margin: 0;
 	font-size: 20px;
-	background: #1D1D1D;
+}
+
+.lowpad {
+	padding-top: 5px
+}
+
+.thin{
+	width: 70%;
+	margin: auto;
+	padding: 10px;
+}
+
+.whitebackground{
+	background: white
 }
 
 p {
-	line-height: 1.6em;
+    padding: 0px;
+    margin: 0px;
 }
 
-a {
-	color: #000;
-}
 
 h1,
 h2 {
@@ -55,27 +71,15 @@ div.small-container {
 
 header,
 footer {
-	background: #1D1D1D;
 	color: #ffffff;
 }
 
-section.hero {
-	color: #fff;
-	background-image: url('/images/bg.jpg');
-	background-size: cover;
-}
 
 p.post-hero {
 	width: 80%;
 	margin: 0 auto;
 }
 
-header a,
-section.hero a,
-footer a {
-	text-decoration: none;
-	color: #ffffff;
-}
 
 header,
 footer {
@@ -107,10 +111,18 @@ div.content {
 }
 
 section.hero {
-	padding: 120px 0;
+	padding: 40px 0;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
 }
 
-p.sub-text {
+.big{
+    font-size: 50px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.subhero{
 	font-size: 20px;
 	text-align: center;
 	line-height: 28px;
@@ -118,9 +130,12 @@ p.sub-text {
     text-align: center;
     line-height: 28px;
     background-color: white;
-    opacity: .75;
+    opacity: .8;
+    width: 50%;
+    margin: auto;
     font-weight: bold;
     color:black !important;
+    border:2px solid grey;
 }
 
 .special {
