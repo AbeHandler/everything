@@ -1,6 +1,11 @@
+.container-fluid {
+width: 70%;
+}
+
 a {
     text-decoration: underline;
     color: darkblue;
+    white-space: nowrap !important; 
 }
 
 body {
