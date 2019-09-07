@@ -29,14 +29,14 @@ navigation_weight: 1
             I study natural language processing methods for new search applications. I am interested in applied research.
             </h5>
             <h5 class="mt-4">
-            More info: <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/cv.pdf">CV</a>, <a href="https://github.com/abehandler">Github</a>, <a href='https://www.linkedin.com/in/abram-handler/'>LinkedIn</a>, <a href="https://twitter.com/AbeHandler/">Twitter</a>
+            <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/cv.pdf">CV</a>, <a href="https://github.com/abehandler">Github</a>, <a href='https://www.linkedin.com/in/abram-handler/'>LinkedIn</a>, <a href="https://twitter.com/AbeHandler/">Twitter</a>
             </h5>
             <h5>
-                The best way to reach me: <code>abram.handler@gmail.com</code>
+                Email: <code>abram.handler@gmail.com</code>
             </h5>
 		</div>
 		<div class="col-sm-3">
-			<span class="bordered"> <img style="width:99%" src="/images/abe.png" width="430"></span>
+			<span class="bordered"> <img style="width:99%" src="images/abe.png" width="430"></span>
 		</div>
 	</div>
 </div>
