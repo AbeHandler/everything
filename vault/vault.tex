@@ -1,5 +1,7 @@
 
 \documentclass[12pt]{amsart}
+\usepackage{amsmath}%
+\usepackage{amssymb}
 \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
 \geometry{a4paper} % or letter or a5paper or ... etc
 % \geometry{landscape} % rotated page geometry
@@ -16,11 +18,22 @@
 \maketitle
 \tableofcontents
 
-\section{}
-\subsection{}
+\section{Stats}
 
 $$
 \text{Var(aX)} = a^2 Var(X)
 $$
+
+Score $\triangleq$ gradient of $\ell$ w.r.t  $\theta$.
+
+\section{Linear Algebra}
+
+Let $A$ and $B$ be matrixes. Then $(AB)^T$ = $(B^T A^T)$. 
+
+Pf. Let $A_i$ be the $i$th row of $A$ and $B_j$ be the $j$th column of $B$.  By definition $B_j$ is also the $j$th row of $B^T$ and $A_i$ is the $i$th column of $A^T$. Also by definition component $AB_{i,j}$ = $A_i \cdot B_j$. The definition of transpose $(AB)^T_{j,i} = AB_{i,j} = B^T_{j}A^T_i$.
+
+Mnemonic: ``push in T, swap A and B.'' 
+
+
 
 \end{document}
