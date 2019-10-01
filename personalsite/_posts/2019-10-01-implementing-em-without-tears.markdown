@@ -1,7 +1,7 @@
 ## Implementing EM without tears
-### What to do when your EM code isn’t working
+### What to do when your EM code isn't working
 
-There are many great [books](https://www.cs.ubc.ca/~murphyk/MLbook/), [lectures](https://www.youtube.com/watch?v=AnbiNaVp3eQ) and [tutorials](https://s3-us-west-2.amazonaws.com/www.abehandler.com/static/em-mixtures.pdf) on the EM algorithm. These materials often derive an E step and an M step for some mixture model (e.g. mixture of Gaussians), before offering a theoretical view of the procedure using Jensen’s inequality and KL divergence. These tutorials are great. But in order to *really* understand EM, you'll have to code an implementation yourself. This step is non-trivial: if you are still learning the math, it can be hard to spot bugs when your implementation doesn’t work. 
+There are many great [books](https://www.cs.ubc.ca/~murphyk/MLbook/), [lectures](https://www.youtube.com/watch?v=AnbiNaVp3eQ) and [tutorials](https://s3-us-west-2.amazonaws.com/www.abehandler.com/static/em-mixtures.pdf) on the EM algorithm. These materials often derive an E step and an M step for some mixture model (e.g. mixture of Gaussians), before offering a theoretical view of the procedure using Jensen's inequality and KL divergence. These tutorials are great. But in order to *really* understand EM, you'll have to code an implementation yourself. This step is non-trivial: if you are still learning the math, it can be hard to spot bugs when your implementation doesn’t work. 
 
 This tutorial focuses on EM in code, instead of in latex. I will list some debugging strategies to verify and troubleshoot your implementation of EM. 
 
@@ -16,7 +16,7 @@ One good way to implement ML algorithms (including EM) is to:
 This tutorial goes into the details of how to do step one for the EM algorithm. Step two is just a matter of adding asserts.
 
 #### Are your expected complete log likelihood and observed data log likelihood functions correct?
-When implementing EM, I think it's helpful to code the expected complete data log likelihood and observed data log likelihood functions at the very start of the process. Murphy Chapter 11 describes what these are. I’d recommend implementing these two functions for your model before doing *anything* else. (The exact mathematical form will vary, depending on your model).
+When implementing EM, I think it's helpful to code the expected complete data log likelihood and observed data log likelihood functions at the very start of the process. Murphy Chapter 11 describes what these are. I'd recommend implementing these two functions for your model before doing *anything* else. (The exact mathematical form will vary, depending on your model).
 
 Implementing these functions might *seem* like a straightforward task of translating latex into matrix operations using some linear algebra package, such as numpy. But this step is surprisingly easy to bungle. I screwed it up recently and it added days of debugging work. Make sure these functions are perfectly correct or your implementation will fail.
 
