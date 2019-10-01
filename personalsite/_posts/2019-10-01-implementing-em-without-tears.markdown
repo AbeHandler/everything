@@ -38,7 +38,7 @@ One good way to verify your EM implementation (for a generative model) is to set
 
 Remember that when you generate data from the true parameters you'll get a noisy sample from the true distribution. For instance, if you are drawing from a 1-D Gaussian, the mean of your sample might be 1.1 and the true mean might be 1. Your model might learn the right parameters for your sample (e.g. estimate a mean of 1.1) and thus deviate from the true parameters. 
 
-To get around this issue, my friend Javier suggested fitting a model multiple times, using multiple draws from the true parameters. In general, as you make more draws and keep fitting the model, the KL divergence between the true parameters and the average learned parameters (across runs of the model) should decrease. If you see this, it is evidence that your implementation works.  
+To get around this issue, my friend [Javier](https://twitter.com/JavierBurroni) suggested fitting a model multiple times, using multiple draws from the true parameters. In general, as you make more draws and keep fitting the model, the KL divergence between the true parameters and the average learned parameters (across runs of the model) should decrease. If you see this, it is evidence that your implementation works.  
 
 #### Is your expected complete log likelihood always less than your observed data log likelihood?
 EM guarantees that the expected complete log likelihood is less than or equal to the observed data log likelihood. This material is explained using Jensen’s inequality in most tutorials that provide a theoretical view of EM. When you implement, verify that the expected complete log likelihood is less or equal to than the observed data log likelihood. If not, you have a bug. 
