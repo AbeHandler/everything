@@ -14,7 +14,7 @@ This tutorial focuses on EM in code, instead of in latex. I will list some debug
 
 #### Assert is your friend
 
-In general, implementing ML algorithms can be tricky. Unlike some other programming contexts (e.g. updating a database), the inputs, initialization and steps of an ML algorithm usually aren’t deterministic. This can make it hard to spot and fix bugs.
+In general, implementing ML algorithms can be tricky. Unlike some other programming contexts (e.g. updating a database), the inputs, initialization and steps of an ML algorithm usually aren't deterministic. This can make it hard to spot and fix bugs.
 
 One good way to implement ML algorithms (including EM) is to:
 1. identify the theoretical guarantees underlying the method (understand what each step does)
