@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Implementing EM without tears"
+date:   2019-10-01 13:40:53 -0400
+categories: EM 
+---
+
 ## Implementing EM without tears
 ### What to do when your EM code isn't working
 
