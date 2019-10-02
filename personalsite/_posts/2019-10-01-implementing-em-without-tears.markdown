@@ -21,7 +21,7 @@ One good way to implement ML algorithms (including EM) is to:
 1. identify the theoretical guarantees underlying the method (understand what each step does)
 2. use assert statements to make sure that your implementation matches the guarantees
  
-This tutorial goes into the details of how to do step one for the EM algorithm. Step two is just a matter of adding asserts.
+This tutorial goes into the details of how to do step one for the EM algorithm. Step two is just a matter of adding asserts. (If you like unit tests with preconditions and post conditions, that works too. I find assert to be a bit more lightweight).
 
 #### Are your expected complete log likelihood and observed data log likelihood functions correct?
 When implementing EM, I think it's helpful to code the expected complete data log likelihood and observed data log likelihood functions at the very start of the process. Murphy Chapter 11 describes what these are. I'd recommend implementing these two functions for your model before doing *anything* else. (The exact mathematical form will vary, depending on your model).  

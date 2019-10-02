@@ -50,7 +50,7 @@ navigation_weight: 1
 
 
 <div class="row mt-4">
-  Query-focused sentence compression in linear time (forthcoming)
+  <a href="https://arxiv.org/pdf/1904.09051.pdf"> Query-focused sentence compression in linear time </a> 
 </div>
 
 <div class="row">
