@@ -32,7 +32,7 @@ Implementing these functions might *seem* like a straightforward task of transla
 EM guarantees that your observed data LL will increase after each E step and M step. Chapter 11 of Kevin Murphy's Machine Learning textbook includes a proof. If your observed data LL is not increasing monotonically (i.e. sometimes takes a step away from zero), you have a bug. Use assert to verify this!
 
 #### Does your M step actually optimize your expected data log likelihood? 
-The M step of EM resets the parameters \theta so that they maximize the expected data log likelihood (according to the expectation at a given timestep). If $\theta^t$ are the parameters at the start of the M step and  $\theta^{t + 1}$ are the parameters at the end of the M step, make sure $Q(\theta^{t + 1}) >= Q(\theta^{t})$. The M step should optimize the lower bound $Q$ w.r.t $\theta$. Again, assert if your friend.
+The M step of EM resets the parameters $$\theta$$ so that they maximize the expected data log likelihood (according to the expectation at a given timestep). If $$\theta^t$ are the parameters at the start of the M step and  $$\theta^{t + 1}$$ are the parameters at the end of the M step, make sure $$Q(\theta^{t + 1}) >= Q(\theta^{t})$$. The M step should optimize the lower bound $$Q$$ w.r.t $$\theta$$. Again, assert if your friend.
 
 #### Can you recover true parameters averaging over multiple runs with simulated data?
 One good way to verify your EM implementation (for a generative model) is to set some true parameters (e.g. known mixture proportions and distributions for a mixture of multinomials), generate data based on those parameters and then see how well your estimated parameters recover the true parameters.    
