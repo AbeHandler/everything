@@ -60,7 +60,7 @@ navigation_weight: 1
 </div>
 
 <div class="row mt-4">
-   Investigating Sports Commentator Bias within a Large Corpus of American Football Broadcasts (forthcoming)
+   <a href="https://arxiv.org/abs/1909.03343"> Investigating Sports Commentator Bias within a Large Corpus of American Football Broadcasts</a>
 </div>
 
 
