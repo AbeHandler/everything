@@ -11,7 +11,7 @@ categories: EM
 There are many great [books](https://www.cs.ubc.ca/~murphyk/MLbook/), [lectures](https://www.youtube.com/watch?v=AnbiNaVp3eQ) and [tutorials](https://s3-us-west-2.amazonaws.com/www.abehandler.com/static/em-mixtures.pdf) on the EM algorithm. These materials often derive an E step and an M step for some mixture model (e.g. mixture of Gaussians), before offering a theoretical view of the procedure using Jensen's inequality and KL divergence. These tutorials are great. But in order to *really* understand EM, you'll have to code an implementation yourself. This step is non-trivial: if you are still learning the math, it can be hard to spot bugs when your implementation doesn't work.
 
 
-**This tutorial focuses on EM in code, instead of in latex.** I will list some debugging strategies to verify and troubleshoot your implementation of EM. 
+*This tutorial focuses on EM in code, instead of in latex.* I will list some debugging strategies to verify and troubleshoot your implementation of EM. 
 
 #### Assert is your friend
 
