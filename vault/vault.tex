@@ -41,11 +41,13 @@ Mnemonic: ``push in T, swap A and B.''
 
 Resources: mathmonk videos and murphy.
 
-$T$ is a transition matrix or stochastic matrix where rows sum to 1.
-
 Many distributions have the form $\pi(x) = \frac{\widetilde{\pi}(x)}{Z}$ where $Z$ is expensive and $\widetilde{\pi}(x)$ is cheap.
 
 Gibbs is a special case of MCMC where you always accept the proposal and where the proposal is the probability of some held out variable conditioned on the others.
+
+$T$ is a transition matrix or stochastic matrix where rows sum to 1.
+
+In Metropolis algorithm you have symmetric proposal distribution. In Metropolis-Hastings you have a Hastings correction, when the proposal is not symmetric. 
 
 \subsection{Detailed balance}
 
@@ -62,7 +64,7 @@ If there is some probability mass in state $a$ at time $i$ and some probability 
 Intuition: there is some mass at $a$ given by $\pi_a$. There is some mass at $b$ given by $\pi_b$. Some fraction of the mass from $a$ transitions to $b$ via $T_{a,b}$ and vice versa. 
 
 \subsection{Metropolis algo}
-Not actually derived by Metropolis. Goal is to sample from some distro $\pi$ that is complex or get the expected value of the distribution. Basically you make a MC that approximates $\pi$. Sometimes you have a Hastings correction, when the proposal is not symmetric. 
+Not actually derived by Metropolis. Goal is to sample from some distro $\pi$ that is complex or get the expected value of the distribution. Basically you make a MC that approximates $\pi$. 
 
 Let $Q$ be a symmetric proposal distribution. Let $u \sim U(0,1)$ be a sample from the uniform distribution between 0, 1.
 
