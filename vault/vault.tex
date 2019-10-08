@@ -1,12 +1,15 @@
 
 \documentclass[12pt]{amsart}
 \usepackage{amsmath}%
+\usepackage{xcolor}
 \usepackage{amssymb}
 \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
 \geometry{a4paper} % or letter or a5paper or ... etc
 % \geometry{landscape} % rotated page geometry
 
 % See the ``Article customise'' template for come common customisations
+
+\newcommand{\ahcomment}[1]{\textcolor{blue}{[#1 -AH]}}
 
 \title{}
 \author{}
@@ -34,6 +37,39 @@ Pf. Let $A_i$ be the $i$th row of $A$ and $B_j$ be the $j$th column of $B$.  By 
 
 Mnemonic: ``push in T, swap A and B.'' 
 
+\section{MCMC}
 
+Resources: mathmonk videos and murphy.
+
+$T$ is a transition matrix or stochastic matrix where rows sum to 1.
+
+Many distributions have the form $\pi(x) = \frac{\widetilde{\pi}(x)}{Z}$ where $Z$ is expensive and $\widetilde{\pi}(x)$ is cheap.
+
+Gibbs is a special case of MCMC where you always accept the proposal and where the proposal is the probability of some held out variable conditioned on the others.
+
+\subsection{Detailed balance}
+
+Detailed balance intuition: $\pi_a T_{a,b} = \pi_b T_{b,a}$ $\forall a,b$
+
+Reversibility:  Let $T$ be a transition matrix and $\pi$ be a distribution over states defining a Markov Chain (MC). Then if $(X_0, X_1 ... X_n) \sim MC(\pi, T)$ = $(X_n, X_{n -1} ... X_1) \sim MC(\pi, T)$ we say ? 
+
+We say that a MC is reversible if there is a stationary distribution for its transition matrix. We say that a pmf satisfies DB. 
+
+\ahcomment{reversibility = exchangeability?}
+
+If there is some probability mass in state $a$ at time $i$ and some probability mass in state $b$ at time $i$, then $\pi_a T_{a,b} = \pi_b T_{b,a}$ for all pairs $b,a$.
+
+Intuition: there is some mass at $a$ given by $\pi_a$. There is some mass at $b$ given by $\pi_b$. Some fraction of the mass from $a$ transitions to $b$ via $T_{a,b}$ and vice versa. 
+
+\subsection{Metropolis algo}
+Not actually derived by Metropolis. Goal is to sample from some distro $\pi$ that is complex or get the expected value of the distribution. Basically you make a MC that approximates $\pi$. Sometimes you have a Hastings correction, when the proposal is not symmetric. 
+
+Let $Q$ be a symmetric proposal distribution. Let $u \sim U(0,1)$ be a sample from the uniform distribution between 0, 1.
+
+Proposal samples $x \sim Q(x_i, x)$, i.e. $p(x | x_i) \sim Q(x_i, x)$. 
+
+If $u < \frac{\widetilde{\pi}(x)}{\widetilde{\pi}(x')}$ then $x_{i+1} = x$ else $x_{i+ 1} = x_i$.
+
+You can show that this satisfies detailed balance. MM and Murphy have proofs. Need to return to them.
 
 \end{document}
