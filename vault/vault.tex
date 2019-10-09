@@ -77,4 +77,7 @@ You can show that this satisfies detailed balance. MM and Murphy have proofs. Ne
 \subsection{Choosing proposals for MH}
 In MH you can have any proposal you want. According to Murphy any proposal distribution is valid if it explores the whole space. More formally, the proposal must assign a non-zero probability to all places in the target distribution. I think the correction here does all of the hard work.
 
+\subsection{Flavors of MCMC}
+Independent MC is when the proposal does not depend on the state $x$: e.g. proposal is always a unit Gaussian. This shows up in IR paper from Brendan and in Dredze Eisner paper on name phylogenies. 
+
 \end{document}
