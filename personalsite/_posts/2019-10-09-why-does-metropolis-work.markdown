@@ -52,35 +52,31 @@ With that said, let’s define a Markov chain *slightly* more formally as a tupl
 
 #### Seeking a Markov chain, finding Metropolis
 
-Let's say we had a Markov chain $$(\pi, T)$$ with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. This would be helpful because, by sampling from the chain, we would sample $$p^*$$. 
-
-How can we create this Markov chain? Well, we need some $$MC(\pi=p^*, T)$$. By definition, that means that we need some $$T$$ such that 
+Let's say we had a Markov chain $$(\pi, T)$$ with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. If we had a chain like this, then by sampling from the chain, we would sample $$p^*$$.  Using our notation, we would write this as $$MC(\pi=p^*, T)$$, where we'd need some $$T$$ such that 
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
 
 for all $$a$$ and $$b$$.
 
-Note that $$p^*(a)$$ and $$p^*(a)$$ are fixed. These are just ordinary probabilities. Even if it takes a really long time, $$p^*(a)$$ and $$p^*(b)$$ we could still compute them with enough time. To make this fact more clear, let's write $$p^*(a)$$ as an extremely boring scalar $$c_a$$ and $$ p^*(b)$$ as an extremely boring scalar $$p_b$$. Our task is to find a $$T$$ such that 
+Note that $$p^*(a)$$ and $$p^*(a)$$ are just ordinary probabilities fixed by our target distribution $$p^*$$. Even if it takes a really long time to find $$p^*(a)$$ and $$p^*(b)$$ we could still compute each quantity. To make this fact more clear, let's write $$p^*(a)$$ as an ordinary scalar $$c_a$$ and $$ p^*(b)$$ as an ordinary scalar $$p_b$$. Our task is to find a $$T$$ such that 
 
 $$c_a T(b \vert a) = c_b T(a \vert b)$$
 
 for all $$a$$ and $$b$$.
 
-On the other hand, $$T(a \vert b)$$ and $$T(b \vert a)$$ are free variables. Because there are two unknowns, we can’t just “solve” for both T terms. (There are many possible solutions.) However, we are free to pick any $$T$$ we want — so long as $$c_a T(b \vert a) = c_b T(a \vert b)$$ and so long as any given transition $$T(\cdot \vert \cdot)$$ is a valid probability. One easy choice is to set $$T(b \vert a)=1$$ and solve for $$T(a \vert b)$$, or vice versa. [2]
+Because there are two unknowns in this equation (per pair of states), we can’t just “solve” for both T terms. There are many possible solutions. However, we are free to pick any $$T$$ we want — so long as $$c_a T(b \vert a) = c_b T(a \vert b)$$ and so long as any given transition $$T(\cdot \vert \cdot)$$ is a valid probability. 
 
-Which one should we pick to set to 1? Because any given $$T( \cdot \vert  \cdot)$$ has to be a valid probability, we don’t really have a choice. Let’s look at the two possible cases (ignoring ties)  
+One easy choice is to set $$T(b \vert a)=1$$ and solve for $$T(a \vert b)$$, or vice versa. [2]
 
-- If p(b) > p(a)
+Because any given $$T( \cdot \vert  \cdot)$$ has to be a valid probability, this actually limits which transition we can set to one. Let’s look at the two possible cases (ignoring ties):
 
-    - In this case, we must set $$T(b \vert a)$$=1. This is because, setting $$T(b \vert a)$$ =1 means that $$T(a \vert b)$$ = c_a / c_b
+- If $$p^*(b) > p^*(a)$$
 
-    - $$T(b \vert a)$$ = 1 => $$c_a \cdot 1$$ = $$c_b T(a \vert b)$$ => $$T(a \vert b)$$ = $$c_a / c_b$$
-
-    - If $$c_a / c_b$$ is greater than 1 then $$T(a \vert b)$$ would not be a valid probability. 
+    - In this case, we must set $$T(b \vert a)$$=1. This is because, if $$T(b \vert a)$$ = 1 then $$c_a \cdot 1$$ = $$c_b T(a \vert b)$$ $$\Rightarrow T(a \vert b)$$ = $$c_a / c_b$$ = $$p^*(a) / p^*(b)$$. If $$p^*(a) / p^*(b)$$ is greater than 1 (because  $$p^*(a) > p^*(b)$$) then $$T(a \vert b)$$ would not be a valid probability. 
 
 - If p(a) > p(b) 
 
-By the exact same reasoning, in this case, we must set $$T(a \vert b)$$=1. This is bec_ause, setting $$T(a \vert b)$$ =1 means that $$T(a \vert b) = c_b / c_a $$
+    - By the exact same reasoning, in this case, we must set $$T(a \vert b)$$=1.
 
 We can express $$T$$ concisely as: 
 
