@@ -26,11 +26,11 @@ You're allowed to pick any proposal distribution $$Q$$, so long as $$Q(x’\vert
 #### Sample from a Markov chain to learn its distribution over states
 
 
-Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and remains in $$b$$ with probability .5. I am going to use the notation $$T$$ to denote the probability of transition from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5 and $$T(b \vert a) = 1$$. I am going to use the notation $$\pi$$ to denote the probability of being in some state in the chain, e.g. $$\pi(a)$$ is the probability of being in state $$a$$.  
+Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and remains in $$b$$ with probability .5. Let $$T$$ denote the probability of transition from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5 and $$T(b \vert a) = 1$$. Let $$\pi$$ denote the probability of being in some state in the chain, e.g. $$\pi(a)$$ is the probability of being in state $$a$$.  
 
-One way to learn $$\pi$$ (i.e. how long some chain spends in each state) is just to "run" the Markov chain for a number of steps (i.e. step through the chain, by sampling the next state) and observe often it spends in each state in order to get an estimated distribution over states $$\hat{\pi}$$. This simple idea underlies the Metropolis algorithm.
+One way to estimate $$\pi$$ is just to "run" the Markov chain for a number of steps (i.e. step through the chain, by sampling the next state) and observe often it spends in each state. This simple idea underlies the Metropolis algorithm.
 
-Here's that same idea in Python. If we run the code, we see that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$.
+Here's that same idea in Python. If we run the code, we see that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$, where $$\hat{\pi}$$ represents our estimate of $$\pi$$.
 
 <script src="https://gist.github.com/AbeHandler/c55f9ebc5b3f681d1d35edfcfa1af9d8.js"></script>
 
