@@ -1,6 +1,7 @@
 
 \documentclass[12pt]{amsart}
 \usepackage{amsmath}%
+\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{amssymb}
 \usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
@@ -29,6 +30,17 @@ $$
 
 Score $\triangleq$ gradient of $\ell$ w.r.t  $\theta$.
 
+\subsection{Markov inequality}
+
+$$p(X\geq a) = E[X] a$$
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{markov.jpg}
+\end{figure}
+
+Mnemonic: no more than $$\frac{1}{a}$$ of population can have more than $a$ times the average.\footnote{https://www.quora.com/What-is-an-intuitive-explanation-of-Markovs-inequality} See also stackexchange for original photo\footnote{https://math.stackexchange.com/questions/518873/visualizing-markov-and-chebyshev-inequalities}.
+
 \section{Linear Algebra}
 
 Let $A$ and $B$ be matrixes. Then $(AB)^T$ = $(B^T A^T)$. 
@@ -36,6 +48,8 @@ Let $A$ and $B$ be matrixes. Then $(AB)^T$ = $(B^T A^T)$.
 Pf. Let $A_i$ be the $i$th row of $A$ and $B_j$ be the $j$th column of $B$.  By definition $B_j$ is also the $j$th row of $B^T$ and $A_i$ is the $i$th column of $A^T$. Also by definition component $AB_{i,j}$ = $A_i \cdot B_j$. The definition of transpose $(AB)^T_{j,i} = AB_{i,j} = B^T_{j}A^T_i$.
 
 Mnemonic: ``push in T, swap A and B.'' 
+
+
 
 \section{MCMC}
 
