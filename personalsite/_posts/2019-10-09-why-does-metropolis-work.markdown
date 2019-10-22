@@ -7,7 +7,7 @@ categories: mcmc
 
 ### Why MCMC works
 
-<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to use them years without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include far more techincal detail. I'm going to focus on why MCMC even works.</p>
+<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to use them years without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include more techincal detail if you get hooked.</p>
 
 <p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script> via a sampling procedure. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
 
@@ -16,33 +16,35 @@ defined by this seemingly odd rule:<br />
 <br /></p>
 <div class="text-center">
 $$
-r = min(1, \frac{p^*(x’)}{p(x)})
+r = min(1, \frac{p^*(x’)}{p^*(x)})
 $$  
 </div>
 
 <p><br /></p>
 
-<p>If you run this procedure long enough, you will begin to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about this I found it quite weird. Doesn't it matter what proposal distribution you pick? Why does this even work?</p>
+<p>If you run this procedure long enough, you will begin to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about this I found it quite surprising, especially since you can pick (basically) any proposal you want.</p>
+
+<p>Why does this work?</p>
 
 
 #### Sampling from a Markov chain
 
 
-Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and $$b$$ remains in $$b$$ with probability .5. I'll use $$T$$ to denote the probability of transitioning from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5 and $$T(b \vert a) = 1$$.
+Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and $$b$$ remains in $$b$$ with probability .5. I'll use $$T$$ to denote the probability of transitioning from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5, $$ T(b \vert b) $$ = .5 and $$T(b \vert a) = 1$$.
 
-We can imagine that that if we "run" this Markov chain for a number of steps (i.e. keep sampling the next state), across many iterations, it will eventualy reach a stationary equillibrium, where it spends some of its time in state $$a$$ and some of its time in state $$b$$. We will use $$\pi$$ to denote the probability of being in some state, e.g. $$\pi(a)$$ is the probability of being in state $$a$$. If we run <a href="https://gist.github.com/AbeHandler/c55f9ebc5b3f681d1d35edfcfa1af9d8">this Python code</a> to sample based on $$T$$, we will find that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$, where $$\hat{\pi}$$ represents our estimate of $$\pi$$.
+We can imagine that that if we "run" this Markov chain for many steps (i.e. keep sampling the next state), it will eventualy reach a <a href="https://www.youtube.com/watch?v=tByUQbJdt14&list=PLD0F06AA0D2E8FFBA&index=143">stationary</a> equillibrium, where on average it spends some of its time in state $$a$$ and some of its time in state $$b$$. 
 
-One way to estimate $$\pi$$ is just to "run" the Markov chain for a number of steps (i.e. step through the chain, by sampling the next state) and observe often it spends in each state. This simple idea underlies _Markov Chain_ Monte Carlo methods, including the Metropolis algorithm. In MCMC, you define a Markov chain with a distribution over states equal to $$p^*$$. Then you just draw samples from the chain to estimate $$p^*$$.
+I will use $$\pi$$ to denote the probability of being in some state in the stationary distribution, e.g. $$\pi(a)$$ is the probability of being in state $$a$$. One way to estimate $$\pi$$ is just to "run" the Markov chain for a number of steps (i.e. step through the chain, by sampling the next state) and observe often it spends in each state. For example, if we run <a href="https://gist.github.com/AbeHandler/c55f9ebc5b3f681d1d35edfcfa1af9d8">this Python code</a> to sample based on $$T$$, we will find that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$, where $$\hat{\pi}$$ represents our estimate of $$\pi$$.
+
+This simple idea underlies _Markov Chain_ Monte Carlo methods, including the Metropolis algorithm. In MCMC, you define a Markov chain with a distribution over states $$\pi$$ that is equal to $$p^*$$. Then you just draw samples from the chain to estimate $$p^*$$.
 
 #### How do we find the right $$T$$?
 
-The previous section explained how we can sample from some transitions $$T$$, in order to estimate some $$\pi$$. Metropolis works by providing a $$T$$ such that if we sample from $$T$$, $$\pi$$ will be equal to $$p^*$$, our target distribution. Therefore, if we sample from $$T$$ and estimate $$\pi$$, we will also sample from $$p^*$$. 
-
-Expressed more precisely, we need a $$T$$ such that 
+The previous section explained how we can sample from some transition $$T$$, in order to estimate some $$\pi$$. This only works if we can find a $$T$$ such that its stationary distribution $$\pi$$ will be equal to $$p^*$$, our target distribution. Expressed more mathematically, we need a $$T$$ such that 
 
 $$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)$$
 
-which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the expected time in state $$y$$ is the same as the probability of being in state $$y$$ of $$p^*$$, which is also the same as the probability of transitioning into state $$y$$ under the target distribution. 
+which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
 
 <!--
 #### If you have detailed balance, the distribution is stationary
@@ -64,50 +66,72 @@ With that said, let’s say we have Markov chain with a transition $$T$$ and a d
 Let's say we had a Markov chain with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. If we had a chain like this, then by sampling from the chain, we would sample $$p^*$$.  
 -->
 
-One way to find such a chain is to identify a $$T$$ such that 
+One sufficient way to do so is to identify a $$T$$ where
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
 
-for all $$a$$ and $$b$$.
+for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very inuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change.
 
-Note that $$p^*(a)$$ and $$p^*(a)$$ are just ordinary probabilities fixed by our target distribution $$p^*$$. (They are fixed because we want to sample from, not modify, the target distribution). To make this fact more clear, let's write $$p^*(a)$$ as an ordinary scalar $$c_a$$ and $$ p^*(b)$$ as an ordinary scalar $$p_b$$. Our task is to find a $$T$$ such that 
 
-$$c_a T(b \vert a) = c_b T(a \vert b)$$
+#### Back to Metropolis
 
-for all $$a$$ and $$b$$.
+Recall the somewhat mysterious Metropolis update rule, in which you move from state $$x$$ to state $$x'$$ with probability
 
-Because there are two unknowns in this single equation (the transitions between each pair of states), there are many possible solutions. However, we are free to pick any $$T$$ we want — so long as $$c_a T(b \vert a) = c_b T(a \vert b)$$ and so long as any given transition $$T(\cdot \vert \cdot)$$ is a valid probability. 
+$$
+r = min(1, \frac{p^*(x’)}{p^*(x)})
+$$  
 
-One easy way to get a valid $$T$$ is to set $$T(b \vert a)=1$$ and solve for $$T(a \vert b)$$, or to set $$T(a \vert b)=1$$ and solve for $$T(a \vert b)$$. However, because any given $$T( \cdot \vert  \cdot)$$ has to be a valid probability, this actually limits which transition we can set to one. Let's look at each case:
-<br>
-- If $$p^*(b) > p^*(a)$$:
+which produces a sample from $$p^*$$.
 
-    - In this case, we must set $$T(b \vert a)$$=1. 
-    - This is because, if $$T(b \vert a)$$ = 1 then $$c_a \cdot 1$$ = $$c_b T(a \vert b)$$ $$\Rightarrow T(a \vert b)$$ = $$c_a / c_b$$ = $$p^*(a) / p^*(b)$$.
-    - If $$p^*(a) / p^*(b)$$ is greater than 1 because  $$p^*(a) > p^*(b)$$, then $$T(a \vert b)$$ would not be a valid probability.   
-<br>
-- If $$p^*(a) > p^*(b)$$: 
+This equation makes a lot more sense if you recall that we are searching for a $$T$$ such that 
 
-    - By the exact same reasoning, in this case, we must set $$T(a \vert b)$$=1.
+$$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$
 
-We can express $$T$$ concisely as: 
+for all states $$a$$ and $$b$$. Because $$p^*$$ is what we are trying to sample from (and thus can't change), we need to define some $$T(b \vert a)$$ and $$T(a \vert b)$$ so that the equation is true for all $$a$$ and $$b$$. 
 
-- $$T(b \vert a)$$ = 1 if $$p^*(b) > p^*(a)$$ else $$c_b/c_a$$
 
-- $$T(a \vert b)$$ = 1 if $$p^*(a) > p^*(b)$$ else $$c_a/c_b$$
+Let's rewrite the previous equation using the names $$x$$ and $$x'$$
 
-If instead of a and b we can use names $$x$$ and $$x’$$, and we can replace the following 2 lines with a 1-liner
 
-- $$T (x  \vert  x') = 1$$ if  $$p(x') > p(x)$$ else $$p^*(x')/p^*(x)$$
+$$p^*(x')T(x \vert x') = p^*(x)T(x' \vert x)$$
 
-In other words, if $$x'$$ is bigger we transition with probability 1. Otherwise we transition with probability $$p^*(x')/p^*(x)$$, which we know is a number less than 1 (because $$p(x) > p(x’)$$), and also greater than 0 because both numbers are positive.
 
-Another way to express this this same fact, we should transition from $$x$$ to $$x'$$ with probability 
+and rearrange to get 
 
-<div class="text-center">
- $$min(1, *(x’)/p^*(x))$$
+
+$$\frac{p^*(x')}{p^*(x)} = \frac{T(x' \vert x)}{T(x \vert x')}$$
+
+
+This is a single equation with two unknowns, so there is no single solution. However, we are free to pick any $$T$$ we want — so long as the equation holds and given transition $$T(\cdot \vert \cdot)$$ is a valid probability, between 0 and 1. 
+
+
+Let's assume for now that $$p^*(x) > p^*(x')$$ and therefore $$\frac{p^*(x')}{p^*(x)}$$ is a valid probability. If we set $$T(x \vert x') = 1$$ we get $$\frac{T(x' \vert x)}{1} =  T(x' \vert x) = \frac{p^*(x')}{p^*(x)}$$, which will be a number between 0 and 1.
+
+
+Now let's assume that $$p^*(x) < p^*(x')$$. If so $$\frac{p^*(x')}{p^*(x)}$$ will not be a valid probability, and so if we set $$T(x' \vert x) = 1$$ we will have 
+
+$$\frac{p^*(x')}{p^*(x)} = \frac{1}{T(x \vert x')}$$
+
+$$T(x \vert x') = \frac{p^*(x)}{p^*(x')}$$
+
+In either case, we have $$T(a \vert b) = \frac{p^*(b)}{p^*(a)}$$ where $$p^*(a) > p^*(b)$$ and $$T(a \vert b)=1$$. 
+
+
+<div class="col-xs-1" align="center">
+<img src="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg">
 </div>
 
-This is the mysterious $$r$$ from the Metropolis update algorithm. 
+I find it helpful to imagine this as a threshold function, like the one above. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one.
 
-[2] I wonder if this is how MCMC was originally derived by the Metropolis authors, btw named Metropolis, Rosenbluth, Rosenbluth, Teller and Teller.
+Another way to express all this, is that if we transition from $$x$$ to $$x'$$ with probability 
+
+<div class="text-center">
+ $$min(1, \frac{p^*(x’)}{p^*(x)})$$
+</div>
+
+we will eventually reach a stationary distribution with $$\pi=p^*$$.
+
+
+#### Thanks
+
+Thanks for <a href="https://twitter.com/JavierBurroni">Javier Burroni</a> for helping me better understand some of the mathematical details behind MCMC and to <a href="http://www.nickeubank.com/">Nick Eubank</a> for his help presenting the material in this post.
