@@ -50,7 +50,7 @@ One way that suffices is to identify a $$T$$ such that
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
 
-for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very intuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. Moreover the stationary distribition $$\pi$$ is equal to $$p^*$$.
+for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very intuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. Because distribition is stationary and $$\pi$$ is equal to $$p^*$$, we can sample from $$T$$ to sample from $$p*$$.
 
 
 #### Back to Metropolis
