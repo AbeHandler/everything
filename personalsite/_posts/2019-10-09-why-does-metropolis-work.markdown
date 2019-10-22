@@ -7,46 +7,44 @@ categories: mcmc
 
 ### Why MCMC works
 
-Markov Chain Monte Carlo ([MCMC](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo)) methods can be easy to implement. If you've studied a  bit of machine learning, you might have coded a Gibbs sampler for a something like a mixture model or LDA. Because actual implementations can be fairly straightforward, it's possible to use MCMC for years before really understanding why it works. __This tutorial focuses on developing intuition for the basic idea underlying MCMC.__ [Other resources](https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf) include far more techincal detail. However, I think it helps to see bigger picture first. 
+<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to use them years without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include far more techincal detail. I'm going to focus on why MCMC even works.</p>
 
-Recall that MCMC allows you to learn properties of __any__ target posterior distribution, by drawing samples from the target $$p^*$$. I am going to focus on one particular MCMC method, the 
-Metropolis algorithm, because it is often covered first when introducing MCMC (e.g. in [Murphy](https://www.cs.ubc.ca/~murphyk/MLbook/) or [mathematicalmonk](https://www.youtube.com/watch?v=gxHe9wAWuGQ))
+<p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script> via a sampling procedure. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
 
-Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state $$x$$ to state $$x’$$. You're allowed to pick any proposal distribution $$Q$$ that you want, so long as $$Q(x’\vert  x) = Q(x  \vert  x')$$ and so long as you have some chance of moving to all non-zero regions of  $$p^*$$. In the second step, you accept the proposal with a probability 
-defined by this seemingly odd rule:  
-<br>
+<p>Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script> and so long as you have some chance of moving to all non-zero regions of  <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
+defined by this seemingly odd rule:<br />
+<br /></p>
 <div class="text-center">
 $$
 r = min(1, \frac{p^*(x’)}{p(x)})
 $$  
 </div>
 
+<p><br /></p>
 
-<br>
-
-This procedure allow you to sample from *any* $$p^*$$. Why is that the case?
-
+<p>If you run this procedure long enough, you will begin to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about this I found it quite weird. Doesn't it matter what proposal distribution you pick? Why does this even work?</p>
 
 
 #### Sampling from a Markov chain
 
 
-Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and remains in $$b$$ with probability .5. Let $$T$$ denote the probability of transition from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5 and $$T(b \vert a) = 1$$. Let $$\pi$$ denote the probability of being in some state in the chain, e.g. $$\pi(a)$$ is the probability of being in state $$a$$.  
+Let's ignore Metropolis for a minute and imagine that we have a <a href="https://www.youtube.com/watch?v=WUjt98HcHlk">Markov chain</a> with two states $$a$$ and $$b$$, where $$a$$ transitions to $$b$$ with probability 1 and $$b$$ transitions to $$a$$ with probability .5, and $$b$$ remains in $$b$$ with probability .5. I'll use $$T$$ to denote the probability of transitioning from one state to another. For instance, in this case $$ T(a \vert b) $$ = .5 and $$T(b \vert a) = 1$$.
+
+We can imagine that that if we "run" this Markov chain for a number of steps (i.e. keep sampling the next state), across many iterations, it will eventualy reach a stationary equillibrium, where it spends some of its time in state $$a$$ and some of its time in state $$b$$. We will use $$\pi$$ to denote the probability of being in some state, e.g. $$\pi(a)$$ is the probability of being in state $$a$$. If we run <a href="https://gist.github.com/AbeHandler/c55f9ebc5b3f681d1d35edfcfa1af9d8">this Python code</a> to sample based on $$T$$, we will find that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$, where $$\hat{\pi}$$ represents our estimate of $$\pi$$.
 
 One way to estimate $$\pi$$ is just to "run" the Markov chain for a number of steps (i.e. step through the chain, by sampling the next state) and observe often it spends in each state. This simple idea underlies _Markov Chain_ Monte Carlo methods, including the Metropolis algorithm. In MCMC, you define a Markov chain with a distribution over states equal to $$p^*$$. Then you just draw samples from the chain to estimate $$p^*$$.
 
-Let's look at our simple example in Python. If we sample based on $$T$$, we find that $$\hat{\pi}(a) = .33$$ and $$\hat{\pi}(b) = .66$$, where $$\hat{\pi}$$ represents our estimate of $$\pi$$.
+#### How do we find the right $$T$$?
 
-<script src="https://gist.github.com/AbeHandler/c55f9ebc5b3f681d1d35edfcfa1af9d8.js"></script>
+The previous section explained how we can sample from some transitions $$T$$, in order to estimate some $$\pi$$. Metropolis works by providing a $$T$$ such that if we sample from $$T$$, $$\pi$$ will be equal to $$p^*$$, our target distribution. Therefore, if we sample from $$T$$ and estimate $$\pi$$, we will also sample from $$p^*$$. 
 
-#### How do we find a Markov chain?
+Expressed more precisely, we need a $$T$$ such that 
 
-The previous section explained how if we knew a $$T$$ with a $$\pi$$=$$p^*$$ we could just sample from $$T$$ to learn $$p^*$$. How do we find $$T$$? 
+$$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)$$
 
-Informally, we need a $$T$$ such that if you kept drawing samples 
+which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the expected time in state $$y$$ is the same as the probability of being in state $$y$$ of $$p^*$$, which is also the same as the probability of transitioning into state $$y$$ under the target distribution. 
 
-$$E_{x}[T(y|x)]=p^*(y)$$
-
+<!--
 #### If you have detailed balance, the distribution is stationary
 
 In the previous example, $$T$$ was fixed and we “ran” the chain to estimate $$\pi$$, learning that $$\hat{\pi}(a) = 0.33$$ and $$\hat{\pi}(b) = 0.66$$.
@@ -63,7 +61,10 @@ With that said, let’s say we have Markov chain with a transition $$T$$ and a d
 
 #### Seeking a Markov chain
 
-Let's say we had a Markov chain with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. If we had a chain like this, then by sampling from the chain, we would sample $$p^*$$.  One way to find such a chain is to identify a $$T$$ such that 
+Let's say we had a Markov chain with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. If we had a chain like this, then by sampling from the chain, we would sample $$p^*$$.  
+-->
+
+One way to find such a chain is to identify a $$T$$ such that 
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
 
