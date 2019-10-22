@@ -16,13 +16,13 @@ defined by this seemingly odd rule:<br />
 <br /></p>
 <div class="text-center">
 $$
-r = min(1, \frac{p^*(x’)}{p^*(x)})
+A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})
 $$  
 </div>
 
-<p><br /></p>
+where I use $$A(x' \vert x)$$ to denote the probability of accepting the move from $$x$$ to $$x'$$.
 
-<p>If you run this procedure long enough, you will begin to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about this I found it quite surprising, especially since you can pick (basically) any proposal you want.</p>
+<p>This procedure allows you to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about it I found it quite surprising, especially since you can pick (basically) any proposal you want.</p>
 
 <p>Why does this work?</p>
 
@@ -46,91 +46,79 @@ $$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)$$
 
 which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
 
-<!--
-#### If you have detailed balance, the distribution is stationary
-
-In the previous example, $$T$$ was fixed and we “ran” the chain to estimate $$\pi$$, learning that $$\hat{\pi}(a) = 0.33$$ and $$\hat{\pi}(b) = 0.66$$.
-
-Notice that these probabilities have an interesting property. $$\hat{\pi}(a)T(b \vert a)$$ = $$\hat{\pi}(b)T(a \vert b)$$ = $$.33 \cdot 1=0.66 \cdot .5$$. In other words, at any given time, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. Using more formal terminology, because the probability mass flowing from each pair of states (in our example, there are only two) is equal, $$\hat{\pi}$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a> w.r.t $$T$$.
-
-To me, it seems very intuitive that if some distribution $$\pi$$ respects detailed balance with respect to some $$T$$ then $$\pi$$ is a <a href="https://www.youtube.com/watch?v=tByUQbJdt14&list=PLD0F06AA0D2E8FFBA&index=143">stationary distribution</a>. This is because if the flow in and out of each state is equal, then the distribution over states will not change with time. For a more formal proof, and some other details that I am skipping (e.g. not all chains have stationary distributions, some chains have stationary distributions $$\pi$$ that do not satisfy detailed balance w.r.t to their $$T$$) see <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Murphy chapter 17</a>. The upshot of all this is that if:
-
-$$\pi(a)T(b \vert a) = \pi(b)T(a \vert b)$$ 
-
-for all states $$a$$ and $$b$$ then this is sufficent to show that $$\pi$$ is a stationary distribution. 
-
-With that said, let’s say we have Markov chain with a transition $$T$$ and a distribution $$\pi$$, where $$\pi$$ satisfies detailed balance with respect to $$T$$. If we draw samples $$X_1, X_2 … X_n \sim T$$ by sampling transitions between states, we should expect that the observed distribution $$\hat{\pi} \approx \pi$$. 
-
-#### Seeking a Markov chain
-
-Let's say we had a Markov chain with a stationary distribution $$\pi$$ equal to $$p^*$$, the target distribution. If we had a chain like this, then by sampling from the chain, we would sample $$p^*$$.  
--->
-
-One sufficient way to do so is to identify a $$T$$ where
+One way that suffices is to identify a $$T$$ such that
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
 
-for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very inuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change.
+for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very intuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. Moreover the stationary distribition $$\pi$$ is equal to $$p^*$$.
 
 
 #### Back to Metropolis
 
-Recall the somewhat mysterious Metropolis update rule, in which you move from state $$x$$ to state $$x'$$ with probability
+Recall the somewhat mysterious Metropolis update rule, which proposes a change from $$x$$ to $$x'$$, denoted $$Q(x' \vert x)$$, and accepts the proposal with probability
 
 $$
 r = min(1, \frac{p^*(x’)}{p^*(x)})
 $$  
 
-which produces a sample from $$p^*$$.
+which we are told will produce a sample from $$p^*$$.
 
 This equation makes a lot more sense if you recall that we are searching for a $$T$$ such that 
 
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$
 
-for all states $$a$$ and $$b$$. Because $$p^*$$ is what we are trying to sample from (and thus can't change), we need to define some $$T(b \vert a)$$ and $$T(a \vert b)$$ so that the equation is true for all $$a$$ and $$b$$. 
-
-
-Let's rewrite the previous equation using the names $$x$$ and $$x'$$
+for all states $$a$$ and $$b$$. Because $$p^*$$ is what we are trying to sample from (and thus can't change), we need to define some $$T(b \vert a)$$ and $$T(a \vert b)$$ so that the equation is true for all $$a$$ and $$b$$. Let's rewrite the previous equation using the names $$x$$ and $$x'$$
 
 
 $$p^*(x')T(x \vert x') = p^*(x)T(x' \vert x)$$
 
 
-and rearrange to get 
+and denote each $$T$$ as the product of two probabilities
 
 
-$$\frac{p^*(x')}{p^*(x)} = \frac{T(x' \vert x)}{T(x \vert x')}$$
+$$p^*(x')A(x \vert x')Q(x \vert x') = p^*(x)A(x' \vert x)Q(x' \vert x)$$
 
 
-This is a single equation with two unknowns, so there is no single solution. However, we are free to pick any $$T$$ we want — so long as the equation holds and given transition $$T(\cdot \vert \cdot)$$ is a valid probability, between 0 and 1. 
+where we use $$Q(x \vert x')$$ to refer to the probability of a proposed distribution from $$x$$ to $$x'$$ and use $$A(x \vert x')$$ to refer to the probability of accepting the proposed move and where $$T(x \vert x')$$=$$Q(x \vert x')A(x \vert x')$$, meaning you transition based on the probability of proposing and accepting the move. If we rearrange a bit we have:
 
 
-Let's assume for now that $$p^*(x) > p^*(x')$$ and therefore $$\frac{p^*(x')}{p^*(x)}$$ is a valid probability. If we set $$T(x \vert x') = 1$$ we get $$\frac{T(x' \vert x)}{1} =  T(x' \vert x) = \frac{p^*(x')}{p^*(x)}$$, which will be a number between 0 and 1.
+$$\frac{p^*(x')Q(x \vert x')}{p^*(x)Q(x' \vert x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
 
 
-Now let's assume that $$p^*(x) < p^*(x')$$. If so $$\frac{p^*(x')}{p^*(x)}$$ will not be a valid probability, and so if we set $$T(x' \vert x) = 1$$ we will have 
+Because $$Q(x \vert x') = Q(x' \vert x)$$ because (remember, the proposal is symmetric) we can simplify to
 
-$$\frac{p^*(x')}{p^*(x)} = \frac{1}{T(x \vert x')}$$
 
-$$T(x \vert x') = \frac{p^*(x)}{p^*(x')}$$
+$$\frac{p^*(x')}{p^*(x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
 
-In either case, we have $$T(a \vert b) = \frac{p^*(b)}{p^*(a)}$$ where $$p^*(a) > p^*(b)$$ and $$T(a \vert b)=1$$. 
+This is an equation with two unknowns, so there is no single solution. However, we are free to pick any $$A$$ we want — so long as a given transition $$T(\cdot \vert \cdot)=Q(\cdot \vert \cdot)A(\cdot \vert \cdot)$$ remains a valid probability, between 0 and 1. 
+
+Let's consider two cases.
+
+First, assume that $$p^*(x) > p^*(x')$$ and therefore $$\frac{p^*(x')}{p^*(x)}$$ is a valid probability. If we set $$A(x \vert x') = 1$$ we get $$\frac{A(x' \vert x)}{1} =  A(x' \vert x) = \frac{p^*(x')}{p^*(x)}$$, which will be a number between 0 and 1. Thus $$T(\cdot \vert \cdot) = Q(\cdot \vert \cdot) A(\cdot \vert \cdot)$$ will be a valid probabilitiy for any pair, $$x$$ and $$x'$$.
+
+
+Now let's assume that $$p^*(x) < p^*(x')$$. If so $$\frac{p^*(x')}{p^*(x)}$$ will not be a valid probability, and if we set $$A(x' \vert x) = 1$$ we will have 
+
+$$\frac{p^*(x')}{p^*(x)} = \frac{1}{A(x \vert x')}$$
+
+$$A(x \vert x') = \frac{p^*(x)}{p^*(x')}$$
+
+In either case, we have $$A(b \vert a) = \frac{p^*(b)}{p^*(a)}$$ if $$p^*(a) > p^*(b)$$ and $$A(b \vert a)=1$$ if $$p^*(a) < p^*(b)$$. Metropolis always accepts moves into a more probable state, and sometimes accepts moves into a less probable state.
 
 
 <div class="col-xs-1" align="center">
-<img src="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg">
+<img style="border:none" src="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg">
 </div>
 
-I find it helpful to imagine this as a threshold function, like the one above. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one.
+I find it helpful to imagine $$A$$ as a threshold function, like the one above. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one, meaning we always transition into the more probable state.
 
-Another way to express all this, is that if we transition from $$x$$ to $$x'$$ with probability 
+Another way to express all this, is that if we use a symmetric proposal distribution and transition from $$x$$ to $$x'$$ with probability 
 
 <div class="text-center">
- $$min(1, \frac{p^*(x’)}{p^*(x)})$$
+ $$A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})$$
 </div>
 
 we will eventually reach a stationary distribution with $$\pi=p^*$$.
-
 
 #### Thanks
 
