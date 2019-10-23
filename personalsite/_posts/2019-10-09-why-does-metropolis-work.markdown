@@ -11,7 +11,7 @@ categories: mcmc
 
 <p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script> via a sampling procedure. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
 
-<p>Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script> and so long as you have some chance of moving to all non-zero regions of  <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
+<p>Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from $$x$$ to $$x'$$ is equal to the probabilty of moving from $$x'$$ to $$x$$, denoted <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as $$Q$$ has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
 defined by this seemingly odd rule:<br />
 <br /></p>
 <div class="text-center">
