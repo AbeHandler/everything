@@ -7,7 +7,7 @@ categories: mcmc
 
 ### Why MCMC works
 
-<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to use them years without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include more techincal detail if you get hooked.</p>
+<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to apply these methods without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include more techincal detail if you get hooked.</p>
 
 <p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script> via a sampling procedure. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
 
@@ -22,9 +22,7 @@ $$
 
 where I use $$A(x' \vert x)$$ to denote the probability of accepting the move from $$x$$ to $$x'$$.
 
-<p>This procedure allows you to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about it I found it quite surprising, especially since you can pick (basically) any proposal you want.</p>
-
-<p>Why does this work?</p>
+<p>This procedure allows you to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about Metropolis I found it quite surprising, especially since you can pick (basically) any proposal you want. Why does this work?</p>
 
 
 #### Sampling from a Markov chain
@@ -42,15 +40,20 @@ This simple idea underlies _Markov Chain_ Monte Carlo methods, including the Met
 
 The previous section explained how we can sample from some transition $$T$$, in order to estimate some $$\pi$$. This only works if we can find a $$T$$ such that its stationary distribution $$\pi$$ will be equal to $$p^*$$, our target distribution. Expressed more mathematically, we need a $$T$$ such that 
 
-$$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)$$
+<div>
+$$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)  &emsp;&emsp; (1)$$
+</div>
 
-which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
+which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ (i.e. $$\pi(y)$$) is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
 
-One way that suffices is to identify a $$T$$ such that
+It <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg"> can be shown</a> that if we have a $$T$$ such that
 
-$$p^*(a)T(b \vert a) = p^*(b)T(a \vert b)$$ 
+<div>
+$$p^*(a)T(b \vert a) = p^*(b)T(a \vert b) &emsp;&emsp; (2)$$ 
+</div>
+for all states $$a$$ and $$b$$ then $$T$$ fulfills the conditions in (1).  It's worth taking a second to build some intuitions for equation (2), which says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. 
 
-for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. It can be shown (and to me seems very intuitive) that some distribution satisfies detailed balance, it is stationary. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. Because distribition is stationary and $$\pi$$ is equal to $$p^*$$, we can sample from $$T$$ to sample from $$p*$$.
+You can prove that if some distribution satisfies detailed balance, it is stationary. To me this seems very intuitive. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
 
 
 #### Back to Metropolis
@@ -58,7 +61,7 @@ for all states $$a$$ and $$b$$. This equation says that, for all $$a$$ and $$b$$
 Recall the somewhat mysterious Metropolis update rule, which proposes a change from $$x$$ to $$x'$$, denoted $$Q(x' \vert x)$$, and accepts the proposal with probability
 
 $$
-r = min(1, \frac{p^*(x’)}{p^*(x)})
+A(x' \vert x) = min(1, \frac{p^*(x’)}{p^*(x)})
 $$  
 
 which we are told will produce a sample from $$p^*$$.
@@ -92,9 +95,9 @@ $$\frac{p^*(x')}{p^*(x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
 
 This is an equation with two unknowns, so there is no single solution. However, we are free to pick any $$A$$ we want — so long as a given transition $$T(\cdot \vert \cdot)=Q(\cdot \vert \cdot)A(\cdot \vert \cdot)$$ remains a valid probability, between 0 and 1. 
 
-Let's consider two cases.
+##### Let's consider two cases.
 
-First, assume that $$p^*(x) > p^*(x')$$ and therefore $$\frac{p^*(x')}{p^*(x)}$$ is a valid probability. If we set $$A(x \vert x') = 1$$ we get $$\frac{A(x' \vert x)}{1} =  A(x' \vert x) = \frac{p^*(x')}{p^*(x)}$$, which will be a number between 0 and 1. Thus $$T(\cdot \vert \cdot) = Q(\cdot \vert \cdot) A(\cdot \vert \cdot)$$ will be a valid probabilitiy for any pair, $$x$$ and $$x'$$.
+First, assume that $$p^*(x) > p^*(x')$$ and therefore $$\frac{p^*(x')}{p^*(x)}$$ is a valid probability. In this case, if we set $$A(x \vert x') = 1$$ we get $$\frac{A(x' \vert x)}{1} =  A(x' \vert x) = \frac{p^*(x')}{p^*(x)}$$, which will be a number between 0 and 1. Thus $$T(x' \vert x) = Q(x'\vert x) \frac{p^*(x')}{p^*(x)}$$ will be a valid probabilitiy for any pair, $$x$$ and $$x'$$.
 
 
 Now let's assume that $$p^*(x) < p^*(x')$$. If so $$\frac{p^*(x')}{p^*(x)}$$ will not be a valid probability, and if we set $$A(x' \vert x) = 1$$ we will have 
@@ -103,14 +106,7 @@ $$\frac{p^*(x')}{p^*(x)} = \frac{1}{A(x \vert x')}$$
 
 $$A(x \vert x') = \frac{p^*(x)}{p^*(x')}$$
 
-In either case, we have $$A(b \vert a) = \frac{p^*(b)}{p^*(a)}$$ if $$p^*(a) > p^*(b)$$ and $$A(b \vert a)=1$$ if $$p^*(a) < p^*(b)$$. Metropolis always accepts moves into a more probable state, and sometimes accepts moves into a less probable state.
-
-
-<div class="col-xs-1" align="center">
-<img style="border:none" src="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg">
-</div>
-
-I find it helpful to imagine $$A$$ as a threshold function, like the one above. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one, meaning we always transition into the more probable state.
+In either case, we have $$A(b \vert a) = \frac{p^*(b)}{p^*(a)}$$ if $$p^*(a) > p^*(b)$$ and $$A(b \vert a)=1$$ if $$p^*(a) < p^*(b)$$. 
 
 Another way to express all this, is that if we use a symmetric proposal distribution and transition from $$x$$ to $$x'$$ with probability 
 
@@ -118,7 +114,18 @@ Another way to express all this, is that if we use a symmetric proposal distribu
  $$A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})$$
 </div>
 
-we will eventually reach a stationary distribution with $$\pi=p^*$$.
+we will eventually reach a stationary distribution $$\pi=p^*$$.
+
+
+I find it helpful to imagine $$A$$ as a threshold function, like the one below. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one, meaning we always transition into the more probable state.
+
+<div class="col-xs-1" align="center">
+<img style="border:none" src="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg">
+</div>
+
+
+Another interpretation of $$A$$ is that Metropolis always accepts moves into a more probable state, and sometimes accepts moves into a less probable state. In any event, I hope Metropolis is a bit less mysterious now.
+
 
 #### Thanks
 
