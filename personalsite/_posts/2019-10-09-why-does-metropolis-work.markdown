@@ -7,22 +7,25 @@ categories: mcmc
 
 ### Why MCMC works
 
-<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. Because MCMC methods can be easy to implement, it’s possible to apply these methods without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other resources</a> include more techincal detail if you get hooked.</p>
+<p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. In the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">machine learning</a> and data science world, MCMC is sometimes used to get distributions over parameter variables for Bayesian models. 
 
-<p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script> via a sampling procedure. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
+Because MCMC methods can be easy to implement, it’s possible to apply these sampling procedures without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other</a> <a href="http://www.mcmchandbook.net/HandbookChapter1.pdf">resources</a> include more techincal detail if you get hooked.</p>
 
-<p>Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from $$x$$ to $$x'$$ is equal to the probabilty of moving from $$x'$$ to $$x$$, denoted <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as $$Q$$ has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
+<p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script>. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
+
+Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from $$x$$ to $$x'$$ is equal to the probabilty of moving from $$x'$$ to $$x$$, which can be written <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as $$Q$$ has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
 defined by this seemingly odd rule:<br />
-<br /></p>
+<br />
 <div class="text-center">
 $$
 A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})
 $$  
 </div>
 
-where I use $$A(x' \vert x)$$ to denote the probability of accepting the move from $$x$$ to $$x'$$.
+where I use $$A(x' \vert x)$$ to denote the probability of accepting the move from $$x$$ to $$x'$$. If you look closely at this (somewhat unintuitive) equation, you will see that if $$p^*(x)$$ is bigger than $$p(x')$$, you accept the proposal to move from $$x$$ to $$x'$$ with probability $$\frac{p^*(x’)}{p^*(x)}$$. But if $$x'$$ is bigger, the fraction will be bigger than 1, and you just move to $$x'$$ automatically (i.e. with probability 1).
 
-<p>This procedure allows you to draw samples from <em>any</em> <script type="math/tex">p^*</script>. When I first learned about Metropolis I found it quite surprising, especially since you can pick (basically) any proposal you want. Why does this work?</p>
+<br>
+When I first learned about Metropolis I found it quite surprising, especially since you can pick (basically) any proposal $$Q$$ that you want. This procedure allows you to draw samples from <em>any</em> <script type="math/tex">p^*</script>? Why does it work?
 
 
 #### Sampling from a Markov chain
