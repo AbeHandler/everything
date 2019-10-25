@@ -54,7 +54,7 @@ It <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Thresho
 <div>
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b) &emsp;&emsp; (2)$$ 
 </div>
-for all states $$a$$ and $$b$$ then $$T$$ fulfills the conditions in (1).  It's worth taking a second to build some intuitions for equation (2), which says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. 
+for all states $$a$$ and $$b$$ then $$T$$ fulfills the conditions in (1).  It's worth taking a second to build some intuitions for equation (2), which says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. (See this <a href="https://youtu.be/xxDkdwQdGvs?t=407">very nice</a>, intuitive description of detailed balance).
 
 You can prove that if some distribution satisfies detailed balance, it is stationary. To me this seems very intuitive. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
 
@@ -91,7 +91,7 @@ where we use $$Q(x \vert x')$$ to refer to the probability of a proposed distrib
 $$\frac{p^*(x')Q(x \vert x')}{p^*(x)Q(x' \vert x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
 
 
-Because $$Q(x \vert x') = Q(x' \vert x)$$ because (remember, the proposal is symmetric) we can simplify to
+Because $$Q(x \vert x') = Q(x' \vert x)$$ (remember, the proposal is symmetric) we can simplify to
 
 
 $$\frac{p^*(x')}{p^*(x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
