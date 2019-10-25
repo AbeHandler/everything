@@ -1,4 +1,3 @@
-
 import numpy as np
 
 from scipy.sparse import csr_matrix
@@ -83,20 +82,10 @@ def generate_data_sparse(N, K, V, real_pi, real_phi, C):
 
 def normalize_log_probs(lps):
     N_, K_ = lps.shape
-
-    # any 0 log probs need to get converted to non or max will be zero
-    lps[lps == 0] = 'nan'
-
-    diffs = lps - np.nanmax(lps,axis=1).reshape(N_,1)
-
-    diffs = np.exp(diffs)
-
-    diffs[np.isnan(diffs)] = 0
-
-    diffs = diffs/np.sum(diffs, axis=1).reshape(N_,1)
-
-    assert np.sum(diffs, axis=1).all() == 1.0
-    return diffs
+    p = np.exp(lps - np.max(lps,axis=1).reshape(N_,1))
+    p = p/np.sum(p, axis=1).reshape(N_,1)
+    assert np.sum(p, axis=1).all() == 1.0
+    return p
 
 
 def log_prob_D_given_k(D, pi_hat_, phi_hat_, k):
