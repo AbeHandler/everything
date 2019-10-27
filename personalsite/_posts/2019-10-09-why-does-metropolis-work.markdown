@@ -111,7 +111,7 @@ $$A(x \vert x') = \frac{p^*(x)}{p^*(x')}$$
 
 In either case, we have $$A(b \vert a) = \frac{p^*(b)}{p^*(a)}$$ if $$p^*(a) > p^*(b)$$ and $$A(b \vert a)=1$$ if $$p^*(a) < p^*(b)$$. 
 
-Another way to express all this, is that if we use a symmetric proposal distribution and transition from $$x$$ to $$x'$$ with probability 
+Another way to express all this, is that if we use a symmetric proposal distribution $$Q$$ and transition from $$x$$ to $$x'$$ with probability 
 
 <div class="text-center">
  $$A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})$$
