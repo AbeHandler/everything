@@ -132,4 +132,4 @@ Another interpretation of $$A$$ is that Metropolis always accepts moves into a m
 
 #### Thanks
 
-Thanks for <a href="https://twitter.com/JavierBurroni">Javier Burroni</a> for helping me better understand some of the mathematical details behind MCMC and to <a href="http://www.nickeubank.com/">Nick Eubank</a> and <a href="https://twitter.com/mrdrozdov">Andrew Drozdov</a> for their help presenting the material in this post.
+Thanks to <a href="https://twitter.com/JavierBurroni">Javier Burroni</a> for helping me better understand some of the mathematical details behind MCMC and to <a href="http://www.nickeubank.com/">Nick Eubank</a> and <a href="https://twitter.com/mrdrozdov">Andrew Drozdov</a> for their help presenting the material in this post.
