@@ -11,10 +11,16 @@ categories: mcmc
 
 Because MCMC methods can be easy to implement, it’s possible to apply these sampling procedures without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other</a> <a href="http://www.mcmchandbook.net/HandbookChapter1.pdf">resources</a> include more techincal detail if you get hooked.</p>
 
-<p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script>. I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.</p>
+<p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script>. We typically don't know how to just draw samples tractably from <script type="math/tex">p^*</script>. Otherwise we'd just sample from <script type="math/tex">p^*</script> and observe its distribution, which is what we are trying to figure out in the first place! However, we can usually compute <script type="math/tex">p^*(x)</script> up to some normalizing constant <script type="math/tex">Z</script>, meaning that if <script type="math/tex">p^*(x)=\frac{\tilde{p}(x)}{Z}</script>, we can usually compute the numerator <script type="math/tex">\tilde{p}(x)</script> really quickly, even if computing <script type="math/tex">Z</script> is hard or slow.</p>
 
-Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from $$x$$ to $$x'$$ is equal to the probabilty of moving from $$x'$$ to $$x$$, which can be written <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as $$Q$$ has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
-defined by this seemingly odd rule:<br />
+
+<p>I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.
+
+Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from <script type="math/tex">x</script> to <script type="math/tex">x'</script> is equal to the probabilty of moving from <script type="math/tex">x'</script> to <script type="math/tex">x</script>, which can be written <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as <script type="math/tex">Q</script> has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
+defined by this seemingly odd rule:</p>
+
+
+
 <br />
 <div class="text-center">
 $$
@@ -44,7 +50,7 @@ This simple idea underlies _Markov Chain_ Monte Carlo methods, including the Met
 The previous section explained how we can sample from some transition $$T$$, in order to estimate some $$\pi$$. This only works if we can find a $$T$$ such that its stationary distribution $$\pi$$ will be equal to $$p^*$$, our target distribution. Expressed more mathematically, we need a $$T$$ such that 
 
 <div>
-$$E_{x \backsim p*}[T(y|x)]=p^*(y)=\pi(y)  &emsp;&emsp; (1)$$
+$$E_{x \backsim \pi}[T(y|x)]=\pi(y)=p^*(y)  &emsp;&emsp; (1)$$
 </div>
 
 which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ (i.e. $$\pi(y)$$) is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
@@ -56,7 +62,7 @@ $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b) &emsp;&emsp; (2)$$
 </div>
 for all states $$a$$ and $$b$$ then $$T$$ fulfills the conditions in (1).  It's worth taking a second to build some intuitions for equation (2), which says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. (See this <a href="https://youtu.be/xxDkdwQdGvs?t=407">very nice</a>, intuitive description of detailed balance).
 
-You can prove that if some distribution satisfies detailed balance, it is stationary. To me this seems very intuitive. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
+You can prove that if some distribution satisfies detailed balance with respect to some $$T$$, then it is the stationary distribution of $$TT$$. To me this seems very intuitive. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
 
 
 #### Back to Metropolis
@@ -119,7 +125,6 @@ Another way to express all this, is that if we use a symmetric proposal distribu
 
 we will eventually reach a stationary distribution $$\pi=p^*$$.
 
-
 I find it helpful to imagine $$A$$ as a threshold function, like the one below. If $$p^*(x') > p^*(x)$$ then their ratio is a probability (the part of the graph that is climing) and we sample a transition from $$x$$ to $$x'$$ in proportion to their ratio. Otherwise, we transition from $$x$$ to $$x'$$ with probability one, meaning we always transition into the more probable state.
 
 <div class="col-xs-1" align="center">
@@ -132,4 +137,4 @@ Another interpretation of $$A$$ is that Metropolis always accepts moves into a m
 
 #### Thanks
 
-Thanks to <a href="https://twitter.com/JavierBurroni">Javier Burroni</a> for helping me better understand some of the mathematical details behind MCMC and to <a href="http://www.nickeubank.com/">Nick Eubank</a> and <a href="https://twitter.com/mrdrozdov">Andrew Drozdov</a> for their help presenting the material in this post.
+Thanks to <a href="https://twitter.com/JavierBurroni">Javier Burroni</a> for helping me better understand some of the mathematical details behind MCMC and providing a detailed technical edit. Thanks to <a href="http://www.nickeubank.com/">Nick Eubank</a> and <a href="https://twitter.com/mrdrozdov">Andrew Drozdov</a> for their help presenting the material in this post.
