@@ -55,14 +55,14 @@ $$E_{x \backsim \pi}[T(y|x)]=\pi(y)=p^*(y)  &emsp;&emsp; (1)$$
 
 which asserts that once $$T$$ is in its stationary distribution $$\pi$$, the probability of being in state $$y$$ (i.e. $$\pi(y)$$) is the same as $$p^*(y)$$, which is also the same as the probability of transitioning into state $$y$$ at any given timestep under the stationary distribution. 
 
-It <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/Threshold.jpg"> can be shown</a> that if we have a $$T$$ such that
+It <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/images/detbal.jpg"> can be shown</a> that if we have a $$T$$ such that
 
 <div>
 $$p^*(a)T(b \vert a) = p^*(b)T(a \vert b) &emsp;&emsp; (2)$$ 
 </div>
 for all states $$a$$ and $$b$$ then $$T$$ fulfills the conditions in (1).  It's worth taking a second to build some intuitions for equation (2), which says that, for all $$a$$ and $$b$$, the probability mass flowing out from state $$a$$ to state $$b$$ is the same as the probability mass flowing from $$b$$ to $$a$$. When this occurs, $$p^*$$ is said to satisfy <a href="https://www.youtube.com/watch?v=xxDkdwQdGvs&t=314s">"detailed balance"</a>  with respect to $$T$$. (See this <a href="https://youtu.be/xxDkdwQdGvs?t=407">very nice</a>, intuitive description of detailed balance).
 
-You can prove that if some distribution satisfies detailed balance with respect to some $$T$$, then it is the stationary distribution of $$TT$$. To me this seems very intuitive. If the probability mass going in to a given state is equal to the probability mass going out of a state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
+You can prove that if some distribution satisfies detailed balance with respect to some $$T$$, then it is the stationary distribution of $$T$$. To me this seems very intuitive. If the probability mass going in to any given state is equal to the probability mass going out of any given state, the distribution will never change. The punchline is: if $$p^*$$ satisfies detailed balance w.r.t. $$T$$ then $$p^*$$ is the stationary distribution of $$T$$ and we can sample from $$T$$ to sample from $$p*$$.
 
 
 #### Back to Metropolis
