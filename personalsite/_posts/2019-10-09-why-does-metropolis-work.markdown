@@ -10,10 +10,10 @@ categories: mcmc
 <p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. In the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">machine learning</a> and data science world, MCMC is sometimes used to get distributions over parameter variables for Bayesian models. 
 
 Because MCMC methods can be easy to implement, it’s possible to apply these sampling procedures without understanding the bigger picture. <strong>This tutorial focuses on developing intuition for the basic idea underlying MCMC.</strong> <a href="https://www.cs.princeton.edu/courses/archive/spr06/cos598C/papers/AndrieuFreitasDoucetJordan2003.pdf">Other</a> <a href="http://www.mcmchandbook.net/HandbookChapter1.pdf">resources</a> include more techincal detail if you get hooked.</p>
-
+<br>
 <p>In general, MCMC algorithms allow you to sample from <strong>any</strong> target distribution <script type="math/tex">p^*</script>. We typically don't know how to just draw samples tractably from <script type="math/tex">p^*</script>. Otherwise we'd just sample from <script type="math/tex">p^*</script> and observe its distribution, which is what we are trying to figure out in the first place! However, we can usually compute <script type="math/tex">p^*(x)</script> up to some normalizing constant <script type="math/tex">Z</script>, meaning that if <script type="math/tex">p^*(x)=\frac{\tilde{p}(x)}{Z}</script>, we can usually compute the numerator <script type="math/tex">\tilde{p}(x)</script> really quickly, even if computing <script type="math/tex">Z</script> is hard or slow.</p>
 
-
+<br>
 <p>I'll focus on one simple MCMC method, the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Metropolis</a> <a href="https://www.youtube.com/watch?v=gxHe9wAWuGQ">algorithm</a>.
 
 Each iteration of Metropolis consists of two steps. In the first step, you make a proposal to move from state <script type="math/tex">x</script> to state <script type="math/tex">x’</script>. You’re allowed to pick <u>any</u> proposal distribution <script type="math/tex">Q</script> that you want, so long as the probability of moving from <script type="math/tex">x</script> to <script type="math/tex">x'</script> is equal to the probabilty of moving from <script type="math/tex">x'</script> to <script type="math/tex">x</script>, which can be written <script type="math/tex">Q(x’\vert  x) = Q(x  \vert  x')</script>, and so long as <script type="math/tex">Q</script> has some chance of moving to all non-zero regions of <script type="math/tex">p^*</script>. In the second step, you accept the proposal with a probability 
@@ -120,7 +120,7 @@ In either case, we have $$A(b \vert a) = \frac{p^*(b)}{p^*(a)}$$ if $$p^*(a) > p
 Another way to express all this, is that if we use a symmetric proposal distribution $$Q$$ and transition from $$x$$ to $$x'$$ with probability 
 
 <div class="text-center">
- $$A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})$$
+ $$A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)}) &emsp;&emsp;  (3)$$ 
 </div>
 
 we will eventually reach a stationary distribution $$\pi=p^*$$.
@@ -133,6 +133,17 @@ I find it helpful to imagine $$A$$ as a threshold function, like the one below. 
 
 
 Another interpretation of $$A$$ is that Metropolis always accepts moves into a more probable state, and sometimes accepts moves into a less probable state. In any event, I hope Metropolis is a bit less mysterious now.
+
+#### One more important note
+
+I've been writing $$p^*(x')$$ this whole time. But remember (from way at the top of the post): we don't know what $$p^*$$ is, beyond that $$p^*(x)=\frac{\tilde{p}(x)}{Z}$$. So we can't actually compute (3) as written. However, because:
+
+<div class="text-center">
+ $$A(x' | x) = min(1, \frac{\frac{\tilde{p^*}(x')}{Z}}{\frac{\tilde{p}^*(x)}{Z}})= min(1, \frac{\tilde{p^*}(x')}{\tilde{p}^*(x)})$$
+</div>
+
+where $$\tilde{p}(x)$$ is easy to compute and $$Z$$ is hard, even if we don't know $$\tilde{p}(x)$$ we can still efficiently compute the ratio of $$p^*(x)$$ and $$p^*(x)$$, which is required for MCMC.
+
 
 
 #### Thanks
