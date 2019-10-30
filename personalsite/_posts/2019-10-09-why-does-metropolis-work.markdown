@@ -20,8 +20,6 @@ Each iteration of Metropolis consists of two steps. In the first step, you make 
 defined by this seemingly odd rule:</p>
 
 
-
-<br />
 <div class="text-center">
 $$
 A(x' | x) = min(1, \frac{p^*(x’)}{p^*(x)})
@@ -91,7 +89,7 @@ and denote each $$T$$ as the product of two probabilities
 $$p^*(x')A(x \vert x')Q(x \vert x') = p^*(x)A(x' \vert x)Q(x' \vert x)$$
 
 
-where we use $$Q(x \vert x')$$ to refer to the probability of a proposed distribution from $$x$$ to $$x'$$ and use $$A(x \vert x')$$ to refer to the probability of accepting the proposed move and where $$T(x \vert x')$$=$$Q(x \vert x')A(x \vert x')$$, meaning you transition based on the probability of proposing and accepting the move. If we rearrange a bit we have:
+where we use $$Q(x \vert x')$$ to refer to the probability of a proposed distribution from $$x$$ to $$x'$$ and use $$A(x \vert x')$$ to refer to the probability of accepting the proposed move. Notice that now $$T(x \vert x')$$=$$Q(x \vert x')A(x \vert x')$$, meaning you transition from $$x'$$ to $$x$$ if two things happen: you propose a move from $$x'$$ to $$x$$ and the move is accepted, each with some probability. If we rearrange a bit we have:
 
 
 $$\frac{p^*(x')Q(x \vert x')}{p^*(x)Q(x' \vert x)} = \frac{A(x' \vert x)}{A(x \vert x')}$$
