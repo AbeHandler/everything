@@ -32,12 +32,15 @@ Score $\triangleq$ gradient of $\ell$ w.r.t  $\theta$.
 
 \subsection{Markov inequality}
 
-$$p(X\geq a) = E[X] a$$
+$$p(X\geq a) \leq \frac{E[X]}{a}$$
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=8cm]{markov.jpg}
+\includegraphics[width=8cm]{markov.png}
+\caption{Via Stackoverflow. The $E[X]$ is easier to interpret if you convince yourself that it is a sum over the \textit{horizontal} rectangles in the picture}
 \end{figure}
+
+
 
 Mnemonic: no more than $\frac{1}{a}$ of population can have more than $a$ times the average.\footnote{https://www.quora.com/What-is-an-intuitive-explanation-of-Markovs-inequality} See also stackexchange for original graphic\footnote{https://math.stackexchange.com/questions/518873/visualizing-markov-and-chebyshev-inequalities}.
 
@@ -93,5 +96,9 @@ In MH you can have any proposal you want. According to Murphy any proposal distr
 
 \subsection{Flavors of MCMC}
 Independent MC is when the proposal does not depend on the state $x$: e.g. proposal is always a unit Gaussian. This shows up in IR paper from Brendan and in Dredze Eisner paper on name phylogenies. 
+
+\section{To Learn}
+Yee Whye Teh, Michael Jordan, Matthew Beal, and David Blei.
+2006. Hierarchical dirichlet processes. Journal of the American Statistical Association, 101.
 
 \end{document}
