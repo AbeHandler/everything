@@ -94,7 +94,7 @@ navigation_weight: 1
 </div>
 
 <div class="row mt-4">
-        <a href="https://slanglab.cs.umass.edu/Rookie"> Rookie: a unique approach for exploring news archives</a>
+        <a href="http://slanglab.cs.umass.edu/Rookie"> Rookie: a unique approach for exploring news archives</a>
 </div>
 
 <div class="row">
