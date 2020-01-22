@@ -77,7 +77,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-    Abram Handler, Brian Dillon and Brendan O’Connor for <a href="https://www.cics.umass.edu/grads/synthesis-project">Synthesis Project</a> (2018)
+    Abram Handler, Brian Dillon and Brendan O’Connor (arXiv preprint)
      </div>
 </div>
 
