@@ -77,7 +77,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-    Abram Handler, Brian Dillon and Brendan O’Connor (arXiv preprint)
+    Abram Handler, Brian Dillon and Brendan O’Connor (arXiv preprint, 2019)
      </div>
 </div>
 
