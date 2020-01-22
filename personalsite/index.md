@@ -71,6 +71,17 @@ navigation_weight: 1
 </div>
 
 <div class="row mt-4">
+   <a href="https://arxiv.org/abs/1902.00489"> Human acceptability judgements for extractive sentence compression</a>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+    Abram Handler, Brian Dillon and Brendan O’Connor
+     </div>
+</div>
+
+<div class="row mt-4">
   <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/N18-1159.pdf">Relational Summarization for Corpus Analysis.</a>
 </div>
 
