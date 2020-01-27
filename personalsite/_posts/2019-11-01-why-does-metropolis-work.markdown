@@ -6,6 +6,7 @@ categories: mcmc
 ---
 
 ### Why MCMC works
+#### Building intuition for MCMC
 
 <p>Markov Chain Monte Carlo (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">MCMC</a>) is a common tool for sampling from complex distributions. In the <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">machine learning</a> and data science world, MCMC is sometimes used to get distributions over parameter variables for Bayesian models. 
 
