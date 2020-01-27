@@ -66,7 +66,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-     Jack Merullo, Luke Yeh, Abram Handler, Alvin Grissom II, Brendan O’Connor, Mohit Iyyer at EMNLP 2019
+     Jack Merullo, Luke Yeh, Abram Handler, Alvin Grissom II, Brendan O’Connor, Mohit Iyyer at EMNLP (2019)
      </div>
 </div>
 
@@ -87,7 +87,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-      Abram Handler and Brendan O’Connor at NAACL 2018
+      Abram Handler and Brendan O’Connor at NAACL (2018)
     </div>
 </div>
 
@@ -100,7 +100,7 @@ navigation_weight: 1
 <div class="row">
     <div class="col-sm-12">
      Katherine A. Keith, Abram Handler, Michael Pinkham,
-    Cara Magliozzi, Joshua McDuffie, and Brendan O’Connor at EMNLP 2017
+    Cara Magliozzi, Joshua McDuffie, and Brendan O’Connor at EMNLP (2017)
     </div>
 </div>
 
@@ -110,7 +110,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-        Abram Handler and Brendan O'Connor, Data Science + Journalism (KDD, 2017). 
+        Abram Handler and Brendan O'Connor, KDD Workshop on Data Science + Journalism (2017). 
     Funded with a <a href="https://www.knightfoundation.org/grants/201550791/">Knight prototype grant</a>.
     </div>
 </div>
@@ -122,7 +122,7 @@ navigation_weight: 1
 <div class="row mt-4">
     <div class="col-sm-12">
     Software to extract multiword phrases for downstream analysis, with a
-    <a href="http://brenocon.com/handler2016phrases.pdf">companion paper</a> at Text as Data 2016 from Abram Handler, Matthew J. Denny, Hanna Wallach, and Brendan O'Connor.
+    <a href="http://brenocon.com/handler2016phrases.pdf">companion paper</a> at Text as Data (2016) from Abram Handler, Matthew J. Denny, Hanna Wallach, and Brendan O'Connor.
     </div>
 </div>
 
