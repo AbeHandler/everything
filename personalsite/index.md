@@ -59,7 +59,7 @@ navigation_weight: 1
 
 <div class="row">
     <div class="col-sm-12">
-    Abram Handler and Brendan O’Connor at EMNLP 2019
+    Abram Handler and Brendan O’Connor at EMNLP (2019)
     </div>
 </div>
 
