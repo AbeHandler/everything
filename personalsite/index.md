@@ -60,6 +60,7 @@ navigation_weight: 1
 <div class="row">
     <div class="col-sm-12">
     Abram Handler and Brendan O’Connor at EMNLP (2019)
+    <button type="button" class="btn btn-link"><a href="https://github.com/slanglab/qsb">Code</a></button> 
     </div>
 </div>
 
@@ -71,6 +72,7 @@ navigation_weight: 1
 <div class="row">
     <div class="col-sm-12">
      Jack Merullo, Luke Yeh, Abram Handler, Alvin Grissom II, Brendan O’Connor, Mohit Iyyer at EMNLP (2019)
+     <button type="button" class="btn btn-link"><a href="https://github.com/jmerullo/football">Code + data</a></button> // <button type="button" class="btn btn-link"><a href="https://theundefeated.com/features/artificial-intelligence-racial-bias-in-sports/">Press</a></button>
      </div>
 </div>
 
