@@ -1,0 +1,79 @@
+
+\documentclass[12pt]{amsart}
+\usepackage{geometry} % see geometry.pdf on how to lay out the page. There's lots.
+\usepackage{amssymb}
+\geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+
+% See the ``Article customise'' template for come common customisations
+
+\title{}
+\author{}
+\date{} % delete this line to display the current date
+
+\newcommand{\fhat}{\frac{1}{h}\int_{x-(h/2)}^{x+(h/2)}f(y)dy}
+
+%%% BEGIN DOCUMENT
+\begin{document}
+
+\maketitle
+
+Let $\lambda$=log($\frac{\pi}{1-\pi}$). 
+
+$$
+e^{\lambda y - \psi(\lambda)} = AB 
+$$
+
+where 
+
+$$
+A = {(\frac{\pi}{1-\pi})}^y
+$$
+
+and 
+
+$$
+B = (1 + \frac{\pi}{1-\pi})^{-n}
+$$
+
+So we have 
+
+$$
+AB = \frac{{(\frac{\pi}{1-\pi})}^y }{ (1 + \frac{\pi}{1-\pi})^{n}}
+$$
+
+Splitting the exponent we have
+
+\begin{equation}
+AB = \frac{{(\frac{\pi}{1-\pi})}^y }{ (1 + \frac{\pi}{1-\pi})(1 + \frac{\pi}{1-\pi})^{n-1}} 
+\end{equation}
+
+Multiplying $AB$ by $\frac{1-\pi}{1-\pi}=1$
+
+\begin{equation}
+AB = \frac{{\frac{\pi^y}{(1-\pi)^y}} (1-\pi)}{ ({1-\pi} + \pi)(1 + \frac{\pi}{1-\pi})^{n-1}}
+\end{equation}
+
+\begin{equation}
+AB = \frac{{\frac{\pi^y}{(1-\pi)^{y-1}}}}{(1 + \frac{\pi}{1-\pi})^{n-1}}
+\end{equation}
+
+If we repeat (1), (2) and (3) $n$ times we have 
+
+$$
+AB = \frac{{\frac{\pi^y}{(1-\pi)^{y-n}}}}{(1 + \frac{\pi}{1-\pi})^{n-n}}
+$$
+
+$$
+AB = {\frac{\pi^y}{(1-\pi)^{y-n}}}
+$$
+
+$$
+AB = \pi^y (1-\pi)^{(-(y-n)}
+$$
+
+$$
+AB = \pi^y (1-\pi)^{n-y}
+$$
+
+\end{document}
