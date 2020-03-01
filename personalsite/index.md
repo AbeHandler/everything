@@ -23,7 +23,7 @@ navigation_weight: 1
 			Abe Handler
             </h3>
             <h5>
-                5th-year PhD student in Computer Science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>
+                5th-year PhD student in computer science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>
             </h5>
             <h5 class="mt-4">
             I study natural language processing methods for user-facing search applications. I am interested in applied research.
