@@ -22,12 +22,12 @@ navigation_weight: 1
             <h3>
 			Abe Handler
             </h3>
-            <h5>
+            <h6>
                 I am a 5th-year PhD student in computer science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>.
-            </h5>
-            <h5>
+            </h6>
+            <h6>
             I study natural language processing methods for user-facing search applications. I am interested in applied research.
-            </h5>
+            </h6>
             <h6 class="mt-4">
             <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/cv.pdf">CV</a>, 
             <a href="https://www.abehandler.com/blog.html">Blog</a>,
