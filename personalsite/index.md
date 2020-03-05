@@ -23,21 +23,21 @@ navigation_weight: 1
 			Abe Handler
             </h3>
             <h5>
-                5th-year PhD student in computer science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>
+                I am a 5th-year PhD student in computer science at the <a href="https://cics.umass.edu">University of Massachusetts, Amherst</a>, advised by <a href="http://brenocon.com/">Brendan O'Connor</a>.
             </h5>
-            <h5 class="mt-4">
+            <h5>
             I study natural language processing methods for user-facing search applications. I am interested in applied research.
             </h5>
-            <h5 class="mt-4">
+            <h6 class="mt-4">
             <a href="https://s3.us-west-2.amazonaws.com/www.abehandler.com/static/cv.pdf">CV</a>, 
             <a href="https://www.abehandler.com/blog.html">Blog</a>,
             <a href="https://twitter.com/AbeHandler/">Twitter</a>, 
             <a href="https://github.com/abehandler">Github</a>, 
             <a href='https://www.linkedin.com/in/abram-handler/'>LinkedIn</a>
-            </h5>
-            <h5>
+            </h6>
+            <h6>
                 Email: <code>abram.handler@gmail.com</code>
-            </h5>
+            </h6>
 		</div>
 		<div class="col-sm-3">
 			<span class="bordered"> <img style="width:99%" src="images/abe.png" width="430"></span>
