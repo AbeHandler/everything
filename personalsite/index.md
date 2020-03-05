@@ -17,7 +17,7 @@ navigation_weight: 1
 
 
 <div class="container-fluid">
-	<div class="row mt-4 align-items-center justify-content-center">
+	<div class="row mt-4 align-items-left justify-content-left">
 		<div class="col-sm-9">
             <h3>
 			Abe Handler
@@ -48,8 +48,8 @@ navigation_weight: 1
 
 <div class="container-fluid">
 
-<div class="row mt-4 align-items-center justify-content-center">
-<h4>Publications, projects and software</h4>
+<div class="row mt-4 align-items-left justify-content-left">
+<h5>Publications, projects and software</h5>
 </div>
 
 
