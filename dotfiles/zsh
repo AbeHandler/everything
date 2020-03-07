@@ -143,12 +143,9 @@ alias bf="source ~/.virtualenvs/bf/bin/activate"
 
 alias nb="ipython notebook"
 
-
+# recommended by bto to save cmds
 export HISTSIZE=1000000
-
-
 export SAVEHIST=1000000
-
 setopt appendhistory
 setopt extended_history
 setopt inc_append_history
