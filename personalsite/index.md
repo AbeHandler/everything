@@ -74,6 +74,20 @@ navigation_weight: 1
      </div>
 </div>
 
+
+
+<div class="row mt-4">
+   <a href="https://www.aclweb.org/anthology/D19-5414.pdf">Summarizing Relationships for Interactive Concept Map Browsers</a>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+     Abram Handler, Prem Ganeshkumar, Brendan O’Connor and Mohamed AlTantawy, New Frontiers in Summarization Workshop at EMNLP (2019) &nbsp; <a href="https://github.com/slanglab/concept_maps_newsum19" class="small">Code + data</a> 
+     </div>
+</div>
+
+
 <div class="row mt-4">
    <a href="https://arxiv.org/abs/1902.00489"> Human acceptability judgements for extractive sentence compression</a>
 </div>
