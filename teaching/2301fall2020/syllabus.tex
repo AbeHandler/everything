@@ -104,7 +104,7 @@
 \def\mycourselisting{INFO 2301}
 \def\myclassroom{Online}
 \def\myzoomurl{TODO}
-\def\mycanvasurl{TODO}
+\def\mycanvasurl{https://canvas.colorado.edu/courses/62559}
 \def\mymeetingdays{TODO}
 \def\mymeetingtimes{TODO}
 \def\mydate{Fall 2020}
@@ -177,7 +177,12 @@ The following topics will be covered
 \end{itemize}
 
 \section{Textbook and software }
-TODO
+
+\begin{itemize}
+\item \textbf{Textbook}: \href{https://www.abehandler.com/resources/openintro-statistics.pdf}{OpenIntro} Statistics (free)
+\item \textbf{Software}: Assignments will use \href{https://www.python.org/}{Python 3} in \href{https://jupyter.org/}{Jupyter notebooks}
+\end{itemize}
+
 
 \section{Learning Goals}
 
@@ -295,125 +300,54 @@ This syllabus was typeset in \LaTeX~using \href{http://www.sharelatex.com}{Overl
 %%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 
-\section{\textbf{Course Outline}}
+%\section{\textbf{Course Outline}}
 
-The schedule will evolve throughout the semester, so please consult the schedule online at Canvas for the most up-to-date information.
+%The schedule will evolve throughout the semester, so please consult the schedule online at Canvas for the most up-to-date information.
 
-\section{Week 1 -- Introductions}
-% \textcolor{CUGold}{\textbf{Monday, August 24; Wednesday, August 26; Friday, August 28}}\\
-\textcolor{CUGold}{\textbf{%
-    \adddays{0}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Course overview; configuring environment; building a data scientist mindset.
+% \section{Week 1 -- Introductions}
+%  \textcolor{CUGold}{\textbf{Monday, August 24; Wednesday, August 26; Friday, August 28}}\\
+% \textcolor{CUGold}{\textbf{%
+%   \adddays{0}\datedate;
+%   \adddays{2}\datedate;
+%   \adddays{2}\datedate}}\\
+% Course overview; configuring environment; building a data scientist mindset.
 
-\section{Week 2 -- Tabular data: Fundamentals} % Brian
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Reviewing tabular data structures, file I/O; long \textit{vs}. wide data; tabular data with \href{https://pandas.pydata.org/}{\texttt{pandas}}.
+% \section{Week 2 -- Tabular data: Fundamentals} % Brian
+% \textcolor{CUGold}{\textbf{%
+%     \adddays{3}\datedate;
+%     \adddays{2}\datedate;
+%     \adddays{2}\datedate}}\\
+% Reviewing tabular data structures, file I/O; long \textit{vs}. wide data; tabular data with \href{https://pandas.pydata.org/}{\texttt{pandas}}.
 
-\section{Week 3 -- Tabular data: Applications} % Brian
-\textcolor{CUGold}{\textbf{%
-    \adddays{5}\datedate;
-    \adddays{2}\datedate}}\\
-    \textbf{(No class on Monday, September 7 in observance of Labor Day)}\\
-Cleaning and analyzing data about populations from \href{https://data.census.gov/}{U.S. Census}, \href{https://data.un.org/}{United Nations}, \href{https://www.who.int/gho/database/en/}{WHO}, \textit{etc}.
+% \section{Week 3 -- Tabular data: Applications} % Brian
+% \textcolor{CUGold}{\textbf{%
+%     \adddays{5}\datedate;
+%     \adddays{2}\datedate}}\\
+%     \textbf{(No class on Monday, September 7 in observance of Labor Day)}\\
+% Cleaning and analyzing data about populations from \href{https://data.census.gov/}{U.S. Census}, \href{https://data.un.org/}{United Nations}, \href{https://www.who.int/gho/database/en/}{WHO}, \textit{etc}.
 
-\section{Week 4 -- Relational data: Fundamentals} % Abe
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Understanding related data across multiple tables; types of joins; databases with \href{https://www.sqlite.org/index.html}{\texttt{sqlite}}.
+% \section{Week 4 -- Relational data: Fundamentals} % Abe
+% \textcolor{CUGold}{\textbf{%
+%     \adddays{3}\datedate;
+%    \adddays{2}\datedate;
+%     \adddays{2}\datedate}}\\
+% Understanding related data across multiple tables; types of joins; databases with \href{https://www.sqlite.org/index.html}{\texttt{sqlite}}.
 
-\input{M2-relational}
+% \input{M2-relational}
 
-\section{Week 5 -- Relational data: Applications} % Abe
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Administering a simple database; analyzing historical baseball data from \href{https://www.retrosheet.org/}{Retrosheet} and \href{http://www.seanlahman.com/baseball-archive/statistics/}{Lahman Database}.
+% \section{Week 5 -- Relational data: Applications} % Abe
+% \textcolor{CUGold}{\textbf{%
+%     \adddays{3}\datedate;
+%     \adddays{2}\datedate;
+%     \adddays{2}\datedate}}\\
+% Administering a simple database; analyzing historical baseball data from \href{https://www.retrosheet.org/}{Retrosheet} and \href{http://www.seanlahman.com/baseball-archive/statistics/}{Lahman Database}.
 
-\section{Week 6 -- Temporal data: Fundamentals}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Understanding time series data; auto-correlation, change-points, anomalies; forecasting using \href{https://facebook.github.io/prophet/}{\texttt{prophet}}.
-
-\section{Week 7 -- Temporal data: Applications}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Preparing and forecasting economic data from \href{https://fred.stlouisfed.org/}{FRED}, \href{https://data.worldbank.org/}{World Bank}, \href{https://data.imf.org/}{IMF}, \textit{etc}.
-
-\section{Week 8 -- Spatial data: Fundamentals}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Understanding spatial data; projections, choropleths, spatial joins, lookups; visualization using \href{https://geopandas.org/}{\texttt{geopandas}}.
-
-\section{Week 9 -- Spatial data: Applications}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Analyzing and visualizing political data from \href{https://dataverse.harvard.edu/}{DataVerse}, \href{https://www.icpsr.umich.edu/}{ICPSR}, \href{https://electionlab.mit.edu/data}{MIT Election Lab}, \textit{etc}.
-
-\section{Week 10 -- Dyadic data: Fundamentals}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Understanding networks; network types, data structure, metrics, and dynamics; analysis using \href{https://networkx.github.io/}{\texttt{networkx}}.
-
-\section{Week 11 -- Dyadic data: Applications}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Preparing and analyzing network data from \href{https://icon.colorado.edu/}{ICON}, \href{http://konect.uni-koblenz.de/}{KONECT}, \href{http://networkrepository.com/}{Network Repository}, \textit{etc}.
-
-\section{Week 12 -- Structured data: Fundamentals}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Parsing and navigating structured data like XML and JSON; scraping using \href{https://requests.readthedocs.io/en/master/}{\texttt{requests}} and \href{https://www.crummy.com/software/BeautifulSoup/bs4/doc/}{\texttt{BeautifulSoup}}.
-
-\section{Week 13 -- Structured data: Applications}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Scraping, storing, and analyzing structured data from APIs like \href{https://www.mediawiki.org/wiki/API:Main_page}{Wikipedia}, \href{https://developer.twitter.com/en/docs}{Twitter}, \href{https://developer.spotify.com/documentation/web-api/}{Spotify}, \textit{etc}.
-
-\section{Week 14 -- (Not) Fall Break}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate}}\\
-Catch-up, spill-over, and review of content from previous weeks.
-
-\section{Week 15 -- Unstructured data: Fundamentals}
-\textcolor{CUGold}{\textbf{
-    \adddays{5}\datedate;
-    \adddays{2}\datedate;
-    \adddays{2}\datedate}}\\
-Analysis of unstructured data; text pre-processing, vectorizing, metrics; analysis using \href{https://www.nltk.org/}{\texttt{nltk}}.
-
-\section{Week 16 -- Unstructured data: Applications}
-\textcolor{CUGold}{\textbf{%
-    \adddays{3}\datedate;
-    \adddays{2}\datedate}}\\
-Pre-processing and analyzing text data from literature, journalism, and social web.
-
-
-
+% \section{Week 6 -- Temporal data: Fundamentals}
+% \textcolor{CUGold}{\textbf{%
+%     \adddays{3}\datedate;
+ %    \adddays{2}\datedate;
+ %    \adddays{2}\datedate}}\\
+% Understanding time series data; auto-correlation, change-points, anomalies; forecasting using \href{https://facebook.github.io/prophet/}{\texttt{prophet}}.
 
 
 % \clearpage
