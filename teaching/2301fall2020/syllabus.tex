@@ -111,7 +111,7 @@
 
 \def\instructorAfirstname{Abram}
 \def\instructorAlastname{Handler}
-\def\instructorAfullname{\instructorAfirstname~\instructorAlastname, Ph.D.}
+\def\instructorAfullname{\instructorAfirstname~\instructorAlastname, M.A.}
 \def\instructorAtitle{Instructor, Information Science}
 \def\instructorAoffice{INFO TBD}
 \def\instructorAemail{abe.handler@colorado.edu}
@@ -161,30 +161,33 @@
 
 \section{\textbf{Course Description}}
 
-The volume, velocity, variety, and variability of data challenges our ability to collect, analyze, interpret, and act. This course will develop students' skills and sensibilities for conducting \textit{exploratory data analysis} across seven kinds of data. Students will learn to collect, analyze, visualize, evaluate, and communicate data to motivate new questions, make predictions, and work towards solutions. This course will call upon the quantitative and computational skills students have developed in previous courses and will increase their confidence and autonomy as data analysts and scientists who can deliver insights from diverse kinds of data.
+Introduces methods for quantifying and analyzing different types of data, covering foundational
+concepts in discrete mathematics, probability, and predictive modeling, along with complementary computational skills to apply these concepts to real problems. Covers counting and combinatorics, logic, set theory, introductory probability, common probability distributions, regression,
+and model validation. Requires demonstrated proficiency with introductory computer programming.
 
-\subsection{Learning objectives}
+\section{Topics}
+
+The following topics will be covered
 
 \begin{itemize}
-    \item Improve students' confidence analyzing diverse kinds of data
-    \item Develop students' ability to match questions to data to solutions
-    \item Understand professional data science tools and methods
-    \item Think critically about the opportunities and limitations of data
+\item Data types and corresponding data structures in Python
+\item Operations on data structures (sets and vectors)
+\item Counting and combinatorics (combinations and permutations)
+\item Probability concepts (independence, marginalization, expected value)
+\item Probability distributions (discrete and continuous)
+\item Conditional probability (language modeling and music generation as applications)
+\item Probability in Python (distributions, pseudorandom sampling)
 \end{itemize}
 
 \subsection{Course Design}
-Class will meet three times per week (\mymeetingdays)\space from \mymeetingtimes\space in \myclassroom\space and on Zoom. As we detail below, we will be employing a ``flipped classroom'' in which students watch pre-recorded lectures before class and class time prioritizes discussions, case studies, and activities. Student performance will be evaluated through a combination of Module Assignments, Module Quizzes, Participation, and a Final Project. There is no final exam.
+Class will meet three times per week (\mymeetingdays)\space from \mymeetingtimes\space on Zoom. As we detail below, we will be employing a ``flipped classroom'' in which students watch pre-recorded lectures before class and class time prioritizes discussions, case studies, and activities. Student performance will be evaluated through a combination of Module Assignments, Module Quizzes, Participation, and a Final Project. 
 
-The class is split up into seven two-week modules organized around different types of data: (1) tabularThe class is split up into seven two-week modules organized around different types of data: (1) tabular, (2) relational, (3) temporal, (4) spatial, (5) dyadic, (6) structured, and (7) unstructured data. The first week of each module will focus on the fundamentals of the data type and the second week of each module will explore applications of the data type.
-
-% The first week of each module will be a ``show'' week dedicated to reviewing or introducing the method. The second week of each module will be a ``tell'' week dedicated to connecting the technique to larger social and ethical implications. In each week, Mondays will be a lecture providing motivation and background, Wednesdays will be a combination of lecture and exercises, and Fridays will be Weekly Presentations.
+The class is split up into seven two-week modules TODO TODO
 
 \subsection{COVID-19 contingencies}
 The COVID-19 pandemic has caused unprecedented and on-going disruptions to social, economic, and cultural life around the globe, including the delivery of courses here at the University of Colorado. We will follow the guidance from the \href{https://www.colorado.edu/roadmap/}{campus roadmap} and \href{https://covid19.colorado.gov/}{other public health resources} to deliver the class as safely as possible. The class will meet remotely for the first five weeks and then we will evaluate if conditions permit shifting to a ``hybrid'' mode that would permit some on-campus instruction.
 
 \begin{itemize}[itemsep=0pt,leftmargin=1em]
-    
-    \item \textbf{Conditionally hybrid}. The class will meet entirely remotely for weeks 1--5 (August 24--September 25) and there will be no on-campus lectures or office hours. During the first week, the instructors and students will have a discussion about whether, when, and how to shift to a ``hybrid'' instructional model combining remote and on-campus instruction. During the (remote) lecture on September 25 (the Friday before week 6) the instructors will announce their determination whether the class will shift to a ``hybrid'' format agreed upon by the instructors. We will make this determination based on the \href{https://www.bouldercounty.org/families/disease/covid-19/covid-19-illness-and-recovery/}{case data} reported by the Boulder County Department of Public Health. Specifically, if there are more than 12 new cases reported per day\footnote{Fewer than 4 new cases per 100,000 people is \href{https://www.vox.com/2020/5/28/21270515/coronavirus-covid-reopen-economy-social-distancing-states-map-data}{a popular criterion} for reopening. Boulder County has ~300,000 residents.} for more than 7 of the previous 14 days, then the subsequent week will remain remote. % Unless the campus reverts to a ``remote'' \href{https://www.colorado.edu/roadmap/modes-operation}{mode of operation}, the instructors will repeat this determination and make this announcement every Friday.
     
     \item \textbf{Flipped classroom}. We will employ a ``\href{https://en.wikipedia.org/wiki/Flipped_classroom}{flipped classroom}'' strategy in which pre-recorded lectures are posted on Canvas and in-class time prioritizes discussions and ``hands-on-keyboard'' activities. \textit{Attendance is required.} Students will be expected to have watched the lectures before starting class, attendance will be taken for each class, and there will be regular quizzes to assess student comprehension.
     
@@ -194,13 +197,13 @@ The COVID-19 pandemic has caused unprecedented and on-going disruptions to socia
     % The need to accommodate students with health conditions, the difficulties with scheduling classrooms large enough to fit 50 students while maintaining safe distancing, and the possibility of falling back to a fully remote delivery option all mean that 
     We will use a ``synchronous remote'' instructional model: students will attend on Zoom at the scheduled time. \textit{Attendance is required.} In order to fully participate remotely, students will need access to a personal computer with a web camera, a reliable high-speed internet connection, and a minimally disruptive background environment. We will discuss, debug, and develop practices about how best to run this instructional model and are open to feedback and iteration throughout the term. %We recognize this instructional model will complicate discussions and activities. % In the event that health of the general public, CU community, or instructors requires a fully \href{https://www.colorado.edu/roadmap/modes-operation}{remote mode of operation}, we will make an announcement via Canvas and the entire class will meet on Zoom and no instruction will take place on campus. 
     
-    \item \textbf{Protection and hygiene}. If the conditions permit a hybrid model, students attending lectures on-campus will be required to follow all \href{https://www.colorado.edu/protect-our-herd/}{campus health and safety requirements}, including (1) wearing a mask covering their mouth and nose and (2) maintaining at least six feet of distance from other people the entire time they are in the classroom. Students who are unable or unwilling to follow these health and safety requirements will not be permitted in the classroom. Any students experiencing \href{https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html}{COVID-19 symptoms}, students who have been in recent close contact with anyone experiencing COVID-19 symptoms, or students who received a positive test may not attend any on-campus class. The instructors also will not touch students' computers in order to reduce the risk of transmission. 
-    
     \item \textbf{Illness}. Should a student contract any illness that requires mandatory sequestration, intensive medical treatment, or extended convalescence and disrupts their ability to participate in class and complete assignments, the instructors will try to accommodate their condition without penalty with extensions and incompletes. This also applies if the student has a family member whose diagnosis, treatment, and recovery will affect their ability to participate. \textit{Please do not ghost us}: students should notify the instructors as soon as possible of events that will impact their engagement with the class so that we can triage and develop an accommodation plan rather than scrambling at the end of the semester.
 \end{itemize}
-\noindent Students who are unable or unwilling to follow these policies should email the instructors about other accommodations or should withdraw from the class.
 
 \subsection{Prerequisites}
+
+TODO
+
 Students should have completed the sequences of INFO 2201 and INFO 2301 or similar coursework covering intermediate computational reasoning and intermediate statistical reasoning before enrolling in \mycourselisting. If you have questions, please email \href{mailto:\instructorAemail}{Dr. \instructorAlastname}.
 
 % \subsection{Requirements}
@@ -250,7 +253,7 @@ The success of this class depends on students feeling comfortable sharing questi
 % The class will make regular use of Liz Lerman's ``\href{https://lizlerman.com/critical-response-process/}{Critical Response Process}'' for the Weekly Presentations and the Final Project. The details of this process will be covered in more detail in Week 1, but students will rotate through the roles of ``artist'' and ``responder'' regularly. Students are expected to participate in good faith when sharing statements of meaning, questions, neutral questions, and permissioned opinions.
 
 \subsection{Instructor Interaction}
-Dr. Handler and Dr. Keegan will check e-mail between 8:00 and 18:00 on non-holiday business days and try to respond to emails within 24 hours. They welcome online or offline interactions outside of class, however these are not appropriate spaces for discussing class matters. E-mailing \href{\instructorAemail}{Dr. Handler} or coming to our (remote) office hours are the best ways to get help and feedback outside of lecture.
+Dr. Handler will check e-mail between 8:00 and 18:00 on non-holiday business days and try to respond to emails within 24 hours. They welcome online or offline interactions outside of class, however these are not appropriate spaces for discussing class matters. E-mailing \href{\instructorAemail}{Dr. Handler} or coming to our (remote) office hours are the best ways to get help and feedback outside of lecture.
 
 \subsection{Accommodations for Disabilities}
 We are committed to providing everyone the support and services needed to participate in this course. If you qualify for accommodations because of a disability, please submit your accommodation letter from Disability Services to the instructor in a timely manner so that your needs can be addressed. Disability Services determines accommodations based on documented disabilities in the academic environment. Information on requesting accommodations is located on the \href{Disability Services website}{www.colorado.edu/disabilityservices/students}. Contact Disability Services at 303-492-8671 or \href{mailto:dsinfo@colorado.edu}{dsinfo@colorado.edu} for further assistance. If you have a temporary medical condition or injury, see Temporary Medical Conditions under the Students tab on the Disability Services website and discuss your needs with the instructors.
