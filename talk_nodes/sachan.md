@@ -13,5 +13,6 @@ https://github.com/linqs/psl/wiki/Introduction-to-probabilistic-soft-logic
 
 Buchbinder (2012) submodular
 
-
 What feedback does this get from educational psychologists? To what extent is this computationally expedient and to what extent are you trying to actually model human learning? Clearly the former.
+
+Andrew M question: could you use this for domains like law where you want an iterpretable formal structure? I guess also security.

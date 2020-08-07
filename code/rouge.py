@@ -7,12 +7,13 @@ class RougeScorer(object):
     '''
 
     def __init__(self, reference):
+        '''list is important not set cuz ROUGE considers counts'''
         assert type(reference) == list
         assert [type(o) == 'unicode' for o in reference]
         self.reference = reference
 
     def getRougeN(self, summary, N):
-
+        '''list is important not set cuz ROUGE considers counts'''
         assert type(summary) == list
         assert N > 0
         assert type(N) == int
