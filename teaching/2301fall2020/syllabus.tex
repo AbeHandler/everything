@@ -38,6 +38,9 @@
 \usepackage{graphicx}
 \usepackage{enumerate}
 
+\usepackage{caption}
+\captionsetup[table]{name=Unit}
+
 % Setup list environments
 \usepackage{enumitem}
 \setlist[description]{
@@ -310,32 +313,43 @@ This syllabus was typeset in \LaTeX~using \href{http://www.sharelatex.com}{Overl
         \cmidrule[.1em](lr){1-4}
         
     \multirow{1}{*}[0pt]{\textit{Booleans}} % Brian
-        & 6 & Sep 28 -- Oct 2 & Definitions, intro to Boolean logic \\
-        \cmidrule[.1em](lr){1-4}
-        
-    \multirow{2}{*}[0pt]{\textit{Spatial}} % Brian
-        & 8 & Oct 12 -- Oct 16 & \textbf{Fundamentals}: mapping, \texttt{geopandas} \\
-        & 9 & Oct 19 -- Oct 23 & \textbf{Applications}: political data \\ \cmidrule[.1em](lr){1-4}
-    
-    \multirow{2}{*}[0pt]{\textit{Dyadic}} % Brian
-        & 10 & Oct 26 -- Oct 30 & \textbf{Fundamentals}: network analysis, \texttt{networkx} \\
-        & 11 & Nov 2 -- Nov 6 & \textbf{Applications}: social network data \\ \cmidrule[.1em](lr){1-4}
-        
-    \multirow{2}{*}[0pt]{\textit{Structured}} % Abe
-        & 12 & Nov 9 -- Nov 13 & \textbf{Fundamentals}: JSON \& XML, \texttt{BeautifulSoup} \\
-        & 13 & Nov 16 -- Nov 20 & \textbf{Applications}: API data \\ 
-        \cmidrule[.1em](lr){1-4}
-    
-    & 14 & Nov 23 -- Nov 27 & Not Fall Break - Catch up \\ \cmidrule[.1em](lr){1-4}
-    
-    \multirow{2}{*}[0pt]{\textit{Unstructured}} % Abe //// grep 
-        & 15 & Nov 30 -- Dec 4 & \textbf{Fundamentals}: text processing, \texttt{nltk} \\ 
-        & 16 & Dec 7 -- Dec 11 & \textbf{Applications}: text data \\
-        
+        & 6 & Sep 28 -- Oct 2 & Definitions, intro to Boolean logic \\       
     \bottomrule[.15em]
 \end{tabular}\\
+\caption{Fundamentals}
 \end{table}
 
+% \clearpage
+\vspace{2em}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccl}
+    \toprule[.15em]
+    \textbf{Module} & \textbf{Week} & \textbf{Dates} & \textbf{Topics} \\
+    \cmidrule[.1em](lr){1-4}
+    
+   \textit{Random variables} & 7 & X & Definitions and expected value \\
+    \cmidrule[.1em](lr){1-4}
+        
+   \textit{Simulation} & 8 & X & Definitions and expected value \\
+    \cmidrule[.1em](lr){1-4}
+
+   \textit{Events} & 9 & X & Definitions and expected value \\
+    \cmidrule[.1em](lr){1-4}
+
+   \textit{Conditional probability} & 10 & X & Definitions and expected value \\
+    \cmidrule[.1em](lr){1-4}   
+ 
+    \textit{Bayes theorem } & 11 & X & Definitions and expected value \\
+    \cmidrule[.1em](lr){1-4}   
+ 
+    \textit{Midterm review} & 12 & X & Definitions and expected value \\  
+ 
+    \bottomrule[.15em]
+\end{tabular}\\
+\caption{Probability}
+\end{table}
 
 \renewcommand{\bibsection}{\section{\huge \bibname}\prebibhook}
 \baselineskip 14.2pt
