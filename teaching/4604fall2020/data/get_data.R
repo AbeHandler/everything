@@ -15,6 +15,6 @@ final <- z %>% select(`state/region`, population, positive)
 
 with_gov = final %>% left_join(gov, by = c("state/region" = "state_code"))
 
-p <- ggplot(with_gov) + geom_point(aes(x=population, y=positive, color = `party`))
+p <- ggplot(with_gov) + geom_point(aes(x=population, y=positive, color = `party`)) + xlim(0, 39332521)
 
-p <- p + geom_text(aes(x=population, y=positive, label = `state/region`)) + xlim(0, 39332521)
+p <-p + geom_text(aes(x=population, y=positive, label = `state/region`), hjust = -.5)
