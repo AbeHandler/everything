@@ -35,7 +35,7 @@ def createInClassAssignment(courseNo, date):
 
     print("[*] Creating in-class assignment {} for {}".format(courseNo, date))
 
-    new_assignment = course.create_assignment({
+    course.create_assignment({
         'name': 'In-class assignment, {}'.format(date.strftime("%b %d")),
         'published': True,
         'unlock_at': date.strftime('%Y-%m-%d') + "T09:00:00",
@@ -43,6 +43,8 @@ def createInClassAssignment(courseNo, date):
         "assignment_group_id": group_id,
         "points_possible": 3
     })
+
+    print(" Added assignment to {}".format(course.name))
 
 
 if __name__ == "__main__":
@@ -60,12 +62,6 @@ if __name__ == "__main__":
     parser.add_argument('--inClass', help='pass a date in YYYYMMDD to create in-class assignment, e.g. 20200824')
 
     args = parser.parse_args()
-
-    # course = canvas.get_course(COURSES["4604"])
-    # print(course.name)
-    # course.create_quiz({"title": "test"})
-
-    # createInClassAssignment(courseNo="4604", date="20200826")
 
     try:
         datetime.strptime(args.inClass, '%Y%m%d')
