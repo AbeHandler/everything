@@ -1,0 +1,1 @@
+daily.csv is from covid tracking project
