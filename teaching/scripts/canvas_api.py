@@ -44,7 +44,7 @@ def createInClassAssignment(courseNo, date):
         "points_possible": 3
     })
 
-    print(" Added assignment to {}".format(course.name))
+    print("   - Added assignment to {}".format(course.name))
 
 
 if __name__ == "__main__":
