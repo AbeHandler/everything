@@ -16,8 +16,6 @@ API_URL = "https://canvas.colorado.edu"
 # Canvas API key
 API_KEY = os.environ['CANVAS_TOKEN']
 
-print(API_KEY)
-
 # Initialize a new Canvas object
 canvas = Canvas(API_URL, API_KEY)
 
