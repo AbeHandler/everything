@@ -1,14 +1,15 @@
 '''
-Abe Handler's scripts for accessing the canvas API
+Abe Handler's command-line scripts for accessing the canvas API
 
+Setup:
 1. Go to https://canvas.colorado.edu/profile/settings and click "+ New Access Token"
 2. in your local shell, run export CANVAS_TOKEN="my_secret_token"
 3. Install the python client $pip install canvasapi
 '''
 
 
-# Import the Canvas class
 import os
+import argparse
 from datetime import datetime
 from canvasapi import Canvas
 
@@ -39,7 +40,8 @@ def createInClassAssignment(courseNo, date):
         'published': True,
         'unlock_at': date.strftime('%Y-%m-%d') + "T09:00:00",
         'lock_at': date.strftime('%Y-%m-%d') + "T17:00:00",
-        "assignment_group_id": group_id
+        "assignment_group_id": group_id,
+        "points_possible": 3
     })
 
 
@@ -52,8 +54,21 @@ if __name__ == "__main__":
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--course', help='INFO course number, e.g. 4604')
+
+    parser.add_argument('--inClass', help='pass a date in YYYYMMDD to create in-class assignment, e.g. 20200824')
+
+    args = parser.parse_args()
+
     # course = canvas.get_course(COURSES["4604"])
     # print(course.name)
     # course.create_quiz({"title": "test"})
 
-    createInClassAssignment(courseNo="4604", date="20200826")
+    # createInClassAssignment(courseNo="4604", date="20200826")
+
+    try:
+        datetime.strptime(args.inClass, '%Y%m%d')
+        createInClassAssignment(courseNo=args.course, date=args.inClass)
+    except ValueError:
+        print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
