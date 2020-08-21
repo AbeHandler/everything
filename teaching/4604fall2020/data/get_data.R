@@ -15,6 +15,8 @@ final <- z %>% select(`state/region`, population, positive)
 
 with_gov = final %>% left_join(gov, by = c("state/region" = "state_code")) %>% filter(`state/region` != "USA")
 
+with_gov = rename(with_gov, num_positive =positive ) %>% rename(governor_party=party)
+
 big_max = 40000000
 small_max = 10000000
 
