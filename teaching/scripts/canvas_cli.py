@@ -13,6 +13,10 @@ Questions and contact:
 abram.handler@gmail.com
 www.abehandler.com
 
+To make an API call when logged into canvas do this 
+
+https://canvas.colorado.edu/api/v1/courses/62535/assignment_groups
+
 '''
 
 
@@ -31,6 +35,9 @@ def get_api():
 
     # Initialize a new Canvas object
     return Canvas(API_URL, API_KEY)
+
+# update an assignment
+# https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
 
 
 def createInClassAssignment(courseNo, date, published=False):
@@ -78,10 +85,16 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # test out overrides
+    course = canvas.get_course(COURSES["sandbox"])
+    assignment = course.get_assignment(826690)
+    KEEGAN = 107996488
+    assignment.edit(assignment={"name":"tex", "assignment_overrides": [{"student_ids": KEEGAN, "due_at": "2012-07-01T23:59:00-06:00"}]})
+
+    '''
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
         course.create_quiz({'title': "test"})
-    '''
     try:
         datetime.strptime(args.dueDate, '%Y%m%d')
         createInClassAssignment(courseNo=args.course, date=args.dueDate)
