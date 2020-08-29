@@ -40,22 +40,18 @@ def get_api():
 # https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
 
 
-def createInClassAssignment(courseNo, date, published=False):
+def create_in_class_assignment(courseNo, due, name, published=False):
 
     course = canvas.get_course(COURSES[courseNo])
 
-    group_id = COURSE2INCLASS[courseNo]
+    due = datetime.strptime(due, '%Y%m%d')
 
-    date = datetime.strptime(date, '%Y%m%d')
-
-    print("[*] Creating in-class assignment {} for {}".format(courseNo, date))
+    print("[*] Creating in-class assignment {} for {}".format(courseNo, due))
 
     course.create_assignment({
-        'name': 'In-class assignment, {}'.format(date.strftime("%b %d")),
+        'name': name,
         'published': published,
-        'unlock_at': date.strftime('%Y-%m-%d') + "T09:00:00",
-        'lock_at': date.strftime('%Y-%m-%d') + "T17:00:00",
-        "assignment_group_id": group_id,
+        'due_at': due.strftime('%Y-%m-%d') + "T23:59:00",
         "points_possible": 3
     })
 
@@ -66,7 +62,7 @@ if __name__ == "__main__":
     canvas = get_api()
 
     # map CU names to names in Canvas
-    COURSES = {"4604": 62561, "sandbox": 62535}
+    COURSES = {"4604": 62561, "sandbox": 62535, "2301": 62559}
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
@@ -81,23 +77,27 @@ if __name__ == "__main__":
 
     parser.add_argument('--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
+    parser.add_argument('--name', help='the name of the assignment')
+
     parser.add_argument('--publish', dest='publish', default='false', action='store_true', help='Use this flag to immediately publish the assignment')
 
     args = parser.parse_args()
 
     # test out overrides
+    '''
     course = canvas.get_course(COURSES["sandbox"])
     assignment = course.get_assignment(826690)
     KEEGAN = 107996488
     assignment.edit(assignment={"name":"tex", "assignment_overrides": [{"student_ids": KEEGAN, "due_at": "2012-07-01T23:59:00-06:00"}]})
-
     '''
+
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
         course.create_quiz({'title': "test"})
-    try:
-        datetime.strptime(args.dueDate, '%Y%m%d')
-        createInClassAssignment(courseNo=args.course, date=args.dueDate)
-    except ValueError:
-        print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
-    '''
+
+    if(args.assignment):
+        try:
+            datetime.strptime(args.due, '%Y%m%d')
+            create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
+        except ValueError:
+            print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
