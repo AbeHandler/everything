@@ -111,4 +111,9 @@ if __name__ == "__main__":
     course = canvas.get_course(COURSES["sandbox"])
 
     # Create a folder in canvas
-    # course.create_folder(name='Assignment1', parent_folder_path="/Assignments/")
+    for week in range(1, 17):
+        parent = "/week{}/".format(week)
+        course.create_folder(name='quiz_files', parent_folder_path=parent)
+        course.create_folder(name='assignment_files', parent_folder_path=parent)
+        course.create_folder(name='other_files', parent_folder_path=parent)
+
