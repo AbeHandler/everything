@@ -82,21 +82,23 @@ if __name__ == "__main__":
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
 
+    COURSE2CLASSTIME = {"4604": "T12:40:00", "sandbox": "T12:40:00"}
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-c', '-course', '--course', default='sandbox', help='INFO course number, e.g. 4604')
 
-    parser.add_argument('-init_files', '--init_files', dest='init_files', default='false', action='store_true', help='Use this flag to init the course files on Canvas')
+    parser.add_argument('-init_files', '--init_files', dest='init_files', default=False, action='store_true', help='Use this flag to init the course files on Canvas')
 
     parser.add_argument('--quiz', '-quiz', dest='quiz', default='false', action='store_true', help='Use this flag to create a quiz')
 
     parser.add_argument('--assignment', '-assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
 
-    parser.add_argument('-a', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
+    parser.add_argument('-a', '-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
 
-    parser.add_argument('--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
+    parser.add_argument('-d', '-due', '--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
-    parser.add_argument('--name', help='the name of the assignment')
+    parser.add_argument('-n', '-name', '--name', help='the name of the quiz or assignment')
 
     parser.add_argument('--publish', dest='publish', default='false', action='store_true', help='Use this flag to immediately publish the assignment')
 
@@ -112,11 +114,13 @@ if __name__ == "__main__":
 
     print(args)
 
-    '''
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
-        course.create_quiz({'title': "test"})
+        course.create_quiz({'title': args.name,
+                            'published': args.publish,
+                            "due_at": args.due + "T" + COURSE2CLASSTIME[args.course]})
 
+    '''
     if(args.assignment):
         try:
             datetime.strptime(args.due, '%Y%m%d')
