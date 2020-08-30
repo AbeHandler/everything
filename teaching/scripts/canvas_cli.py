@@ -1,5 +1,5 @@
 '''
-Command-line interface to the canvas API.
+An opinionated command-line interface to the canvas API.
 - This will modify your canvas courses
 - Start with your sandbox course when learning
 - Mostly just a wrapper over https://github.com/ucfopen/canvasapi
@@ -20,6 +20,7 @@ https://canvas.colorado.edu/api/v1/courses/62535/assignment_groups
 '''
 
 
+import time
 import os
 import argparse
 from datetime import datetime
@@ -58,6 +59,18 @@ def create_in_class_assignment(courseNo, due, name, published=False):
     print("   - Added assignment to {}".format(course.name))
 
 
+def init_course_files(course_number):
+    course = canvas.get_course(course_number)
+
+    # Create a folder in canvas
+    for week in range(1, 17):
+        print("[*] {}".format(week))
+        parent = "/week{}/".format(week)
+        course.create_folder(name='quiz_files', parent_folder_path=parent)
+        course.create_folder(name='assignment_files', parent_folder_path=parent)
+        course.create_folder(name='other_files', parent_folder_path=parent)
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -70,6 +83,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--course', default='sandbox', help='INFO course number, e.g. 4604')
+
+    parser.add_argument('--init_files', dest='init_files', default='false', action='store_true', help='Use this flag to init the course files on Canvas')
 
     parser.add_argument('--quiz', '-quiz', dest='quiz', default='false', action='store_true', help='Use this flag to create a quiz')
 
@@ -108,12 +123,5 @@ if __name__ == "__main__":
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
     '''
 
-    course = canvas.get_course(COURSES["sandbox"])
-
-    # Create a folder in canvas
-    for week in range(1, 17):
-        parent = "/week{}/".format(week)
-        course.create_folder(name='quiz_files', parent_folder_path=parent)
-        course.create_folder(name='assignment_files', parent_folder_path=parent)
-        course.create_folder(name='other_files', parent_folder_path=parent)
-
+    if(args.init_files):
+        init_course_files(COURSES[args.course])
