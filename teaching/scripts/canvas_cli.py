@@ -100,6 +100,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-n', '-name', '--name', help='the name of the quiz or assignment')
 
+    parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
+
     parser.add_argument('--publish', dest='publish', default='false', action='store_true', help='Use this flag to immediately publish the assignment')
 
     args = parser.parse_args()
@@ -118,6 +120,7 @@ if __name__ == "__main__":
         course = canvas.get_course(COURSES[args.course])
         course.create_quiz({'title': args.name,
                             'published': args.publish,
+                            'time_limit': args.time_limit,
                             "due_at": args.due + "T" + COURSE2CLASSTIME[args.course]})
 
     '''
