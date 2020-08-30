@@ -75,6 +75,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--assignment', '-assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
 
+    parser.add_argument('-a', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
+
     parser.add_argument('--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
     parser.add_argument('--name', help='the name of the assignment')
@@ -91,6 +93,9 @@ if __name__ == "__main__":
     assignment.edit(assignment={"name":"tex", "assignment_overrides": [{"student_ids": KEEGAN, "due_at": "2012-07-01T23:59:00-06:00"}]})
     '''
 
+    print(args)
+
+    '''
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
         course.create_quiz({'title': "test"})
@@ -101,3 +106,9 @@ if __name__ == "__main__":
             create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
         except ValueError:
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
+    '''
+
+    course = canvas.get_course(COURSES["sandbox"])
+
+    # Create a folder in canvas
+    # course.create_folder(name='Assignment1', parent_folder_path="/Assignments/")
