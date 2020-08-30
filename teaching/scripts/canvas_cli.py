@@ -1,5 +1,5 @@
 '''
-Command-line interface to the canvas API.
+An opinionated command-line interface to the canvas API.
 - This will modify your canvas courses
 - Start with your sandbox course when learning
 - Mostly just a wrapper over https://github.com/ucfopen/canvasapi
@@ -20,6 +20,7 @@ https://canvas.colorado.edu/api/v1/courses/62535/assignment_groups
 '''
 
 
+import time
 import os
 import argparse
 from datetime import datetime
@@ -58,6 +59,20 @@ def create_in_class_assignment(courseNo, due, name, published=False):
     print("   - Added assignment to {}".format(course.name))
 
 
+def init_course_files(course_number):
+    # See https://github.com/ucfopen/canvasapi/issues/415
+
+    course = canvas.get_course(course_number)
+
+    # Create a folder in canvas
+    for week in range(1, 17):
+        print("[*] Init folders week {}".format(week))
+        parent = "/week{}/".format(week)
+        course.create_folder(name='quiz_files', parent_folder_path=parent)
+        course.create_folder(name='assignment_files', parent_folder_path=parent)
+        course.create_folder(name='other_files', parent_folder_path=parent)
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -69,11 +84,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--course', default='sandbox', help='INFO course number, e.g. 4604')
+    parser.add_argument('-c', '-course', '--course', default='sandbox', help='INFO course number, e.g. 4604')
+
+    parser.add_argument('-init_files', '--init_files', dest='init_files', default='false', action='store_true', help='Use this flag to init the course files on Canvas')
 
     parser.add_argument('--quiz', '-quiz', dest='quiz', default='false', action='store_true', help='Use this flag to create a quiz')
 
     parser.add_argument('--assignment', '-assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
+
+    parser.add_argument('-a', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
 
     parser.add_argument('--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
@@ -91,6 +110,9 @@ if __name__ == "__main__":
     assignment.edit(assignment={"name":"tex", "assignment_overrides": [{"student_ids": KEEGAN, "due_at": "2012-07-01T23:59:00-06:00"}]})
     '''
 
+    print(args)
+
+    '''
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
         course.create_quiz({'title': "test"})
@@ -101,3 +123,7 @@ if __name__ == "__main__":
             create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
         except ValueError:
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
+    '''
+
+    if(args.init_files):
+        init_course_files(COURSES[args.course])
