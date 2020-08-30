@@ -60,11 +60,13 @@ def create_in_class_assignment(courseNo, due, name, published=False):
 
 
 def init_course_files(course_number):
+    # See https://github.com/ucfopen/canvasapi/issues/415
+
     course = canvas.get_course(course_number)
 
     # Create a folder in canvas
     for week in range(1, 17):
-        print("[*] {}".format(week))
+        print("[*] Init folders week {}".format(week))
         parent = "/week{}/".format(week)
         course.create_folder(name='quiz_files', parent_folder_path=parent)
         course.create_folder(name='assignment_files', parent_folder_path=parent)
@@ -82,9 +84,9 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--course', default='sandbox', help='INFO course number, e.g. 4604')
+    parser.add_argument('-c', '-course', '--course', default='sandbox', help='INFO course number, e.g. 4604')
 
-    parser.add_argument('--init_files', dest='init_files', default='false', action='store_true', help='Use this flag to init the course files on Canvas')
+    parser.add_argument('-init_files', '--init_files', dest='init_files', default='false', action='store_true', help='Use this flag to init the course files on Canvas')
 
     parser.add_argument('--quiz', '-quiz', dest='quiz', default='false', action='store_true', help='Use this flag to create a quiz')
 
