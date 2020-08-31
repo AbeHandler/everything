@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-init_files', '--init_files', dest='init_files', default=False, action='store_true', help='Use this flag to init the course files on Canvas')
 
-    parser.add_argument('--quiz', '-quiz', dest='quiz', default='false', action='store_true', help='Use this flag to create a quiz')
+    parser.add_argument('--quiz', '-quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
 
     parser.add_argument('--assignment', '-assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
 
@@ -99,6 +99,10 @@ if __name__ == "__main__":
     parser.add_argument('-d', '-due', '--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
     parser.add_argument('-n', '-name', '--name', help='the name of the quiz or assignment')
+
+    parser.add_argument('-w', '-week', '--week', dest='week', type=int)
+
+    parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas. ', dest='upload', type=str)
 
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
 
@@ -134,3 +138,15 @@ if __name__ == "__main__":
 
     if(args.init_files):
         init_course_files(COURSES[args.course])
+
+    if args.upload is not None:
+
+        def get_week_folder(course_no, week_no):
+            course = canvas.get_course(COURSES[args.course])
+            for f in course.get_folders():
+                if f.name == "week{}".format(args.week):
+                    return f
+
+        folder = get_week_folder(COURSES[args.course], args.week)
+
+        print(folder)
