@@ -73,6 +73,17 @@ def init_course_files(course_number):
         course.create_folder(name='other_files', parent_folder_path=parent)
 
 
+def get_student_names2_ids(courseno):
+    '''
+    Returns a dictionary of names 2 student ids for this course
+    '''
+    out = {}
+    course = canvas.get_course(COURSES[courseno])
+    for student in course.get_recent_students():
+        out[student.name] = student.id
+    return out
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -83,6 +94,10 @@ if __name__ == "__main__":
     COURSE2INCLASS = {"4604": "149100"}
 
     COURSE2CLASSTIME = {"4604": "T12:40:00", "sandbox": "T12:40:00"}
+
+    names2ids = {}
+    for coursename, courseno in COURSES.items():
+        names2ids[coursename] = get_student_names2_ids(coursename)
 
     parser = argparse.ArgumentParser()
 
@@ -113,14 +128,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # test out overrides
-    '''
-    course = canvas.get_course(COURSES["sandbox"])
-    assignment = course.get_assignment(826690)
-    KEEGAN = 107996488
-    assignment.edit(assignment={"name":"tex", "assignment_overrides": [{"student_ids": KEEGAN, "due_at": "2012-07-01T23:59:00-06:00"}]})
-    '''
 
     print(args)
+
+    course = canvas.get_course(COURSES["sandbox"])
+    assignment = course.get_assignment(826690)
+
+    extra_time = ['Jason Zietz', 'Brian Keegan']
+
+    print(names2ids.keys())
+    print(names2ids[args.course])
+
+    ids = [names2ids[args.course][i] for i in extra_time]
+
+    assignment.edit(assignment={"name": "tex", "assignment_overrides": [{"student_ids": ids, "due_at": "2012-07-01T23:59:00-06:00"}]})
 
     if(args.quiz):
         course = canvas.get_course(COURSES[args.course])
@@ -129,6 +150,9 @@ if __name__ == "__main__":
                             'time_limit': args.time_limit,
                             "points_possible": args.points,
                             "due_at": args.due + "T" + COURSE2CLASSTIME[args.course]})
+
+    import os
+    os._exit(0)
 
     if(args.assignment):
         try:
