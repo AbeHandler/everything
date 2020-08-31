@@ -102,6 +102,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-w', '-week', '--week', dest='week', type=int)
 
+    parser.add_argument('-p', '-points', '--points', dest='points', default=10, type=int)
+
     parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas. ', dest='upload', type=str)
 
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
@@ -125,16 +127,15 @@ if __name__ == "__main__":
         course.create_quiz({'title': args.name,
                             'published': args.publish,
                             'time_limit': args.time_limit,
+                            "points_possible": args.points,
                             "due_at": args.due + "T" + COURSE2CLASSTIME[args.course]})
 
-    '''
     if(args.assignment):
         try:
             datetime.strptime(args.due, '%Y%m%d')
             create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
         except ValueError:
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
-    '''
 
     if(args.init_files):
         init_course_files(COURSES[args.course])
