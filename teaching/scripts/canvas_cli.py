@@ -112,6 +112,20 @@ def init_quizzes(course):
                             "due_at": due_at})
 
 
+def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10):
+    '''
+    course = canvas.get_course(CU2Canvas["3401"])
+    names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
+    names2ids_course = names2ids["3401"]
+    '''
+    ids = [names2ids_course[i] for i in names]
+
+    for quiz in course.get_quizzes():
+        print("[*] Setting accomodation for {}".format(quiz.title))
+        for id_ in ids:
+            quiz.set_extensions([{'user_id': id_, 'extra_time': extra_minutes}])
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -159,19 +173,10 @@ if __name__ == "__main__":
 
     print(args)
 
-    course = canvas.get_course(CU2Canvas[args.course])
-
-    '''
-    assignment = course.get_assignment(826690)
-
-    extra_time = ['Jason Zietz', 'Brian Keegan']
-    ids = [names2ids[args.course][i] for i in extra_time]
-
-    for quiz in course.get_quizzes():
-        for id_ in ids:
-            quiz.set_extensions([{'user_id': id_, 'extra_time': 60}])
-
-    '''
+    course = canvas.get_course(CU2Canvas["3401"])
+    names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
+    names2ids_course = names2ids["3401"]
+    set_extra_time_on_quizzes(course, names, names2ids_course)
 
     import os
     os._exit(0)
