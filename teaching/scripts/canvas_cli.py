@@ -126,6 +126,13 @@ def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10)
             quiz.set_extensions([{'user_id': id_, 'extra_time': extra_minutes}])
 
 
+def export_all(CU2Canvas):
+    for course in CU2Canvas:
+        print("[*] Exporting {} from Canvas".format(course))
+        course = canvas.get_course(CU2Canvas[course])
+        course.export_content(export_type="common_cartridge")
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -140,6 +147,8 @@ if __name__ == "__main__":
     names2ids = {}
     for coursename, courseno in CU2Canvas.items():
         names2ids[coursename] = get_student_names2_ids(CU2Canvas[coursename])
+
+    # TODO exports
 
     parser = argparse.ArgumentParser()
 
@@ -159,6 +168,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-w', '-week', '--week', dest='week', type=int)
 
+    parser.add_argument('-e', '-export', '--export', dest='export', help='Export all', default=False, action='store_true')
+
     parser.add_argument('-p', '-points', '--points', dest='points', default=10, type=int)
 
     parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas. ', dest='upload', type=str)
@@ -173,10 +184,13 @@ if __name__ == "__main__":
 
     print(args)
 
-    course = canvas.get_course(CU2Canvas["3401"])
-    names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
-    names2ids_course = names2ids["3401"]
-    set_extra_time_on_quizzes(course, names, names2ids_course)
+    # course = canvas.get_course(CU2Canvas["3401"])
+    # names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
+    # names2ids_course = names2ids["3401"]
+    # set_extra_time_on_quizzes(course, names, names2ids_course)
+
+    if(args.export):
+        export_all(CU2Canvas)
 
     import os
     os._exit(0)
