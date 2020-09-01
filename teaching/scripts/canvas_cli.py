@@ -92,6 +92,8 @@ def init_quizzes(course):
     '''
     Initialize weekly quizzes for a course
 
+    This code starts on week 3 b/c Brian already made the first 2 weeks of quizzes
+
     The day of the week will be determined by the initial value of the now variable
     '''
     now = datetime(2020, 9, 11)
@@ -114,7 +116,7 @@ if __name__ == "__main__":
     canvas = get_api()
 
     # Map CU course names to Canvas course names
-    CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559}
+    CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
@@ -158,8 +160,6 @@ if __name__ == "__main__":
     print(args)
 
     course = canvas.get_course(CU2Canvas[args.course])
-
-    init_quizzes(course)
 
     '''
     assignment = course.get_assignment(826690)
