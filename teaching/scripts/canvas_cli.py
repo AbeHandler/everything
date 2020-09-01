@@ -25,6 +25,8 @@ import os
 import argparse
 from datetime import datetime
 from canvasapi import Canvas
+from datetime import datetime
+from datetime import timedelta
 
 
 def get_api():
@@ -86,6 +88,28 @@ def get_student_names2_ids(course_no):
     return out
 
 
+def init_quizzes(course):
+    '''
+    Initialize weekly quizzes for a course
+
+    The day of the week will be determined by the initial value of the now variable
+    '''
+    now = datetime(2020, 9, 11)
+    for week in range(3, 17):
+        title = "Week {} ".format(str(week).zfill(2)) + "Quiz"
+        time_limit = 10
+        due_at = now.strftime('%Y-%m-%d') + "T11:20:00"
+        unlock_at = now.strftime('%Y-%m-%d') + "T11:00:00"
+        points_possible = 10
+        now = now + timedelta(days=7)
+        course.create_quiz({'title': title,
+                            'published': False,
+                            'time_limit': time_limit,
+                            "points_possible": points_possible,
+                            "unlock_at": unlock_at,
+                            "due_at": due_at})
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -133,7 +157,11 @@ if __name__ == "__main__":
 
     print(args)
 
-    course = canvas.get_course(CU2Canvas["sandbox"])
+    course = canvas.get_course(CU2Canvas[args.course])
+
+    init_quizzes(course)
+
+    '''
     assignment = course.get_assignment(826690)
 
     extra_time = ['Jason Zietz', 'Brian Keegan']
@@ -142,6 +170,8 @@ if __name__ == "__main__":
     for quiz in course.get_quizzes():
         for id_ in ids:
             quiz.set_extensions([{'user_id': id_, 'extra_time': 60}])
+
+    '''
 
     import os
     os._exit(0)
