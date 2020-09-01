@@ -75,9 +75,9 @@ def init_course_files(course_number):
 
 def get_student_names2_ids(course_no):
     '''
-    courseno = 
+    courseno = a canvas course number
     Returns a dictionary of names 2 student ids for this course
-    note that 
+    note that maps student names to *canvas* student IDs
     '''
     out = {}
     course = canvas.get_course(course_no)
@@ -107,11 +107,11 @@ if __name__ == "__main__":
 
     parser.add_argument('-init_files', '--init_files', dest='init_files', default=False, action='store_true', help='Use this flag to init the course files on Canvas')
 
-    parser.add_argument('--quiz', '-quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
+    parser.add_argument('-q', '-quiz', '--quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
 
-    parser.add_argument('--assignment', '-assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
+    parser.add_argument('-a', '-assignment', '--assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
 
-    parser.add_argument('-a', '-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
+    parser.add_argument('-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
 
     parser.add_argument('-d', '-due', '--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
@@ -135,9 +135,16 @@ if __name__ == "__main__":
 
     course = canvas.get_course(CU2Canvas["sandbox"])
     assignment = course.get_assignment(826690)
+
     extra_time = ['Jason Zietz', 'Brian Keegan']
     ids = [names2ids[args.course][i] for i in extra_time]
-    assignment.edit(assignment={"name": "tex", "assignment_overrides": [{"student_ids": ids, "due_at": "2012-07-01T23:59:00-06:00"}]})
+
+    for quiz in course.get_quizzes():
+        for id_ in ids:
+            quiz.set_extensions([{'user_id': id_, 'extra_time': 60}])
+
+    import os
+    os._exit(0)
 
     if(args.quiz):
         course = canvas.get_course(CU2Canvas[args.course])
@@ -146,9 +153,6 @@ if __name__ == "__main__":
                             'time_limit': args.time_limit,
                             "points_possible": args.points,
                             "due_at": args.due + "T" + Course2Classtime[args.course]})
-
-    import os
-    os._exit(0)
 
     if(args.assignment):
         try:
