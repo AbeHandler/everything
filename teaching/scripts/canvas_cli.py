@@ -19,7 +19,7 @@ https://canvas.colorado.edu/api/v1/courses/62535/assignment_groups
 
 '''
 
-
+import glob
 import time
 import os
 import argparse
@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-q', '-quiz', '--quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
 
-    parser.add_argument('-a', '-assignment', '--assignment', dest='assignment', default='false', action='store_true', help='Use this flag to create an assignment')
+    parser.add_argument('-a', '-assignment', '--assignment', dest='assignment', default=False, action='store_true', help='Use this flag to create an assignment')
 
     parser.add_argument('-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
 
@@ -172,7 +172,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-p', '-points', '--points', dest='points', default=10, type=int)
 
-    parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas. ', dest='upload', type=str)
+    parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas.', dest='upload', type=str)
 
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
 
@@ -191,9 +191,6 @@ if __name__ == "__main__":
 
     if(args.export):
         export_all(CU2Canvas)
-
-    import os
-    os._exit(0)
 
     if(args.quiz):
         course = canvas.get_course(CU2Canvas[args.course])
@@ -214,6 +211,7 @@ if __name__ == "__main__":
         init_course_files(CU2Canvas[args.course])
 
     if args.upload is not None:
+        # py canvas_cli.py -u ../2301fall2020/week2/assignment_files/ -c 2301 -w 2
 
         def get_week_folder(course_no, week_no):
             course = canvas.get_course(CU2Canvas[args.course])
@@ -223,4 +221,5 @@ if __name__ == "__main__":
 
         folder = get_week_folder(CU2Canvas[args.course], args.week)
 
-        print(folder)
+        for fn in glob.glob(args.upload + "/*"):
+            folder.upload(fn)
