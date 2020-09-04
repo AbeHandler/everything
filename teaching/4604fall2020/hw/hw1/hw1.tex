@@ -16,7 +16,6 @@
 
 
 \usepackage{enumerate}
-\usepackage{subfigure}
 \usepackage{tikz}
 \usetikzlibrary{shapes,snakes}
 
@@ -814,8 +813,7 @@ The code from the book uses two variables, {\em sepal length} and {\em petal len
 This is not actually a very interesting example, because the points are completely separated by only one of these dimensions ({\em petal length}), so it is easy to learn.
 In order words, if you only used this one feature, you could still learn a classifier, rather than needing two features.
 
-A more interesting example is with {\em sepal length} and {\em sepal width} (columns 1 and 2).
-The data are still linearly separable in these two dimensions, but it requires a combination of both variables.
+A more interesting example is with {\em sepal length} and {\em sepal width} The data are still linearly separable in these two dimensions, but it requires a combination of both variables. Sepal length and sepal width are columns 1 and 2 in the dataframe you load from disk. It's a good idea to print out the dataframe to see the column numbers and confirm you are selecting the correct columns. Note that the left-most column in the dataframe is column 0. 
 
 Modify the code to use these two variables. When you run it, you will find that the algorithm still makes errors after the default 10 iterations (also called epochs). 
 Change the \code{n\_iters} parameter of the \code{Perceptron} object to $1000$.
