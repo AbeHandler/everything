@@ -174,6 +174,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas.', dest='upload', type=str)
 
+    parser.add_argument('-s', '-sync', '--sync', action='store_true', help='syncs a directory to canvas', dest='sync', default=False)
+
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
 
     parser.add_argument('--publish', dest='publish', default='false', action='store_true', help='Use this flag to immediately publish the assignment')
@@ -210,8 +212,9 @@ if __name__ == "__main__":
     if(args.init_files):
         init_course_files(CU2Canvas[args.course])
 
-    if args.upload is not None:
+    if args.upload is not None and args.sync is False:
         # py canvas_cli.py -u ../2301fall2020/week2/assignment_files/ -c 2301 -w 2
+        print("*uploading")
 
         def get_week_folder(course_no, week_no):
             course = canvas.get_course(CU2Canvas[args.course])
@@ -223,3 +226,22 @@ if __name__ == "__main__":
 
         for fn in glob.glob(args.upload + "/*"):
             folder.upload(fn)
+
+    if args.sync and args.upload is not None:
+
+        def get_week_folder(course_no, week_no):
+            course = canvas.get_course(CU2Canvas[args.course])
+            for f in course.get_folders():
+                if f.name == "week{}".format(args.week):
+                    return f
+
+        folder = get_week_folder(CU2Canvas[args.course], args.week)
+
+        for subfolder in folder.get_folders():
+            name = subfolder.name
+            path = args.upload + "/" + name
+            print(args.upload + "/" + name + "/*")
+            for fn in glob.glob(args.upload + "/" + name + "/*"):
+                print("fn=", fn)
+                print("[*] Uploading {} to {}".format(fn, name))
+                subfolder.upload(fn, on_duplicate="overwrite")
