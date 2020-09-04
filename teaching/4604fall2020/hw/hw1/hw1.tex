@@ -1,0 +1,903 @@
+%%%%%
+% TODO:
+% - Add pseudocode that explains clique/junction tree algorithm in more detail than book.
+%   Show notation table along with pseudocode to make it easy to follow.
+%   Add details for certain edge cases: how to handle empty cliques (set to 1), etc
+%%%%%
+
+
+
+\documentclass{article}
+
+\usepackage{psfig}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+
+
+\usepackage{enumerate}
+\usepackage{subfigure}
+\usepackage{tikz}
+\usetikzlibrary{shapes,snakes}
+
+\pagestyle{empty} \addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{0.5in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+
+% Commands for the homework
+\newcommand{\points}[1]{{\textbf{[#1 points]}}}
+\newcommand{\expoints}[1]{{\textbf{[#1 extra credit]}}}
+\newcommand{\ruleskip}{\bigskip\hrule\bigskip}
+\newcommand{\nodify}[1]{{\sc #1}}
+\newcommand{\Parents}[1]{\mbox{Parents(#1)}}
+\newcommand{\ignore}[1]{}
+
+\newcommand{\code}[1]{{\footnotesize \tt #1}}
+
+%theorem
+\newcommand{\thm}{\begin{THEOREM} \thmcolon \rm}
+\newcommand{\thmwname}[1]{\begin{THEOREM} {\bf {#1}} \thmcolon \rm}
+%lemma
+\newcommand{\lem}{\begin{lemma}}
+%proposition
+\newcommand{\pro}{\begin{proposition}}
+%definition
+\newcommand{\dfn}{\begin{definition}}
+%remark
+\newcommand{\rem}{\begin{remark}}
+%example
+\newcommand{\xam}{\begin{example}}
+%corollary
+\newcommand{\cor}{\begin{corollary}}
+%proof
+\newcommand{\prf}{\noindent{\bf Proof:} }
+%end theorem
+\newcommand{\ethm}{\end{THEOREM}}
+%end lemma
+\newcommand{\elem}{\end{lemma}}
+%end proposition
+\newcommand{\epro}{\end{proposition}}
+%end definition
+\newcommand{\edfn}{\bbox\end{definition}}
+%end remark
+\newcommand{\erem}{\bbox\end{remark}}
+%end example
+\newcommand{\exam}{\bbox\end{example}}
+%end corollary
+\newcommand{\ecor}{\end{corollary}}
+%end proof
+\newcommand{\eprf}{\bbox\vspace{0.1in}}
+%begin equation
+\newcommand{\beqn}{\begin{equation}}
+%end equation
+\newcommand{\eeqn}{\end{equation}}
+%begin eqnarray*
+\newcommand{\beqa}{\begin{eqnarray*}}
+%end equation
+\newcommand{\eeqa}{\end{eqnarray*}}
+
+%lists
+\newcommand{\denselist}{\itemsep 0pt\partopsep 0pt}
+\newcommand{\bitem}{\begin{itemize}\denselist}
+\newcommand{\eitem}{\end{itemize}}
+\newcommand{\benum}{\begin{enumerate}\denselist}
+\newcommand{\eenum}{\end{enumerate}}
+
+%set operations
+\newcommand{\union}{\cup}
+\newcommand{\inter}{\cap}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+
+\newcommand{\forclass}[1]{#1}
+\newcommand{\notforclass}[1]{}
+
+%notes and comments
+\newcommand{\commentout}[1]{}
+\notforclass{
+\newcommand{\mynote}[1]{\begin{center}\fbox{\parbox{6in}{#1}}\end{center}}
+}
+\forclass{
+\newcommand{\mynote}[1]{}
+}
+
+%misc from defn...
+\newcommand{\abs}[1]{\left| #1\right|}
+\newcommand{\reals}{\mbox{$I\!\!R$}}
+\newcommand{\ints}{\mbox{$I\!\!N$}}
+\newcommand{\cross}{\times}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\newcommand{\eg}{e.g.,~}
+\newcommand{\ie}{i.e.,~}
+\newcommand{\resp}{resp.\ }
+\newcommand{\respc}{resp.,\ }
+\newcommand{\sat}{\models}
+\newcommand{\bbox}{\vrule height7pt width4pt depth1pt}
+
+
+%bold symbols (\bf alread taken ...:-)
+
+%\newcommand{\boldsymbol}[1]{{\mathbf{#1}}}
+
+\newcommand{\ba}{{\boldsymbol{a}}}
+\newcommand{\bb}{{\boldsymbol{b}}}
+\newcommand{\bc}{{\boldsymbol{c}}}
+\newcommand{\bd}{{\boldsymbol{d}}}
+\newcommand{\be}{{\boldsymbol{e}}}
+%\newcommand{\bf}{\boldsymbol{f}}
+\newcommand{\bg}{{\boldsymbol{g}}}
+\newcommand{\bh}{{\boldsymbol{h}}}
+\newcommand{\bi}{{\boldsymbol{i}}}
+\newcommand{\bj}{{\boldsymbol{j}}}
+\newcommand{\bk}{{\boldsymbol{k}}}
+\newcommand{\bl}{{\boldsymbol{l}}}
+\newcommand{\bm}{{\boldsymbol{m}}}
+\newcommand{\bn}{{\boldsymbol{n}}}
+\newcommand{\bo}{{\boldsymbol{o}}}
+\newcommand{\bp}{{\boldsymbol{p}}}
+\newcommand{\bq}{{\boldsymbol{q}}}
+\newcommand{\br}{{\boldsymbol{r}}}
+\newcommand{\bs}{{\boldsymbol{s}}}
+\newcommand{\bt}{{\boldsymbol{t}}}
+\newcommand{\bu}{{\boldsymbol{u}}}
+\newcommand{\bv}{{\boldsymbol{v}}}
+\newcommand{\bw}{{\boldsymbol{w}}}
+\newcommand{\bx}{{\boldsymbol{x}}}
+\newcommand{\by}{{\boldsymbol{y}}}
+\newcommand{\bz}{{\boldsymbol{z}}}
+%bold face upper-case letters
+\newcommand{\bA}{{\boldsymbol{A}}}
+\newcommand{\bB}{{\boldsymbol{B}}}
+\newcommand{\bC}{{\boldsymbol{C}}}
+\newcommand{\bD}{{\boldsymbol{D}}}
+\newcommand{\bE}{{\boldsymbol{E}}}
+\newcommand{\bF}{{\boldsymbol{F}}}
+\newcommand{\bG}{{\boldsymbol{G}}}
+\newcommand{\bH}{{\boldsymbol{H}}}
+\newcommand{\bI}{{\boldsymbol{I}}}
+\newcommand{\bJ}{{\boldsymbol{J}}}
+\newcommand{\bK}{{\boldsymbol{K}}}
+\newcommand{\bL}{{\boldsymbol{L}}}
+\newcommand{\bM}{{\boldsymbol{M}}}
+\newcommand{\bN}{{\boldsymbol{N}}}
+\newcommand{\bO}{{\boldsymbol{O}}}
+\newcommand{\bP}{{\boldsymbol{P}}}
+\newcommand{\bQ}{{\boldsymbol{Q}}}
+\newcommand{\bR}{{\boldsymbol{R}}}
+\newcommand{\bS}{{\boldsymbol{S}}}
+\newcommand{\bT}{{\boldsymbol{T}}}
+\newcommand{\bU}{{\boldsymbol{U}}}
+\newcommand{\bV}{{\boldsymbol{V}}}
+\newcommand{\bW}{{\boldsymbol{W}}}
+\newcommand{\bX}{{\boldsymbol{X}}}
+\newcommand{\bY}{{\boldsymbol{Y}}}
+\newcommand{\bZ}{{\boldsymbol{Z}}}
+%greek boldface
+\newcommand{\bmu}{{\boldsymbol{\mu}}}
+\newcommand{\balpha}{{\boldsymbol{\alpha}}}
+\newcommand{\bnu}{{\boldsymbol{\nu}}}
+\newcommand{\btheta}{{\boldsymbol{\theta}}}
+\newcommand{\bbeta}{{\boldsymbol{\beta}}}
+\newcommand{\bphi}{{\boldsymbol{\phi}}}
+\newcommand{\bgamma}{{\boldsymbol{\gamma}}}
+
+%caligraphic symbols
+\newcommand{\A}{{\cal A}}
+\newcommand{\B}{{\cal B}}
+\newcommand{\C}{{\cal C}}
+\newcommand{\D}{{\cal D}}
+\newcommand{\E}{{\cal E}}
+\newcommand{\F}{{\cal F}}
+\newcommand{\G}{{\cal G}}
+\renewcommand{\H}{{\cal H}}
+\newcommand{\I}{{\cal I}}
+\newcommand{\J}{{\cal J}}
+\newcommand{\K}{{\cal K}}
+\renewcommand{\L}{{\cal L}}
+\newcommand{\M}{{\cal M}}
+\newcommand{\N}{{\cal N}}
+\renewcommand{\O}{{\cal O}}
+\newcommand{\Ocal}{{\cal O}}
+\newcommand{\Hcal}{{\cal H}}
+\renewcommand{\P}{{\cal P}}
+\newcommand{\Q}{{\cal Q}}
+\newcommand{\R}{{\cal R}}
+\renewcommand{\S}{{\cal S}}
+\newcommand{\T}{{\cal T}}
+\newcommand{\U}{{\cal U}}
+\newcommand{\V}{{\cal V}}
+\newcommand{\W}{{\cal W}}
+\newcommand{\X}{{\cal X}}
+\newcommand{\Y}{{\cal Y}}
+\newcommand{\Z}{{\cal Z}}
+
+% Random Variables and values
+
+%need to fix these definitions...
+\newcommand{\rv}[1]{{\textit {#1}}}
+\newcommand{\Val}[1]{{\textit Val}({#1})}
+\newcommand{\val}[2]{#1^{#2}}
+\newcommand{\tval}[1]{\val{#1}{1}}
+\newcommand{\fval}[1]{\val{#1}{0}}
+
+% events
+\newcommand{\evnta}{\alpha}
+\newcommand{\evntb}{\beta}
+\newcommand{\evntc}{\gamma}
+\newcommand{\Event}[1]{{\rv{#1}}}
+
+% Bayesian networks
+\newcommand{\Phat}{\hat{P}}
+\newcommand{\MI}[2]{{\fnMI}_{#1}({#2})}
+\newcommand{\entropy}[2]{{\fnH}_{#1}({#2})}
+\newcommand{\info}[3]{{\fnMI}_{#1}({#2}; {#3})}
+\newcommand{\score}[3]{{\rm score}_{#1}({#2}\ :\ {#3})}
+\newcommand{\familyscore}[3]{{\rm FamScore}_{#1}({#2}\ :\ {#3})}
+\newcommand{\Par}[1]{{\bf Pa}_{#1}}
+\newcommand{\ParG}[2]{{\bf Pa}^{#1}_{#2}}
+\newcommand{\Dim}[1]{{\rm Dim}[{#1}]}
+\newcommand{\Family}[1]{{\bf Family}_{#1}}
+\newcommand{\Nondesc}[1]{\emph{NonDescendants}_{#1}}
+\newcommand{\Pari}{\Par{i}}
+\newcommand{\Parj}{\Par{j}}
+\newcommand{\vPar}[1]{{\bf pa}_{#1}}
+\newcommand{\vParG}[2]{{\bf pa}^{#1}_{#2}}
+\newcommand{\vPari}{\vPar{i}}
+\newcommand{\vParj}{\vPar{j}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\rarc}{\leftarrow}
+\newcommand{\darc}{\leftrightarrow}
+\newcommand{\oarc}{\circ\!\!\arc}
+\newcommand{\Card}[1]{|{#1}|}
+
+% data
+\newcommand{\data}[1]{[#1]}
+
+\newcommand{\Param}{\Theta}
+\newcommand{\cParam}[1]{\Param_{{#1}}}
+
+%nir: distinguish single parameter from a set !
+%\newcommand{\param}{\btheta}
+%\newcommand{\hparam}{\hat{\btheta}}
+%\newcommand{\cparam}[1]{\theta_{{#1}}}
+\newcommand{\param}{\theta}
+\newcommand{\hparam}{\hat{\theta}}
+\newcommand{\cparam}[1]{\theta_{{#1}}}
+\newcommand{\chparam}[1]{\hparam_{{#1}}}
+\newcommand{\params}{\btheta}
+\newcommand{\hparams}{\hat{\btheta}}
+\newcommand{\chparams}[1]{\hparams_{{#1}}}
+\newcommand{\cparams}[1]{\btheta_{{#1}}}
+
+\newcommand{\likelihood}[2]{L({#1} : {#2})}
+\newcommand{\LocalLikelihood}[3]{L_{#1}({#3} : {#2})}
+\newcommand{\logl}[2]{\ell({#1} : {#2})}
+
+%\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+\newcommand{\dfnref}[1]{Definition~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\exref}[1]{Exercise~\ref{#1}}
+\newcommand{\xamref}[1]{Example~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\proref}[1]{Proposition~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+\newcommand{\corref}[1]{Corollary~\ref{#1}}
+\newcommand{\partref}[1]{Part~\ref{#1}}
+\newcommand{\lineref}[1]{line~\ref{#1}}
+\newcommand{\boxref}[1]{Box~\ref{#1}}
+
+%\newcommand{\Ind}[3]{I({#1}; {#2} \mid {#3})}
+%\newcommand{\Indc}[3]{I_c({#1}; {#2} \mid {#3})}
+%\newcommand{\mInd}[2]{I({#1}; {#2})}
+%DK - I think this is better, and less confusing with MI
+\newcommand{\Ind}[3]{({#1} \perp {#2} \mid {#3})}
+\newcommand{\Indc}[3]{({#1} \perp_c {#2} \mid {#3})}
+\newcommand{\mInd}[2]{({#1} \perp {#2})}
+\newcommand{\Indsetone}{{\cal I}}
+\newcommand{\dsep}[4]{\emph{d-sep}_{#1}({#2};{#3} \mid {#4})}
+\newcommand{\pdsep}[3]{\emph{d-sep}_{#1}({#2};{#3})}
+\newcommand{\sep}[4]{\emph{sep}_{#1}({#2};{#3} \mid {#4})}
+\newcommand{\Markov}{\emph{Markov}}
+\newcommand{\Graph}{{\cal G}}
+\newcommand{\GraphB}{{\cal B}}
+\newcommand{\mnet}{{\cal H}}
+%\newcommand{\PDAG}{{\cal P}}
+\newcommand{\PDAG}{\cgraph}
+\newcommand{\PAG}{{\cal P}}
+\newcommand{\Name}[1]{\emph{#1}}
+\newcommand{\redtree}[2]{{#1}^{#2}}
+\newcommand{\restricted}[2]{{#1}|_{#2}}
+%\newcommand{\reduce}[2]{{#1}|_{{\langle{#2}\rangle}}}
+\newcommand{\indgraph}{\mnet}
+\newcommand{\clique}{\bC}
+\newcommand{\pot}[2]{\pi_{#1}[{#2}]}
+\newcommand{\potone}[1]{\pi_{#1}}
+\newcommand{\pottwo}[1]{\pi[{#1}]}
+
+\newcommand{\MPE}{{\rm MPE}}
+\newcommand{\MAP}{{\rm MAP}}
+\newcommand{\argmax}{{\rm argmax}}
+\newcommand{\argmin}{{\rm argmin}}
+\newcommand{\BN}{\B}
+\newcommand{\Betad}{\emph{Beta}}
+\newcommand{\Dir}{\emph{Dir}}
+\newcommand{\cnt}[1]{M[#1]}
+\newcommand{\htheta}{\hat{\theta}}
+\newcommand{\hbtheta}{{\boldsymbol{\htheta}}}
+\newcommand{\Model}{\M}
+
+\newcommand{\xmp}[1]{{\sf #1}}
+\newcommand{\alg}[1]{{\sc #1}}
+
+
+%for specific examples
+\newcommand{\Graphstudent}{G_{\emph{student}}}
+\newcommand{\studentP}{P_{\emph{student}}}
+\newcommand{\Road}{\rv{Road}}
+\newcommand{\OneOOne}{\rv{T101}}
+\newcommand{\TwoEighty}{\rv{T280}}
+\newcommand{\Time}{\rv{Time}}
+
+\newcommand{\dictionary}{\D}
+
+
+\newcommand{\fn}[1] {\mbox {\sl{#1}\/}}
+%\newcommand{\fnMI}{\fn{\makebox[.2ex][l]{I}\makebox{MI}}}
+\newcommand{\fnMI}{\fn{\makebox[.2ex][l]{I}\makebox{I}}}
+\newcommand{\fnH}{\fn{\makebox[.2ex][l]{I}\makebox{H}}}
+\newcommand{\fnD}{\fn{\makebox[.2ex][l]{I}\makebox{D}}}
+\newcommand{\fnE}{\fn{\makebox[.2ex][l]{I}\makebox{E}}}
+\newcommand{\cov}[2]{{\fn{\makebox[.2ex][l]{C}\makebox{Cov}}}[#1;#2]}
+\newcommand{\Cov}[3]{\cov_{{#1}}{\left[{#2};{#3}\right]}}
+%\newcommand{\var}{\fn{\makebox[.2ex][l]{I}\makebox{Var}}}
+\newcommand{\var}{\fn{\makebox[.2ex][l]{V}\makebox{Var}}}
+
+\newcommand{\sigmoid}{{\rm sigmoid}}
+\newcommand{\Gaussian}[2]{{\cal N}\left({#1};{#2}\right)}
+\newcommand{\GammaDist}[2]{{\rm Gamma}\left({#1};{#2}\right)}
+
+
+\newcommand{\post}{P'}
+\newcommand{\dist}{\mu}
+\newcommand{\States}{\Omega}
+\newcommand{\state}{\omega}
+\newcommand{\distance}[3]{\fnD_{#1}({#2};{#3})}
+\newcommand{\metric}[2]{|\!|{#1}|\!|_{#2}}
+\newcommand{\Lone}[2]{\metric{{#1}-{#2}}{1}}
+\newcommand{\Ltwo}[2]{\metric{{#1}-{#2}}{2}}
+\newcommand{\Linf}[2]{\metric{{#1}-{#2}}{\infty}}
+\newcommand{\KLD}[2]{\fnD({#1}|\!|{#2})}
+
+\newcommand{\fnind}{{\fn{\makebox[.2ex][l]{1}\makebox{1}}}}
+\newcommand{\indicator}[1]{\fnind\{{#1}\}}
+\newcommand{\eindic}{\bar{\fnind}}
+\newcommand{\ecnt}[2]{{\bar{M}_{#1}[{#2}]}}
+\newcommand{\bel}{\emph{bel}}
+\newcommand{\completions}{\C}
+
+\newcommand{\expect}[2]{\fnE_{#1}{\left[{#2}\right]}}
+\newcommand{\cexpect}[3]{\fnE_{#1}{\left[{#2} \mid {#3}\right]}}
+\newcommand{\expectone}[1]{\fnE{[{#1}]}}
+\newcommand{\Var}[2]{\var_{{#1}}{\left[{#2}\right]}}
+\newcommand{\hindic}[3]{\overline{\indicator{#1}}({#2} \mid {#3})}
+\newcommand{\elogl}[3]{\lbar_{#1}[{#2} : {#3}]}
+\newcommand{\lbar}{{\bar{\ell}}}
+
+\newcommand{\at}[1]{^{({#1})}}
+\newcommand{\BNtrans}{{\B_{\rightarrow}}}
+\newcommand{\Ptrans}{{P_{\rightarrow}}}
+\newcommand{\belstate}[1]{\sigma\at{{#1}}}
+\newcommand{\tbel}[1]{\sigma\at{\cdot #1}}
+\newcommand{\appbel}[1]{\hat{\sigma}\at{{#1}}}
+\newcommand{\interbel}[1]{\tilde{\tau}\at{{#1}}}
+\newcommand{\eqdef}{\stackrel{\Delta}{=}}
+\newcommand{\ctreetemplate}{\Upsilon}
+\newcommand{\Graphtrans}{{\Graph_{\rightarrow}}}
+\newcommand{\Frontier}{{\cal Y}}
+\newcommand{\belst}{\tbel}
+
+\newcommand{\fig}[1]{\centerline{\Large {#1}}}
+\newcommand{\cmin}{c_{\emph{min}}}
+\newcommand{\cmax}{c_{\emph{max}}}
+\newcommand{\Payoff}{\emph{Payoff}}
+
+\newcommand{\noparents}[1]{\overline{#1}}
+\newcommand{\nochildren}[1]{\underline{#1}}
+\newcommand{\mutilate}[2]{{#1}_{#2}}
+
+\newcommand{\neighbors}[1]{{\cal N}_{#1}}
+\newcommand{\MBlanket}[2]{{\cal N}_{#1}(#2)}
+\newcommand{\csep}[2]{S_{#1,#2}}
+
+% temporary book imitation
+\newcommand{\Chapter}[1]{\title{#1}\author{Daphne Koller \and Nir Friedman}\maketitle}
+
+
+\newcommand{\easy}{}
+\newcommand{\medium}{*}
+\newcommand{\hard}{**}
+
+
+\newcommand{\vars}{\X}
+\newcommand{\true}{\rv{true}}
+\newcommand{\false}{\rv{false}}
+
+\newcommand{\tuple}[1]{\<{#1}\>}
+\newcommand{\toadd}[1]{\centerline{\large\bf #1}}
+
+
+\newcommand{\NP}{{\cal NP}}
+\newcommand{\RP}{{\cal RP}}
+\newcommand{\PP}{{\cal PP}}
+
+
+\newcommand{\DP}{\Pi}
+\newcommand{\BNDP}{\DP_{BN}}
+\newcommand{\inp}{\omega}
+\newcommand{\lang}{\L}
+\newcommand{\SAT}{\emph{SAT}}
+\newcommand{\factor}{\phi}
+\newcommand{\sfactor}{\psi}
+\newcommand{\tfactor}{\tau}
+
+\newcommand{\dfactors}[2]{{\cal F}_{\prec({#1}\rightarrow{#2})}}
+\newcommand{\dvars}[2]{{\cal V}_{\prec({#1}\rightarrow{#2})}}
+\newcommand{\factors}{{\cal F}}
+
+
+\newcommand{\hypspace}{\Theta}
+\newcommand{\Pstar}{P^*}
+\newcommand{\thumbtack}{{\mathit{thumbtack}}}
+\newcommand{\multinomial}{{\mathit{multinomial}}}
+\newcommand{\gaussian}{{\mathit{Gaussian}}}
+\newcommand{\Pemp}{\hat{P}}
+\newcommand{\Dirichlet}{\mathit{Dirichlet}}
+\newcommand{\DL}{\mathit{DL}}
+\newcommand{\Graphempty}{\Graph_{\emptyset}}
+\newcommand{\GraphXY}{\Graph_{X \arc Y}}
+\newcommand{\Gstar}{\Graph^*}
+
+
+%from Chris Manning defs
+
+% see latex companion p.51 for how to make this do some hyphenation
+% (allow only limited leftskip!)
+
+\marginparwidth=85pt
+\def\mymarginpar#1{\mbox{}\marginpar{\raggedleft\footnotesize
+  \hspace{0pt}\textsc{#1}}}
+\reversemarginpar
+
+\renewcommand{\term}[3]{\index{#1}\mymarginpar{#2}\nobreak\hspace{0pt}#3}
+\newcommand{\terme}[3]{\term{#1}{#2}{\emph{#3}}}
+\newcommand{\tterme}[1]{\term{#1}{#1}{\emph{#1}}}
+\newcommand{\tterm}[1]{\term{#1}{#1}{\emph{#1}}}
+
+%\newcommand{\points}[1]{}
+\newcommand{\Pmissing}{P_{\textit{missing}}}
+\newcommand{\Obs}{O}
+\newcommand{\obs}{o}
+\newcommand{\bObs}{\bO}
+\newcommand{\bobs}{\bo}
+
+
+\newcommand{\rimp}{\longrightarrow}
+\newcommand{\dimp}{\longleftrightarrow}
+
+\newcommand{\MMB}[2]{\textit{MB}_{#1}({#2})}
+\newcommand{\Indset}[1]{\I(#1)}
+\newcommand{\lIndset}[1]{\I_\ell(#1)}
+\newcommand{\IndsetH}[2]{\I_{#1}(#2)}
+
+%DK - new
+\newcommand{\energy}[2]{\epsilon_{#1}[{#2}]}
+\newcommand{\energyone}[1]{\epsilon_{#1}}
+\newcommand{\energytwo}[1]{\epsilon[{#1}]}
+
+\newcommand{\energyp}[2]{\epsilon'_{#1}[{#2}]}
+\newcommand{\cenergy}[2]{\epsilon^*_{#1}[{#2}]}
+\newcommand{\cenergyone}[1]{\epsilon^*_{#1}}
+\newcommand{\cenergytwo}[1]{\epsilon^*[{#1}]}
+
+\newcommand{\feature}[2]{\phi_{#1}[{#2}]}
+\newcommand{\featureone}[1]{\phi_{#1}}
+\newcommand{\featuretwo}[1]{\phi[{#1}]}
+
+\newcommand{\logp}{\ell}
+\newcommand{\completion}[2]{\sigma_{#1}[#2]}
+\newcommand{\edge}{\mbox{---}}
+\newcommand{\anyedge}{\rightleftharpoons}
+
+\newcommand{\pIndset}[1]{\I_p(#1)}
+
+\newcommand{\solution}[1]{}
+\newcommand{\Subclique}{\bD}
+\newcommand{\subclique}{\bd}
+
+
+\newcommand{\shortcite}[1]{\cite{#1}}
+\newcommand{\Ancestors}[1]{\emph{Ancestors}_{#1}}
+
+\newcommand{\closure}[2]{{#1}^+[#2]}
+\newcommand{\moralized}[1]{\M[{#1}]}
+\newcommand{\induced}[2]{{#1}[{#2}]}
+\newcommand{\cgraph}{{\cal K}}
+\newcommand{\chain}{\bK}
+\newcommand{\Boundary}[1]{\emph{Boundary}_{#1}}
+\newcommand{\Children}[1]{\emph{Children}_{#1}}
+\newcommand{\Descendants}[1]{\emph{Descendants}_{#1}}
+\newcommand{\edges}{\E}
+
+\newcommand{\answer}[1]{}
+%{\sf #1}}
+
+
+\newcommand{\ProbSpace}{\Omega}
+\newcommand{\Events}{\S}
+\newcommand{\grad}{\nabla}
+
+\newcommand{\guess}{\gamma}
+
+\newcommand{\BNPDP}{{\textit{BN-Pr-DP}}}
+\newcommand{\BNMPEDP}{{\textit{BN-MPE-DP}}}
+\newcommand{\BNMAPDP}{{\textit{BN-MAP-DP}}}
+\newcommand{\BNP}{{\textit{BN-Pr}}}
+
+\newcommand{\fprod}{\times}
+\newcommand{\ifprod}{\prod}
+% reduced factor \reduced{\factor}{\by}
+\newcommand{\reduced}[2]{{#1}_{[#2]}}
+% rules...
+\newcommand{\Rulecp}[2]{\tuple{{#1}; {#2}}}
+\newcommand{\Rule}{\rho}
+\newcommand{\Rules}{\R}
+\newcommand{\rulesplit}[2]{\textit{Split}({#1} \angle {#2})}
+% \compatible{\bx}{\by} do \bx and \by agree on common vars
+\newcommand{\compatible}[2]{{#1} \sim {#2}}
+\newcommand{\incompatible}[2]{{#1} \not\sim {#2}}
+% \scope{\factor} scope of a factor or rule
+\newcommand{\Scope}[1]{\textit{Scope}[{#1}]}
+% ??
+\newcommand{\indmnet}[2]{{\I_{#1,#2}}}
+\newcommand{\context}{\bc}
+\newcommand{\Context}{\bC}
+% instance of \vars
+\newcommand{\varsinst}{\xi}
+% \instin{\bx}{\bY} instantiation of \bY in \bx
+\newcommand{\instin}[2]{{#1}\langle{#2}\rangle}
+\newcommand{\Data}{\D}
+% \pestimate{\Data}{\event} - estimate of prob of event from \Data
+\newcommand{\pestimate}[2]{\hat{P}_{#1}({#2})}
+% \pestimate{\Data}{f} - estimate of expectation  of function from \Data
+\newcommand{\festimate}[2]{\hat{\fnE}_{#1}({#2})}
+\newcommand{\phat}{\hat{p}}
+\newcommand{\qhat}{\hat{q}}
+
+
+\newcommand{\BNstudent}{\BN^{\emph{student}}}
+\newcommand{\weight}{w}
+\newcommand{\lbound}{\ell}
+\newcommand{\ubound}{u}
+\newcommand{\stationary}{\pi}
+\newcommand{\Trans}[2]{\Transnone({#1} \rightarrow {#2})}
+\newcommand{\Transnone}{{\T}}
+\newcommand{\TransQ}[3]{\Transnone^{#1}({#2} \rightarrow {#3})}
+\newcommand{\TransQnone}[1]{\Transnone^{#1}}
+\newcommand{\vardistance}[2]{\distance{\emph{var}}{#1}{#2}}
+\newcommand{\proposal}{Q}
+\newcommand{\accept}[2]{{\A}({#1} \rightarrow {#2})}
+
+% CPD tree
+\newcommand{\CPDtree}{\T}
+\newcommand{\tleaf}{\ell}
+\newcommand{\tleafs}[1]{{\rm Leaves}({#1})}
+\newcommand{\tleafctx}[1]{\context_{#1}}
+
+
+\newcommand{\empexpect}[1]{\fnE_{\Data}{[{#1}]}}
+\newcommand{\empcov}[2]{{\fn{\makebox[.2ex][l]{C}\makebox{Cov}}_{\Data}}[#1;#2]}
+\newcommand{\logLocalLikelihood}[3]{\ell_{#1}({#3} : {#2})}
+
+
+\newcommand{\indwidth}[2]{w_{{#1},{#2}}}
+\newcommand{\minwidth}[1]{w^*_{#1}}
+
+
+%clique tree chapter
+\newcommand{\PF}{P_{\F}}
+\newcommand{\ctree}{\T}
+\newcommand{\sepset}[2]{\bS_{{#1},{#2}}}
+\newcommand{\ctroot}{r}
+\newcommand{\upstream}[2]{{p_{#1}(#2)}}
+\newcommand{\initpot}[2]{\pi^0_{#1}[{#2}]}
+\newcommand{\initpotone}[1]{\pi^0_{#1}}
+\newcommand{\initpottwo}[1]{\pi^0[{#1}]}
+\newcommand{\msg}[2]{\delta_{{#1} \rightarrow {#2}}}
+\newcommand{\umsg}[2]{\mu_{{#1},{#2}}}
+\newcommand{\fmsg}[2]{\sigma_{{#1} \rightarrow {#2}}}
+\newcommand{\dmsg}[2]{\delta_{{#1} \rightarrow {#2}}}
+\newcommand{\assign}{\alpha}
+\newcommand{\ctreepot}[1]{\pi_{#1}}
+\newcommand{\initpotset}{\F}
+
+\newcommand{\DecisionRule}{\fn{R}}
+\newcommand{\Deviance}{\fn{d}}
+\newcommand{\pval}{\mbox{p-value}}
+\newcommand{\Accept}{\mbox{Accept}}
+\newcommand{\Reject}{\mbox{Reject}}
+
+\newcommand{\searchop}{o}
+\newcommand{\searchOps}{\O}
+\newcommand{\GraphBest}{\Graph_{\rm best}}
+\newcommand{\fnscore}{{\rm score}}
+\newcommand{\Graphs}{{\cal G}\!\!\!{\cal G}}
+\newcommand{\Graphfeaturefn}{f}
+\newcommand{\Graphfeature}[1]{\Graphfeaturefn(#1)}
+\newcommand{\MAPGraph}{\tilde{\Graph}}
+\newcommand{\CNTSpace}[2]{\C^{#1}_{#2}}
+\newcommand{\CNT}[1]{C[{#1}]}
+\newcommand{\LOOCV}{\fn{LOOCV}}
+
+\newcommand{\mparam}{\psi}
+\newcommand{\mparams}{{\boldsymbol{\psi}}}
+
+%Gaussian chapter
+\newcommand{\bintinf}{\int_{-\binfty}^{\binfty}}
+\newcommand{\intinf}{\int_{-\infty}^{\infty}}
+\newcommand{\contvars}{\Gamma}
+\newcommand{\discvars}{\Delta}
+\newcommand{\CanonicalThree}[3]{\C \left( {#1},{#2},{#3} \right)}
+\newcommand{\CanonicalFour}[4]{\C \left( {#1};{#2},{#3},{#4} \right)}
+\newcommand{\bzero}{{\boldsymbol{0}}}
+\newcommand{\bone}{{\boldsymbol{1}}}
+\newcommand{\binfty}[0]{{\protect {\boldsymbol{\infty}}}}
+\newcommand{\fhat}{\hat{f}}
+
+\newcommand{\inst}[1]{\ba^{#1}}
+\newcommand{\instzero}[0]{\ba}
+\newcommand{\suminst}[1]{S(\inst{#1})}
+\newcommand{\GaussianThree}[3]{\N \left( {#1};{#2},{#3}\right)}
+\newcommand{\BNCLG}{{\textit{CLG-DP}}}
+
+% missing data section
+\newcommand{\obsinst}{\bo}
+\newcommand{\hiddeninst}{\bh}
+\newcommand{\DataMissing}{{\cal H}}
+\newcommand{\DataComplete}{{\Data^{+}}}
+\newcommand{\DataHidden}{\bH}
+\newcommand{\datahidden}{\bh}
+\newcommand{\fnEMFunctional}{\F}
+\newcommand{\EMFunctional}[3]{\fnEMFunctional_{#1}[{#2},{#3}]}
+\newcommand{\ObsVar}[1]{O_{#1}}
+
+% partition function
+\newcommand{\Zfunc}{Z}
+%\newcommand{\PFnoZ}{\tilde{P}_{\F}}
+\newcommand{\PFnoZ}{\PF'}
+\newcommand{\Qdist}{Q}
+\newcommand{\fnFEnergy}{F}
+\newcommand{\FEnergy}[2]{\fnFEnergy[{#1},{#2}]}
+\newcommand{\MNetPotential}{\bC}
+\newcommand{\vMNetPotential}{\bc}
+\newcommand{\QZfunc}{\Zfunc_\Qdist}
+\newcommand{\Qfactor}{\psi}
+
+\newcommand{\unknown}{{\textit ?}}
+\newcommand{\Interface}{\vars_I}
+
+
+%influence diagram chapter
+\newcommand{\decisions}{{\cal D}}
+\newcommand{\utilvars}{{\cal U}}
+\newcommand{\strat}{\sigma}
+\newcommand{\ID}{{\cal I}}
+\newcommand{\decrule}[1]{\delta_{#1}}
+\newcommand{\EU}[2]{{\rm EU}[\redID{#1}{#2}]}
+\newcommand{\IDBN}[2]{\BN_{\redID{#1}{#2}}}
+\newcommand{\relutils}[1]{\utilvars_{\succ #1}}
+\newcommand{\probfactor}{\factor}
+\newcommand{\utilityfactor}{\mu}
+\newcommand{\jointfactor}{\gamma}
+\newcommand{\marginalize}[2]{\textit{marg}_{#1}({#2})}
+\newcommand{\contraction}{{\rm cont}}
+\newcommand{\Actions}{{\cal A}}
+\newcommand{\Simplex}[1]{\Delta_{#1}}
+\newcommand{\smin}{s_{\bot}}
+\newcommand{\smax}{s_{\top}}
+\newcommand{\allvars}{{\cal W}}
+\newcommand{\allvarsinst}{\omega}
+\newcommand{\eu}{{\mbox{\rm eu}}}
+\newcommand{\MEU}[1]{{\rm MEU}[#1]}
+\newcommand{\conv}{\oplus}
+\newcommand{\VPI}[3]{{{\rm VPI}_{#1}({#3} \mid {#2})}}
+
+\newcommand{\gsepset}[1]{{\bS_{{#1}}}}
+\newcommand{\vgsepset}[1]{{\bs_{{#1}}}}
+\newcommand{\vsepset}[2]{{\bs_{{#1},{#2}}}}
+\newcommand{\gumsg}[1]{\mu_{{#1}}}
+\newcommand{\BFEnergy}[2]{{\tilde\fnFEnergy}[{#1},{#2}]}
+\newcommand{\Qmsg}{\bQ}
+\newcommand{\interface}[3]{\textit{Interface}_{#1}(#2; #3)}
+\newcommand{\amsg}[2]{\tilde\delta_{{#1} \rightarrow {#2}}}
+\newcommand{\aumsg}[2]{\tilde{\mu}_{{#1},{#2}}}
+\newcommand{\afmsg}[2]{\tilde{\sigma}_{{#1} \rightarrow {#2}}}
+\newcommand{\admsg}[2]{\tilde{\delta}_{{#1} \rightarrow {#2}}}
+\newcommand{\factorset}{\vec{\factor}}
+\newcommand{\mproject}[1]{\rho_{{#1}}}
+\newcommand{\apotone}[1]{\tilde\pi_{#1}}
+\newcommand{\apot}[2]{\tilde\pi_{#1}[{#2}]}
+\newcommand{\initpotsetone}[1]{\vec{\pi}^0_{#1}}
+\newcommand{\suffstat}{\mathsf{s}}
+\newcommand{\esuffstat}{\bar{\suffstat}}
+\newcommand{\natparam}{\mathsf{t}}
+\newcommand{\ParamtoSS}{\suffstat}
+\newcommand{\Exp}[1]{\exp\left\{ #1 \right\}}
+
+
+\usepackage{color}
+\newcommand{\Note}[1]{\textbf{\large\textcolor{blue}{[#1]}}}
+\newcommand{\TODO}[1]{\Note{TODO: #1}}
+
+
+\begin{document}
+
+\pagestyle{myheadings} \markboth{}{INFO 4604/5604 Assignment \#1}
+
+\begin{Large}
+\noindent INFO 4604/5604, Fall 2018\\ Assignment \#1: Perceptron
+{(Version 1.01)}\\
+{Due by {\bf 9:00pm} on {\bf Wednesday, September 12}}
+\end{Large}
+
+\ruleskip
+
+%\tableofcontents{}
+
+\section{Instructions}
+
+%This assignment includes programming problems, modeling problems, and analytical questions. Please read the document carefully.
+%While it appears long, this is partly because this is the first assignment there are many details we have to explain such as programming instructions and file formatting. 
+
+\subsection{What You are Given}
+
+The assignment is based on the Chapter 2 code from the {\em Python Machine Learning} book: \\
+{\small  \url{https://github.com/rasbt/python-machine-learning-book-2nd-edition/tree/master/code/ch02}}
+
+For this assignment, you will not use any code from the ``{\em Adaptive linear neurons and the convergence of learning}'' section onward.
+It is preferred that you remove this code from your notebook for this assignment, to make it easier for the grader to find your relevant code.
+You may modify the layout of the notebook and add new sections as needed.
+
+\subsection{What to Hand In}
+
+You will submit the assignment on Canvas. Your submission should be contained 
+ in a single Jupyter notebook named \code{hw1-lastname.ipynb}, where {\em lastname} is replaced with your last name.
+This will include your code as well as figures and answers to questions.
+Please create headers for your cells that are labeled ``Deliverable'' followed by the problem number, so that your responses are easy to find.
+
+
+\paragraph{Note on 4604 vs 5604:} 
+Sections labeled as {\bf [5604]} are only required for INFO-5604 students.
+Students in INFO-4604 may optionally do these problems for extra credit
+(with the amount of extra credit points indicated as ``EC'' points).
+
+\subsection{Submission Policies}
+
+
+\begin{itemize}
+\item
+{\bf Collaboration: } 
+You are allowed to work with a partner. You are still expected to write up your own solution. Each individual must post their own submission on Canvas, and you must list the names of your group members in your Piazza note when you submit.
+\item
+{\bf Late Submissions: }
+We allow each student to use up to 5 late days over the semester. You have late days, not late hours. This means that if your submission is late by any amount of time past the deadline, then this will use up a late day. If it is late by any amount beyond 24 hours past the deadline, then this will use a second late, and so on. Once you have used up all late days, late assignments will be given at most 80\% credit after one day and 60\% credit after two days.
+\end{itemize}
+
+
+\subsection{Asking for Help}
+
+You are encouraged to ask questions on Canvas. {Do not post anything that you are turning in. }
+In this assignment, that would be any of the plots you need to hand in, or the parameter values.
+However, you can describe your results, like the number of iterations it took to converge,
+and general things you observe about the algorithms.
+
+You may ask questions to help with debugging, but do not post your code. You can share error messages and describe what you are trying to do with your code, but try not to write enough to ``give away'' the solution.
+
+
+\section{Experimenting with Perceptron}
+
+The code from the book uses two variables, {\em sepal length} and {\em petal length} (columns 1 and 3).
+This is not actually a very interesting example, because the points are completely separated by only one of these dimensions ({\em petal length}), so it is easy to learn.
+In order words, if you only used this one feature, you could still learn a classifier, rather than needing two features.
+
+A more interesting example is with {\em sepal length} and {\em sepal width} (columns 1 and 2).
+The data are still linearly separable in these two dimensions, but it requires a combination of both variables.
+
+Modify the code to use these two variables. When you run it, you will find that the algorithm still makes errors after the default 10 iterations (also called epochs). 
+Change the \code{n\_iters} parameter of the \code{Perceptron} object to $1000$.
+You will see that eventually perceptron learns to classify all of the instances correctly, but that it takes a large number of iterations.
+
+Examine the figure of decision regions (the figure with two regions shaded as red or blue) when running perceptron for $10$, $20$, $50$, $100$, $200$, $500$, and $1000$ iterations (seven different figures). You can see how the boundary changes and gradually becomes more accurate as the algorithm runs for more iterations. 
+
+In your figures, be sure to change the axis labels to reflect the correct variable name ({\em sepal width} instead of {\em pedal length}).
+
+Finally, examine the weights that are learned by perceptron after $1000$ iterations. To do this, print out the values of the \code{w\_} variable of the \code{Perceptron} object, which is the weight vector, where \code{w\_[0]} is the `bias' weight.
+
+\subsection{Deliverables [8 points]}
+
+Include the following in your writeup:
+
+\begin{enumerate}
+\item The plot showing the number of updates versus epochs when using 1000 iterations.
+\item The seven region boundary figures for different numbers of iterations.
+\item Write the linear function that is learned, in the form $m_1 x_1 + m_2 x_2 + b$, based on the parameters in the \code{w\_} vector as described above.
+\end{enumerate}
+
+\section{Modifying Perceptron [5604]}
+
+You will experiment with an algorithm that is similar to perceptron, called {\bf Winnow} \cite{winnow}.
+Winnow is not a commonly used algorithm (and it's not quite appropriate for this dataset), 
+but implementing it is a way to get additional practice with the perceptron implementation here.
+
+Like perceptron, Winnow (at least the basic version) is used for binary classification, where the positive class is predicted if:
+
+\begin{displaymath}
+\mathbf{w}^{\textrm{T}} \mathbf{x} \geq \tau
+\end{displaymath}
+
+\noindent for some threshold $\tau$.
+This is almost the same as the perceptron prediction function, except that in perceptron, the threshold $\tau$ for positive classification is usually 0,
+while it must be positive in Winnow. Usually $\tau$ is set to the number of training instances in Winnow. In this assignment, you'll set $\tau=100.0$.
+
+The main difference between Winnow and Perceptron is how the weights are updated. Perceptron uses additive updates while Winnow uses multiplicative updates.
+The Winnow update rule is:
+
+\[ w_i^{(\textrm{new})} = \begin{cases} 
+      w_i \times \eta x_i & y_i > f(x_i) \\
+      w_i \div \eta x_i & y_i < f(x_i) \\
+      w_i & y_i = f(x_i) 
+   \end{cases}
+\]
+
+For this problem, you should create a new class called \code{Winnow}, which is similar to the \code{Perceptron} class but with the following changes:
+
+\begin{itemize}
+\item Initialize the weights {\bf w} to $1.0$ instead of $0.0$. This can be done in \code{numpy} with \code{np.ones} (where the current code uses \code{np.zeros}).
+\item Change the prediction function so that it outputs the positive class if the linear function is greater than $100.0$ (where the current code uses a threshold of $0.0$).
+\item Change the update rule so that the weights are multiplied by $\eta x_i$ if the prediction was an underestimate, and divided by $\eta x_i$ if the prediction was an overestimate (where the current code adds $\eta x_i$ to the weight if it was an underestimate and subtracts $\eta x_i$ if it was an overestimate).
+\end{itemize}
+
+When you run this, use the variables {\em sepal length} and {\em petal length} (columns 1 and 3).
+(The algorithm won't work if you use  {\em sepal length} and {\em sepal width}, for reasons we won't get into.) 
+
+In the code, set the parameter \code{eta} to $1.0$ (it won't behave as expected if $\eta < 1$, which is the default, so you need to change it),
+and set \code{n\_iters} to $10$.
+
+You may notice that when $\eta$ (eta) is 1, the bias weight will never change. This is okay; the algorithm will still work, but the bias won't contribute anything to the prediction rule.
+
+If you run everything correctly, it should converge after 5 epochs.
+
+\subsection{Deliverables [5604: 6 points; 4604: +3 EC points]}
+
+Include the following in your writeup:
+
+\begin{enumerate}
+\item The plot showing the number of updates versus epochs when using 10 iterations.
+\item The region boundary figure.
+\item Write the linear function that is learned, in the form $m_1 x_1 + m_2 x_2 + b$.
+\end{enumerate}
+
+
+
+\bibliography{refs}
+\bibliographystyle{plain}
+
+%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{document}
