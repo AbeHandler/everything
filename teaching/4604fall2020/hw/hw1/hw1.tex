@@ -768,7 +768,7 @@ The file hw1.ipynb is available under homework assignment \#1 on Canvas. This no
 
 \subsection{What to Hand In}
 
-You will a completed notebook on Canvas. Your submission should be contained 
+You will turn in a completed notebook on Canvas. Your submission should be contained 
  in a single Jupyter notebook named \code{hw1-lastname.ipynb}, where {\em lastname} is replaced with your last name.
 This will include your code as well as figures and answers to questions.
 Please create headers for your cells that are labeled ``Deliverable'' followed by the problem number, so that your responses are easy to find.
@@ -806,10 +806,9 @@ You may ask questions to help with debugging, but do not post your code. You can
 
 The code from the book uses two variables, {\em sepal length} and {\em petal length} (columns 1 and 3).
 This is not actually a very interesting example, because the points are completely separated by only one of these dimensions ({\em petal length}), so it is easy to learn.
-In order words, if you only used this one feature, you could still learn a classifier, rather than needing two features.
+In other words, if you only used this one feature, you could still learn a classifier, rather than needing two features.
 
-A more interesting example is with {\em sepal length} and {\em sepal width} The data are still linearly separable in these two dimensions, but it requires a combination of both variables. Sepal length and sepal width are columns 1 and 2 in the dataframe you load from disk. It's a good idea to print out the dataframe to see the column numbers and confirm you are selecting the correct columns. Note that the left-most column in the dataframe is column 0. 
-
+A more interesting example is with {\em sepal length} and {\em sepal width} The data are still linearly separable in these two dimensions, but it requires a combination of both variables. 
 Modify the code to use these two variables. When you run it, you will find that the algorithm still makes errors after the default 10 iterations (also called epochs). 
 Change the \code{n\_iters} parameter of the \code{Perceptron} object to $1000$.
 You will see that eventually perceptron learns to classify all of the instances correctly, but that it takes a large number of iterations.
@@ -864,7 +863,7 @@ For this problem, you should create a new class called \code{Winnow}, which is s
 \item Change the update rule so that the weights are multiplied by $\eta x_i$ if the prediction was an underestimate, and divided by $\eta x_i$ if the prediction was an overestimate. The Winnow update rule (above) specifies what to implement. Note that the current code  for the Perceptron adds $\eta x_i$ to the weight if it was an underestimate and subtracts $\eta x_i$ if it was an overestimate).
 \end{itemize}
 
-When you run this, use the variables {\em sepal length} and {\em petal length} (columns 1 and 3).
+When you run this, use the variables {\em sepal length} and {\em petal length}.
 (The algorithm won't work if you use  {\em sepal length} and {\em sepal width}, for reasons we won't get into.) 
 
 In the code, set the parameter \code{eta} to $1.0$ (it won't behave as expected if $\eta < 1$, which is the default, so you need to change it),
