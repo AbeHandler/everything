@@ -748,9 +748,9 @@
 \pagestyle{myheadings} \markboth{}{INFO 4604/5604 Assignment \#1}
 
 \begin{Large}
-\noindent INFO 4604/5604, Fall 2018\\ Assignment \#1: Perceptron
-{(Version 1.01)}\\
-{Due by {\bf 9:00pm} on {\bf Wednesday, September 12}}
+\noindent INFO 4604/5604, Fall 2020\\ Assignment \#1: Perceptron
+{(Version 1.02)}\\
+{Due by {\bf 11:59pm} on {\bf Friday, September 18}}
 \end{Large}
 
 \ruleskip
@@ -764,16 +764,11 @@
 
 \subsection{What You are Given}
 
-The assignment is based on the Chapter 2 code from the {\em Python Machine Learning} book: \\
-{\small  \url{https://github.com/rasbt/python-machine-learning-book-2nd-edition/tree/master/code/ch02}}
-
-For this assignment, you will not use any code from the ``{\em Adaptive linear neurons and the convergence of learning}'' section onward.
-It is preferred that you remove this code from your notebook for this assignment, to make it easier for the grader to find your relevant code.
-You may modify the layout of the notebook and add new sections as needed.
+The file hw1.ipynb is available under homework assignment \#1 on Canvas. This notebook is adapted from code from \textit{Python Machine Learning}.
 
 \subsection{What to Hand In}
 
-You will submit the assignment on Canvas. Your submission should be contained 
+You will a completed notebook on Canvas. Your submission should be contained 
  in a single Jupyter notebook named \code{hw1-lastname.ipynb}, where {\em lastname} is replaced with your last name.
 This will include your code as well as figures and answers to questions.
 Please create headers for your cells that are labeled ``Deliverable'' followed by the problem number, so that your responses are easy to find.
@@ -790,10 +785,10 @@ Students in INFO-4604 may optionally do these problems for extra credit
 \begin{itemize}
 \item
 {\bf Collaboration: } 
-You are allowed to work with a partner. You are still expected to write up your own solution. Each individual must post their own submission on Canvas, and you must list the names of your group members in your Piazza note when you submit.
+You are allowed to work with a partner. You are still expected to write up your own solution. Each individual must post their own submission on Canvas, and you must list the names of your partner in your notebook. 
 \item
 {\bf Late Submissions: }
-We allow each student to use up to 5 late days over the semester. You have late days, not late hours. This means that if your submission is late by any amount of time past the deadline, then this will use up a late day. If it is late by any amount beyond 24 hours past the deadline, then this will use a second late, and so on. Once you have used up all late days, late assignments will be given at most 80\% credit after one day and 60\% credit after two days.
+We allow each student to use up to 5 late days over the semester. You have late days, not late hours. This means that if your submission is late by any amount of time past the deadline, then this will use up a late day. If it is late by any amount beyond 24 hours past the deadline, then this will use a second late, and so on. Once you have used up all late days, late assignments will not receive credit except in special circumstances. 
 \end{itemize}
 
 
@@ -837,7 +832,7 @@ Include the following in your writeup:
 
 \section{Modifying Perceptron [5604]}
 
-You will experiment with an algorithm that is similar to perceptron, called {\bf Winnow} \cite{winnow}.
+You will experiment with an algorithm that is similar to perceptron, called {\bf Winnow}.
 Winnow is not a commonly used algorithm (and it's not quite appropriate for this dataset), 
 but implementing it is a way to get additional practice with the perceptron implementation here.
 
@@ -866,7 +861,7 @@ For this problem, you should create a new class called \code{Winnow}, which is s
 \begin{itemize}
 \item Initialize the weights {\bf w} to $1.0$ instead of $0.0$. This can be done in \code{numpy} with \code{np.ones} (where the current code uses \code{np.zeros}).
 \item Change the prediction function so that it outputs the positive class if the linear function is greater than $100.0$ (where the current code uses a threshold of $0.0$).
-\item Change the update rule so that the weights are multiplied by $\eta x_i$ if the prediction was an underestimate, and divided by $\eta x_i$ if the prediction was an overestimate (where the current code adds $\eta x_i$ to the weight if it was an underestimate and subtracts $\eta x_i$ if it was an overestimate).
+\item Change the update rule so that the weights are multiplied by $\eta x_i$ if the prediction was an underestimate, and divided by $\eta x_i$ if the prediction was an overestimate. The Winnow update rule (above) specifies what to implement. Note that the current code adds $\eta x_i$ to the weight if it was an underestimate and subtracts $\eta x_i$ if it was an overestimate).
 \end{itemize}
 
 When you run this, use the variables {\em sepal length} and {\em petal length} (columns 1 and 3).
