@@ -227,7 +227,9 @@ if __name__ == "__main__":
         for fn in glob.glob(args.upload + "/*"):
             folder.upload(fn)
 
-    if args.sync and args.upload is not None:
+    if args.sync and args.week is not None:
+
+        # py canvas_cli.py -w 3 -sync -c 2301
 
         def get_week_folder(course_no, week_no):
             course = canvas.get_course(CU2Canvas[args.course])
@@ -239,9 +241,9 @@ if __name__ == "__main__":
 
         for subfolder in folder.get_folders():
             name = subfolder.name
-            path = args.upload + "/" + name
-            print(args.upload + "/" + name + "/*")
-            for fn in glob.glob(args.upload + "/" + name + "/*"):
+            glb = "/Users/ahandler/everything/teaching/{}fall2020/week{}/{}/*".format(args.course, args.week, name)
+            print(glb)
+            for fn in glob.glob(glb):
                 print("fn=", fn)
                 print("[*] Uploading {} to {}".format(fn, name))
                 subfolder.upload(fn, on_duplicate="overwrite")
