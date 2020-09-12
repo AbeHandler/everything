@@ -1,0 +1,221 @@
+\documentclass[10pt]{beamer}
+\usepackage{anyfontsize}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{bm}
+
+\usepackage{tikz}
+\usepackage[english,ngerman]{babel}
+
+\makeatletter
+\newlength\beamerleftmargin
+\setlength\beamerleftmargin{\Gm@lmargin}
+\makeatother
+
+% ------------------------------------------------------------------------------
+% Use the beautiful metropolis beamer template
+% ------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{fontawesome}
+\usepackage{FiraSans} 
+\mode<presentation>
+{
+  \usetheme[progressbar=foot,numbering=fraction,background=light]{metropolis} 
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+  %\setbeamertemplate{frame footer}{My custom footer}
+} 
+
+% ------------------------------------------------------------------------------
+% beamer doesn't have texttt defined, but I usually want it anyway
+% ------------------------------------------------------------------------------
+\let\textttorig\texttt
+\renewcommand<>{\texttt}[1]{%
+  \only#2{\textttorig{#1}}%
+}
+
+% ------------------------------------------------------------------------------
+% minted
+% ------------------------------------------------------------------------------
+\usepackage{minted}
+
+
+% ------------------------------------------------------------------------------
+% tcolorbox / tcblisting
+% ------------------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{codecolor}{HTML}{FFC300}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{most,listingsutf8,minted}
+
+\tcbset{tcbox width=auto,left=1mm,top=1mm,bottom=1mm,
+right=1mm,boxsep=1mm,middle=1pt}
+
+\newtcblisting{myr}[1]{colback=codecolor!5,colframe=codecolor!80!black,listing only, 
+minted options={numbers=left, style=tcblatex,fontsize=\tiny,breaklines,autogobble,linenos,numbersep=3mm},
+left=5mm,enhanced,
+title=#1, fonttitle=\bfseries,
+listing engine=minted,minted language=r}
+
+
+% ------------------------------------------------------------------------------
+% Listings
+% ------------------------------------------------------------------------------
+\definecolor{mygreen}{HTML}{37980D}
+\definecolor{myblue}{HTML}{0D089F}
+\definecolor{myred}{HTML}{98290D}
+
+\usepackage{listings}
+
+% the following is optional to configure custom highlighting
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morecomment=[s]{<!--}{-->},
+  morestring=[s]{>}{<},
+  morekeywords={ref,xmlns,version,type,canonicalRef,metr,real,target}% list your attributes here
+}
+
+\lstdefinestyle{myxml}{
+language=XML,
+showspaces=false,
+showtabs=false,
+basicstyle=\ttfamily,
+columns=fullflexible,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+basicstyle=\color{mygreen}\ttfamily,%\footnotesize,
+stringstyle=\color{myred},
+commentstyle=\color{myblue}\upshape,
+keywordstyle=\color{myblue}\bfseries,
+}
+
+
+% ------------------------------------------------------------------------------
+% The Document
+% ------------------------------------------------------------------------------
+\title{Vectors: \\Normalization, dot product intro}
+\author{Abe Handler, INFO 2301, CU Boulder}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Normalization}
+
+\begin{frame}[fragile,allowframebreaks]{Normalization}
+\begin{itemize}
+\item{We have seen that different vectors have different sizes or magnitudes}
+\item{What if we want to just compare two vectors in terms of direction, regardless of how big they are?}
+\item{In data science, we actually want to do this a lot}
+\end{itemize}
+
+
+\framebreak
+
+\begin{itemize}
+\item{\textbf{Normalizing} a vector means making the vector a standard size. }
+\item{By definition, this means modifying the vector so it has a magnitude of 1}
+\item{How do we do this?}
+\end{itemize}
+
+
+\framebreak
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.7\paperwidth,
+                                 height=.7\paperheight]{normalization}
+            };
+        \end{tikzpicture}
+}
+
+\framebreak
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] {
+                \includegraphics[keepaspectratio,
+                                 width=.7\paperwidth,
+                                 height=.7\paperheight]{normalization2}
+            };
+        \end{tikzpicture}
+}
+
+\framebreak
+
+\begin{columns}[T,onlytextwidth]
+\column{0.5\textwidth}
+\metroset{block=transparent}
+\begin{exampleblock}{\centering Definition: normalization}
+\centering
+$\hat{\bm{x}}=\frac{\boldsymbol{x}}{\lvert \lvert \bm{x}\lvert  \lvert }$
+
+\end{exampleblock}
+\column{0.4\textwidth}
+\footnotesize
+\alert{To normalize a vector} divide each component by the magnitude.
+\end{columns}
+
+
+\framebreak
+
+\centering
+$$\bm{a} = <3,2>$$
+
+$$\lvert \lvert \bm{a} \lvert \lvert = \sqrt{\Sigma a_i^2}=\sqrt{3^2 + 2^2}=\sqrt{13} \approx{3.6} $$
+
+$$\hat{\bm{a}} = <\frac{3}{3.6},\frac{2}{3.6}>$$
+
+\framebreak 
+
+\centering
+
+How would you verify this in Python?
+
+   
+\end{frame}
+
+\section{Dot product}
+
+\begin{frame}[fragile,allowframebreaks]{Dot product}
+\begin{itemize}
+\item{The dot product between two vectors expresses how much the vectors go in the same direction}
+\item{You can think about the dot product in terms of algebra or geometry}
+\item{We will stick with algebra to start (geometry later)}
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+\item{The dot product of $\bm{a}$ and $\bm{b}$ is $\bm{a} \cdot \bm{b}$ }
+\item{We say this ``$\bm{a}$ dot $\bm{b}$''}
+\item $\bm{a} \cdot \bm{b} = \Sigma_{i} \bm{a}_i\bm{b}_i$
+\end{itemize}
+
+
+\framebreak
+
+An example:
+
+{$$\bm{a}=<2,3>$$}
+{$$\bm{b}=<-1,2>$$}
+{$$\bm{a} \cdot \bm{b}= 2*-1 + 3*2 = -2 + 6$$}
+
+\end{frame}
+
+\end{document}
