@@ -241,7 +241,7 @@ if __name__ == "__main__":
 
         for subfolder in folder.get_folders():
             name = subfolder.name
-            glb = "/Users/ahandler/everything/teaching/{}fall2020/week{}/{}/*".format(args.course, args.week, name)
+            glb =  os.environ["ROOT"] +  "/everything/teaching/{}fall2020/week{}/{}/*".format(args.course, args.week, name)
             print(glb)
             for fn in glob.glob(glb):
                 print("fn=", fn)
