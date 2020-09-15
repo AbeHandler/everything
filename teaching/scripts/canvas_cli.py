@@ -117,12 +117,15 @@ def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10)
     course = canvas.get_course(CU2Canvas["3401"])
     names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
     names2ids_course = names2ids["3401"]
+
+    To see this in the Canvas UI click "Moderate this quiz"
     '''
     ids = [names2ids_course[i] for i in names]
 
     for quiz in course.get_quizzes():
         print("[*] Setting accomodation for {}".format(quiz.title))
         for id_ in ids:
+            print("-", id_)
             quiz.set_extensions([{'user_id': id_, 'extra_time': extra_minutes}])
 
 
@@ -158,6 +161,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-q', '-quiz', '--quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
 
+    parser.add_argument('-set_extra_time_on_quizzes', dest='set_extra_time_on_quizzes', default=False, action='store_true', help='Use this flag to set extra time on all quizzes for students w/ accomodations')
+
     parser.add_argument('-a', '-assignment', '--assignment', dest='assignment', default=False, action='store_true', help='Use this flag to create an assignment')
 
     parser.add_argument('-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
@@ -186,13 +191,16 @@ if __name__ == "__main__":
 
     print(args)
 
-    # course = canvas.get_course(CU2Canvas["3401"])
-    # names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
-    # names2ids_course = names2ids["3401"]
-    # set_extra_time_on_quizzes(course, names, names2ids_course)
+    if(args.set_extra_time_on_quizzes):
+        course = canvas.get_course(CU2Canvas[args.course])
+        names = [o.replace('\n', "") for o in open("accomodations{}.txt".format(args.course))]
+        names2ids_course = names2ids[args.course]
+        set_extra_time_on_quizzes(course, names, names2ids_course)
+        import os; os._exit(0)
 
     if(args.export):
         export_all(CU2Canvas)
+        import os; os._exit(0)
 
     if(args.quiz):
         course = canvas.get_course(CU2Canvas[args.course])
