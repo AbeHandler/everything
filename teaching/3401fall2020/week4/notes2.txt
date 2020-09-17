@@ -1,0 +1,5 @@
+.open users
+CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT,  name VARCHAR,  state VARCHAR );
+INSERT INTO users (name, state) VALUES ("PinkPizza", "CO")
+INSERT INTO users (name, state) VALUES ("Frank41", "MA");
+INSERT INTO users (name, state) VALUES ("Ponderozzza", "AZ");
