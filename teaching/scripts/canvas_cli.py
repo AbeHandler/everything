@@ -244,7 +244,7 @@ if __name__ == "__main__":
 
     if args.sync and args.week is not None:
 
-        # py canvas_cli.py -w 3 -sync -c 2301
+        # $ canvas -w 3 -sync -c 2301
 
         def get_week_folder(course_no, week_no):
             course = canvas.get_course(CU2Canvas[args.course])
