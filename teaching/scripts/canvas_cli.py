@@ -1,3 +1,6 @@
+#! /opt/anaconda3/bin/python 
+# replace shebang w/ your local python version 
+
 '''
 An opinionated command-line interface to the canvas API.
 - This will modify your canvas courses
@@ -16,6 +19,8 @@ www.abehandler.com
 To make an API call when logged into canvas do this 
 
 https://canvas.colorado.edu/api/v1/courses/62535/assignment_groups
+
+On my local machine, I "install" by symlinking to this script and aliasing it as "canvas"
 
 '''
 
