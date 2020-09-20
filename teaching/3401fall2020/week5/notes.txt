@@ -1,0 +1,17 @@
+sqlite3
+.open lahmansbaseballdb.sqlite
+.tables 
+.schema salary
+
+# aggregation
+select avg(salary) from salary;
+select max(salary) from salary;
+select sum(salary) from salary;
+select max(salary) from salary where team_id="COL"
+select * from salary where salary=20275000;
+
+# group by
+select year, avg(salary) from salary group by year;
+select year, team_id, avg(salary) from salary group by year, team_id;
+select year, avg(salary) from salary where team_id="COL" group by year;
+
