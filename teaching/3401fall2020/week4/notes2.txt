@@ -1,5 +1,13 @@
-.open users
+.open mydb
 CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT,  name VARCHAR,  state VARCHAR );
-INSERT INTO users (name, state) VALUES ("PinkPizza", "CO")
+INSERT INTO users (name, state) VALUES ("PinkPizza", "CO");
+INSERT INTO users (name, state) VALUES ("JoeyInLittleton", "CO");
 INSERT INTO users (name, state) VALUES ("Frank41", "MA");
 INSERT INTO users (name, state) VALUES ("Ponderozzza", "AZ");
+
+
+## 
+.open mydb
+select * from CO_users;
+0|1|PinkPizza|CO
+1|2|BoulderInternetPerson|CO

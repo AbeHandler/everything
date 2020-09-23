@@ -204,7 +204,7 @@ How would you verify this in Python?
 \begin{itemize}
 \item{The dot product of $\bm{a}$ and $\bm{b}$ is $\bm{a} \cdot \bm{b}$ }
 \item{We say this ``$\bm{a}$ dot $\bm{b}$''}
-\item $\bm{a} \cdot \bm{b} = \Sigma_{i} \bm{a}_i\bm{b}_i$
+\item $\bm{a} \cdot \bm{b} = \Sigma \bm{a}_i\bm{b}_i$
 \end{itemize}
 
 

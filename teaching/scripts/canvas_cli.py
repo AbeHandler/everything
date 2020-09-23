@@ -222,6 +222,7 @@ if __name__ == "__main__":
         try:
             datetime.strptime(args.due, '%Y%m%d')
             create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
+            import os; os._exit(0)
         except ValueError:
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
 
