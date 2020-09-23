@@ -1,0 +1,106 @@
+
+\begin{frame}[fragile]{Using Code Listings II}
+This time with caption but without code highlighting.
+\begin{lstlisting}[caption={Hello World! in C}]
+int main()
+{
+    printf("Hello World!");
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Code highlighting with listings}
+\begin{lstlisting}[language=Python, caption={A demonstration}]
+import numpy as np
+\end{lstlisting}
+
+You can also use the inline shorthand for small snippets: \lstinline[language=C]!while{$a || $b}!
+
+\end{frame}
+
+\begin{frame}{List of listings}
+    %\lstlistoflistings
+    
+    Well, this is how it's supposed to be, but sadly, using sections inside frames will add up to this result. -- So you can't use this list of listings here.
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Importing listing from file}
+\lstset{style=myxml} % now we activate the custom style
+\lstinputlisting[language=XML]{my_test.xml}
+
+This will only be in colour if you use the settings.
+\end{frame}
+
+\begin{frame}[fragile]{Using Knitr}
+<<>>=
+# Create sequence
+my_sequence = 1:5
+ 
+# use summary function to display stats
+summary(my_sequence)
+ 
+@
+
+Then output values inside the text: \Sexpr{my_sequence}.
+\end{frame}
+
+\begin{frame}[fragile]{Using Knitr with options}
+<<eval=FALSE>>=
+# This package (gutenbergr) is not available 
+# on Overleaf
+# So we set KnitR with eval=FALSE
+# so it will not evaluate
+# and litter our slides with error messages
+library(gutenbergr)
+
+# echo=FALSE hides the code but displays the results
+# echo=1:3 only displays first three lines
+# background=#FFFFFF
+@
+
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted}}
+ %set the langauge in these brackets after {minted}{LANGUAGE SHORTHAND}
+\begin{minted}{c}
+int main() {
+  printf("hello, world");
+  return 0;
+}
+\end{minted}
+\mintinline{latex}{Can also typeset $code$ inline. Yay to \LaTeX{}!}
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted}}
+There also is the option to include math mode stuff in the comments.
+\begin{minted}[mathescape,gobble=2]{cpp}
+  /*
+  $\pi=\lim_{n\to\infty}\frac{P_n}{d}$ 
+  */
+  const double pi = 3.1415926535;
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Using \texttt{minted} with options}
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=myblue!20,
+fontsize=\footnotesize,
+linenos
+]
+{python}
+import numpy as np
+
+test = 5
+\end{minted}
+\end{frame}
+
+\begin{frame}[standout]
+    This is it ~\alert{\faSmileO}~
+\end{frame}
