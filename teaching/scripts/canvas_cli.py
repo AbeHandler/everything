@@ -35,6 +35,18 @@ from datetime import datetime
 from datetime import timedelta
 
 
+def init_local(course):
+    for i in range(1,17):
+        str_ = os.environ['ROOT'] + '/everything/teaching/{}Fall2020/week{}'.format(course, i)
+        if not os.path.isdir(str_):
+            os.mkdir(str_)
+            os.mkdir(str_ + "/" + "assignment_files")
+            os.mkdir(str_ + "/" + "quiz_files")
+            os.mkdir(str_ + "/" + "other_files")
+
+
+import os;os._exit(0)
+
 def get_api():
 
     # Canvas API URL
