@@ -147,8 +147,17 @@ def export_all(CU2Canvas):
 if __name__ == "__main__":
     canvas = get_api()
 
+
+
     # Map CU course names to Canvas course names
     CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
+
+
+    course = canvas.get_course(CU2Canvas['2301']) 
+    lecture_page = course.get_page("lectures")
+    lecture_page.edit(wiki_page={'body': 'New Body'})
+    import os;os._exit(0)
+
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
