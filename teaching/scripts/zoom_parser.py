@@ -1,10 +1,12 @@
 import sys
 from jinja2 import Template
 
+### "Show detailed recording info" on Zoom
+
 
 template = '''
 <ul>
-<li><a href="{{link}}">Sep 25</a> (PW: {{pw}})</li>
+<li><a href="{{link}}">{{date}}</a> (PW: {{pw}})</li>
 </ul>
 '''
 
@@ -17,7 +19,9 @@ for o in list(sys.stdin):
     if "Passcode" in o:
         o = o.replace("Access Passcode", "").replace(":", "")
         pw = o 
-        print(o)
+
+    if "Start" in o:
+        date = (o.split(":")[1].split(",")[0]).strip()
 
 
-print(template.render(pw=pw, link=link))
+print(template.render(pw=pw, link=link, date=date))
