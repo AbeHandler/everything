@@ -45,8 +45,6 @@ def init_local(course):
             os.mkdir(str_ + "/" + "other_files")
 
 
-import os;os._exit(0)
-
 def get_api():
 
     # Canvas API URL
@@ -165,10 +163,10 @@ if __name__ == "__main__":
     CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
 
 
+    # in progress
     course = canvas.get_course(CU2Canvas['2301']) 
     lecture_page = course.get_page("lectures")
     lecture_page.edit(wiki_page={'body': 'New Body'})
-    import os;os._exit(0)
 
 
     # map course to in-class assignment groups
