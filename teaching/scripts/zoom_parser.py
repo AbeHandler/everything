@@ -24,4 +24,7 @@ for o in list(sys.stdin):
         date = (o.split(":")[1].split(",")[0]).strip()
 
 
+    if "Date" in o:
+        date = (o.split(":")[1].split(",")[0]).strip()
+
 print(template.render(pw=pw, link=link, date=date))
