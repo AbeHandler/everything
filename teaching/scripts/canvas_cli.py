@@ -154,9 +154,19 @@ def export_all(CU2Canvas):
         course.export_content(export_type="common_cartridge")
 
 
+def get_lecture_page_body(lecture_page):
+    '''
+    Take the page of recorded lectures and add to it
+    '''
+
+    str_ = lecture_page.body
+    body_start = str_.index("<ul>")
+    body_end = str_.index("\r\n\r\n")
+
+    return(str_[body_start:body_end])
+
 if __name__ == "__main__":
     canvas = get_api()
-
 
 
     # Map CU course names to Canvas course names
@@ -166,8 +176,8 @@ if __name__ == "__main__":
     # in progress
     course = canvas.get_course(CU2Canvas['2301']) 
     lecture_page = course.get_page("lectures")
-    lecture_page.edit(wiki_page={'body': 'New Body'})
-
+   
+    str_ = get_lecture_page_body(lecture_page) 
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
