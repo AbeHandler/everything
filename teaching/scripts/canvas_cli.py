@@ -28,6 +28,7 @@ On my local machine, I "install" by symlinking to this script and aliasing it as
 import glob
 import time
 import os
+import sys
 import argparse
 from datetime import datetime
 from canvasapi import Canvas
@@ -172,12 +173,23 @@ if __name__ == "__main__":
     # Map CU course names to Canvas course names
     CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
 
-
     # in progress
-    course = canvas.get_course(CU2Canvas['2301']) 
+    course = canvas.get_course(CU2Canvas['2301'])
     lecture_page = course.get_page("lectures")
-   
-    str_ = get_lecture_page_body(lecture_page) 
+
+    # pbpaste | python zoom_parser.py | python canvas_cli.py
+
+    str_ = get_lecture_page_body(lecture_page)
+
+    lns = []
+    for o in list(sys.stdin):
+        lns.append(o)
+
+    str_ = "".join(lns) + str_
+
+    print(str_)
+
+    import os; os._exit(0)
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
