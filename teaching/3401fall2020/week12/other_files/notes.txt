@@ -1,3 +1,5 @@
 ## To run read_json 
 
 conda install -c conda-forge fsspec
+
+conda install -c anaconda beautifulsoup4
