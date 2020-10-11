@@ -4,11 +4,11 @@ with open("some_html.html", "r") as inf:
     dt = inf.read()
 
 soup = BeautifulSoup(dt, 'html.parser')
-
-winter_items = soup.select("div > a")
+items = soup.select("div > a")
+print(len(items))
 
 total = 0
-for c in winter_items:
+for c in items:
     total += 1 
 
 print(total)
