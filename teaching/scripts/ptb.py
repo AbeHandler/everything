@@ -17,9 +17,117 @@ and available at http://www.cis.upenn.edu/~treebank/tokenizer.sed.
 """
 
 import re
-from nltk.tokenize.api import TokenizerI
-from nltk.tokenize.util import align_tokens
-from nltk.tokenize.destructive import MacIntyreContractions
+
+from abc import ABC, abstractmethod
+
+# from nltk.tokenize.destructive import MacIntyreContractions 
+
+class MacIntyreContractions:
+    """
+    List of contractions adapted from Robert MacIntyre's tokenizer.
+    """
+
+    CONTRACTIONS2 = [
+        r"(?i)\b(can)(?#X)(not)\b",
+        r"(?i)\b(d)(?#X)('ye)\b",
+        r"(?i)\b(gim)(?#X)(me)\b",
+        r"(?i)\b(gon)(?#X)(na)\b",
+        r"(?i)\b(got)(?#X)(ta)\b",
+        r"(?i)\b(lem)(?#X)(me)\b",
+        r"(?i)\b(mor)(?#X)('n)\b",
+        r"(?i)\b(wan)(?#X)(na)\s",
+    ]
+    CONTRACTIONS3 = [r"(?i) ('t)(?#X)(is)\b", r"(?i) ('t)(?#X)(was)\b"]
+    CONTRACTIONS4 = [r"(?i)\b(whad)(dd)(ya)\b", r"(?i)\b(wha)(t)(cha)\b"]
+
+#from nltk.tokenize.api import TokenizerI
+
+class TokenizerI(ABC):
+    """
+    A processing interface for tokenizing a string.
+    Subclasses must define ``tokenize()`` or ``tokenize_sents()`` (or both).
+    """
+
+    @abstractmethod
+    def tokenize(self, s):
+        """
+        Return a tokenized copy of *s*.
+        :rtype: list of str
+        """
+        if overridden(self.tokenize_sents):
+            return self.tokenize_sents([s])[0]
+
+    def span_tokenize(self, s):
+        """
+        Identify the tokens using integer offsets ``(start_i, end_i)``,
+        where ``s[start_i:end_i]`` is the corresponding token.
+        :rtype: iter(tuple(int, int))
+        """
+        raise NotImplementedError()
+
+    def tokenize_sents(self, strings):
+        """
+        Apply ``self.tokenize()`` to each element of ``strings``.  I.e.:
+            return [self.tokenize(s) for s in strings]
+        :rtype: list(list(str))
+        """
+        return [self.tokenize(s) for s in strings]
+
+    def span_tokenize_sents(self, strings):
+        """
+        Apply ``self.span_tokenize()`` to each element of ``strings``.  I.e.:
+            return [self.span_tokenize(s) for s in strings]
+        :rtype: iter(list(tuple(int, int)))
+        """
+        for s in strings:
+            yield list(self.span_tokenize(s))
+
+
+#from nltk.tokenize.util import align_tokens
+
+def align_tokens(tokens, sentence):
+    """
+    This module attempt to find the offsets of the tokens in *s*, as a sequence
+    of ``(start, end)`` tuples, given the tokens and also the source string.
+        >>> from nltk.tokenize import TreebankWordTokenizer
+        >>> from nltk.tokenize.util import align_tokens
+        >>> s = str("The plane, bound for St Petersburg, crashed in Egypt's "
+        ... "Sinai desert just 23 minutes after take-off from Sharm el-Sheikh "
+        ... "on Saturday.")
+        >>> tokens = TreebankWordTokenizer().tokenize(s)
+        >>> expected = [(0, 3), (4, 9), (9, 10), (11, 16), (17, 20), (21, 23),
+        ... (24, 34), (34, 35), (36, 43), (44, 46), (47, 52), (52, 54),
+        ... (55, 60), (61, 67), (68, 72), (73, 75), (76, 83), (84, 89),
+        ... (90, 98), (99, 103), (104, 109), (110, 119), (120, 122),
+        ... (123, 131), (131, 132)]
+        >>> output = list(align_tokens(tokens, s))
+        >>> len(tokens) == len(expected) == len(output)  # Check that length of tokens and tuples are the same.
+        True
+        >>> expected == list(align_tokens(tokens, s))  # Check that the output is as expected.
+        True
+        >>> tokens == [s[start:end] for start, end in output]  # Check that the slices of the string corresponds to the tokens.
+        True
+    :param tokens: The list of strings that are the result of tokenization
+    :type tokens: list(str)
+    :param sentence: The original string
+    :type sentence: str
+    :rtype: list(tuple(int,int))
+    """
+    point = 0
+    offsets = []
+    for token in tokens:
+        try:
+            start = sentence.index(token, point)
+        except ValueError as e:
+            raise ValueError(
+                'substring "{}" not found in "{}"'.format(token, sentence)
+            ) from e
+        point = start + len(token)
+        offsets.append((start, point))
+    return offsets
+
+
+
 
 
 class TreebankWordTokenizer(TokenizerI):
