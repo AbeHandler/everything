@@ -474,3 +474,6 @@ class TreebankWordDetokenizer(TokenizerI):
     def detokenize(self, tokens, convert_parentheses=False):
         """ Duck-typing the abstract *tokenize()*."""
         return self.tokenize(tokens, convert_parentheses)
+
+tok = TreebankWordTokenizer()
+tok.tokenize("Hello this is a tokenizer")
