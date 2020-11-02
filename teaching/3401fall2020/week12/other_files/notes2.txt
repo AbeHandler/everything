@@ -1,0 +1,5 @@
+1. Audit tech corps
+2. API calls
+3. XML/JSON
+4. spotify,last.fm,rapgenius,youtube
+5. basic scraping
