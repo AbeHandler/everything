@@ -30,10 +30,59 @@ import time
 import os
 import sys
 import argparse
-from datetime import datetime
+import configparser
 from canvasapi import Canvas
 from datetime import datetime
 from datetime import timedelta
+from bs4 import BeautifulSoup
+
+
+def str2date(str_):
+    '''
+    format = YYYYMMDD
+    '''
+    data_date = datetime.strptime(str_, "%Y%m%d")
+    return data_date
+
+
+def htmlpage2dates(html_str):
+    soup = BeautifulSoup(html_str, 'html.parser')
+
+    dates = []
+            
+    for i in soup.find_all('h3'):
+        try:
+            data_date = i.attrs["data-date"]
+            data_date = str2date(data_date) 
+            dates.append(data_date)
+        except KeyError:
+            pass
+    return dates
+
+
+def get_dates_for_course(ini_loc='2301F2020.ini'):
+    '''return all dates'''
+    config = configparser.ConfigParser()
+
+    config.read(ini_loc)
+
+    start = str2date(config['dates']["start"])
+    end = str2date(config["dates"]["end"])
+
+    counter = start 
+    delta = timedelta(days=1)
+
+    MON = 0
+    WED = 2
+    FRI = 4
+    dates_for_course = []
+
+    while counter < end:
+        if counter.weekday() in [MON, WED, FRI]:
+            dates_for_course.append(counter)
+            # counter.strftime("%A %Y-%m-%d")
+        counter += delta 
+    return dates_for_course
 
 
 def init_local(course):
@@ -60,7 +109,7 @@ def get_api():
 # https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
 
 
-def create_in_class_assignment(courseNo, due, name, published=False):
+def create_in_class_assignment(courseNo, due, name, points=3, published=False):
 
     course = canvas.get_course(CU2Canvas[courseNo])
 
@@ -72,7 +121,7 @@ def create_in_class_assignment(courseNo, due, name, published=False):
         'name': name,
         'published': published,
         'due_at': due.strftime('%Y-%m-%d') + "T23:59:00",
-        "points_possible": 3
+        "points_possible": points
     })
 
     print("   - Added assignment to {}".format(course.name))
@@ -149,6 +198,7 @@ def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10)
 
 
 def export_all(CU2Canvas):
+    '''This will backup all courses on Canvas'''
     for course in CU2Canvas:
         print("[*] Exporting {} from Canvas".format(course))
         course = canvas.get_course(CU2Canvas[course])
@@ -166,6 +216,7 @@ def get_lecture_page_body(lecture_page):
 
     return(str_[body_start:body_end])
 
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -175,10 +226,19 @@ if __name__ == "__main__":
 
     # in progress
     course = canvas.get_course(CU2Canvas['2301'])
-    lecture_page = course.get_page("lectures")
+    lecture_page = course.get_page("2301")
+
+    last_date_on_page = max(htmlpage2dates(lecture_page.body))
+
+    dates = get_dates_for_course()
+
+    print(last_date_on_page, dates)
+
+    import os; os._exit(0)
 
     # pbpaste | python zoom_parser.py | python canvas_cli.py
 
+    '''
     str_ = get_lecture_page_body(lecture_page)
 
     lns = []
@@ -190,11 +250,12 @@ if __name__ == "__main__":
     print(str_)
 
     import os; os._exit(0)
+    '''
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
 
-    Course2Classtime = {"4604": "T12:40:00", "sandbox": "T12:40:00"}
+    Course2Classtime = {"4604": "T12:40:00", "sandbox": "T12:40:00", "2301": "T10:30:00"}
 
     names2ids = {}
     for coursename, courseno in CU2Canvas.items():
@@ -258,14 +319,17 @@ if __name__ == "__main__":
                             'time_limit': args.time_limit,
                             "points_possible": args.points,
                             "due_at": args.due + "T" + Course2Classtime[args.course]})
+        print("[*] created quiz for {}".format(args.course))
+        import os; os._exit(0)
 
     if(args.assignment):
         try:
             datetime.strptime(args.due, '%Y%m%d')
-            create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name)
+            create_in_class_assignment(courseNo=args.course, due=args.due, name=args.name, points=args.points)
             import os; os._exit(0)
         except ValueError:
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
+        import os;os._exit(0)
 
     if(args.init_files):
         init_course_files(CU2Canvas[args.course])
