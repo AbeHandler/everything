@@ -1,0 +1,10 @@
+Mod6 in-class
+
+Music theme
+1. json parsing, serialization, format, etc.
+2. calls to pushshift API to read music titles, reading in json from requests
+3. xml parsing, serialization, format, etc.
+
+4. Using the spotify API, getting comfortable w/ Python wrappers for APIs. To use spotipy they will have to register an app and learn about/set environment variables, which will take much of a class I think
+5. Using bs4 to scrape titles from music blog. First minimal example with simple_html.html
+6. Putting it all together: which musicians from genre X (via spotify API) show up on a subreddit devoted to genre X by time. Motivate mod7 by pointing out limits of simple string matching (e.g. Rihanna vs. Riri)

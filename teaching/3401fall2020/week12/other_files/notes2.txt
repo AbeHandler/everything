@@ -3,3 +3,4 @@
 3. XML/JSON
 4. spotify,last.fm,rapgenius,youtube
 5. basic scraping
+6. simple API calls w/ spotify API

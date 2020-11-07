@@ -1,0 +1,8 @@
+1. https://developer.spotify.com/documentation/web-api/quick-start/
+
+2. You have to sign up for spotify and accept the terms of service
+
+3. Install spotipy 
+
+https://github.com/plamere/spotipy
+pip install spotipy --upgrade
