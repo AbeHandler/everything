@@ -225,6 +225,7 @@ if __name__ == "__main__":
     CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
 
     # in progress
+    '''
     course = canvas.get_course(CU2Canvas['2301'])
     lecture_page = course.get_page("2301")
 
@@ -235,6 +236,8 @@ if __name__ == "__main__":
     print(last_date_on_page, dates)
 
     import os; os._exit(0)
+    '''
+
 
     # pbpaste | python zoom_parser.py | python canvas_cli.py
 
