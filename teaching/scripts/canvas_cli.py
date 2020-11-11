@@ -291,7 +291,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-e', '-export', '--export', dest='export', help='Export all', default=False, action='store_true')
 
-    parser.add_argument('-p', '-points', '--points', dest='points', default=10, type=int)
+    parser.add_argument('-p', '-points', '--points', dest='points', default=None, type=int)
 
     parser.add_argument('-u', '-upload', '--upload', help='Uploads all files in this folder to canvas.', dest='upload', type=str)
 
