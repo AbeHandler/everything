@@ -109,13 +109,16 @@ def get_api():
 # https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
 
 
-def create_in_class_assignment(courseNo, due, name, points=3, published=False):
+def create_in_class_assignment(courseNo, due, name = None, points=3, published=False):
 
     course = canvas.get_course(CU2Canvas[courseNo])
 
     due = datetime.strptime(due, '%Y%m%d')
 
     print("[*] Creating in-class assignment {} for {}".format(courseNo, due))
+
+    if name is None:
+        name = due.strftime("%b %d") + " : in-class"
 
     course.create_assignment({
         'name': name,
