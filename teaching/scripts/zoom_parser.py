@@ -15,7 +15,7 @@ link = None
 
 for o in list(sys.stdin):
     if "cuboulder" in o:
-        link = o 
+        link = o.replace("\n", "")
     if "Passcode" in o:
         o = o.replace("Access Passcode", "").replace(":", "")
         pw = o 
