@@ -221,6 +221,18 @@ def get_lecture_page_body(lecture_page):
     return(str_[body_start:body_end])
 
 
+def get_no_submissions(course, assignment):
+    '''Get students who did not submit'''
+    assignment = course.get_assignment(assignment)
+    non_submitting_students = []
+    for student in assignment.get_gradeable_students():
+        id_ = student.id
+        submission = assignment.get_submission(id_)
+        if submission.submitted_at is None:
+            non_submitting_students.append(student)
+    return non_submitting_students
+
+
 if __name__ == "__main__":
     canvas = get_api()
 
@@ -340,6 +352,7 @@ if __name__ == "__main__":
 
     if(args.init_files):
         init_course_files(CU2Canvas[args.course])
+        import os;os._exit(0)
 
     if args.upload is not None and args.sync is False:
         # py canvas_cli.py -u ../2301fall2020/week2/assignment_files/ -c 2301 -w 2
