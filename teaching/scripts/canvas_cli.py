@@ -233,16 +233,16 @@ def get_no_submissions(course, assignment):
     return non_submitting_students
 
 
-def comment_and_grade_no_submission(assignment_id, student_id):
-    '''Give comment "no submission" to student on assignment
+def comment_and_grade_no_submission(assignment_id, student):
+    '''Give 0 + comment "no submission" to student on assignment
 
     e.g. 
-    for student in students:
-        comment_and_grade_no_submission(assignment_id=880992, student_id=student.id)
+    for student in get_no_submissions(course, assignment):
+        comment_and_grade_no_submission(assignment_id=880992, student_id=student)
     '''
     assignment = course.get_assignment(assignment=assignment_id)
-    submission = assignment.get_submission(student_id) # student id 
-    print("- commenting on {}".format(student_id))
+    submission = assignment.get_submission(student.id) # student id 
+    print("- Setting {} score to zero".format(student))
     submission.edit(submission={'posted_grade':0}, comment={'text_comment':'no submission'})
 
 
