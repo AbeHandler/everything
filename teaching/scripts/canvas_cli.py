@@ -339,6 +339,7 @@ if __name__ == "__main__":
     print(args)
 
     if args.zeros and args.assignmentid is not None:
+        # py canvas_cli.py -c 2301 -zeros --assignmentid 871212
         course = canvas.get_course(CU2Canvas[args.course])
         for student in get_no_submissions(course, args.assignmentid):
             comment_and_grade_no_submission(args.assignmentid, student)
