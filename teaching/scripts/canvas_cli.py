@@ -234,7 +234,8 @@ def get_no_submissions(course, assignment):
 
 
 def comment_and_grade_no_submission(assignment_id, student):
-    '''Give 0 + comment "no submission" to student on assignment
+    '''
+    Give 0 + comment "no submission" to student on assignment
 
     e.g. 
     for student in get_no_submissions(course, assignment):
@@ -323,6 +324,10 @@ if __name__ == "__main__":
 
     parser.add_argument('-s', '-sync', '--sync', action='store_true', help='syncs a directory to canvas', dest='sync', default=False)
 
+    parser.add_argument('-z', '-zeros', '--zeros', action='store_true', help='assigns zeros to students who have not submitted', dest='zeros', default=False)
+
+    parser.add_argument('--assignmentid', dest="assignmentid", help='Assignment ID for no submission')
+
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
 
     parser.add_argument('--publish', dest='publish', default='false', action='store_true', help='Use this flag to immediately publish the assignment')
@@ -332,6 +337,13 @@ if __name__ == "__main__":
     # test out overrides
 
     print(args)
+
+    if args.zeros and args.assignmentid is not None:
+        course = canvas.get_course(CU2Canvas[args.course])
+        for student in get_no_submissions(course, args.assignmentid):
+            comment_and_grade_no_submission(args.assignmentid, student)
+        import os; os._exit(0)
+
 
     if(args.set_extra_time_on_quizzes):
         course = canvas.get_course(CU2Canvas[args.course])
