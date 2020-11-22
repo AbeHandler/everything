@@ -1,0 +1,4 @@
+1. Zipfs law, tokenization, most common words
+2. Windowing and coccurrance, conditional top terms
+3. Term document matrix
+4. Vector space model and querying the tdm
