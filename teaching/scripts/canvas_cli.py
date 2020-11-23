@@ -358,8 +358,16 @@ if __name__ == "__main__":
         import os; os._exit(0)
 
     if(args.quiz):
+        if args.due is None:
+            print("[*] You must set a due date")
+            import os;os._exit(0)
         course = canvas.get_course(CU2Canvas[args.course])
-        course.create_quiz({'title': args.name,
+        due = datetime.strptime(args.due, '%Y%m%d')
+        if args.name is None:
+            name = due.strftime("%b %d") + " quiz"
+        else:
+            name = args.name
+        course.create_quiz({'title': name,
                             'published': args.publish,
                             'time_limit': args.time_limit,
                             "points_possible": args.points,
