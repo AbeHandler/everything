@@ -18,7 +18,7 @@ social: true  # includes social icons at the bottom of the page
 
 As a resesearcher, I am interested in user-facing natural language processing applications, especially new tools for searching, analyzing and making sense of large document collections.
 
-As part of this work, I design and build [user-centered interfaces](https://arxiv.org/pdf/1708.01944.pdf) with collaborators from [HCI](https://www.cics.umass.edu/people/mahyar-narges), develop [algorithms](https://www.aclweb.org/anthology/D19-1612.pdf) for efficient summarization (user-facing systems come with strict time and space constraints), and research [natural language processing techniques](https://www.aclweb.org/anthology/N18-1159.pdf) to support new ways of [analyzing text](https://www.aclweb.org/anthology/D19-5414.pdf). 
+As part of this work, I design and build [interfaces](https://arxiv.org/pdf/1708.01944.pdf) with collaborators from [HCI](https://www.cics.umass.edu/people/mahyar-narges), develop [algorithms](https://www.aclweb.org/anthology/D19-1612.pdf) for efficient summarization, and research [natural language processing techniques](https://www.aclweb.org/anthology/N18-1159.pdf) to support new ways of [analyzing text](https://www.aclweb.org/anthology/D19-5414.pdf). 
 
 <h5>Teaching</h5>
 In addition to my research interests, I am very excited to be working as a full-time instructor at the University of Colorado, Boulder. I am [cautiously optimistic](https://www.khanacademy.org/) about the possibilities of online eductation, and very interested in [technologies](https://github.com/AbeHandler/CanvasCLI) and [methods](https://projecteuler.net/) for effective, low-cost, online pedagogy at scale.
