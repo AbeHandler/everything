@@ -1,6 +1,7 @@
 ---
-layout: about
+
 title: About
+layout: about
 permalink: /
 description: I am an instructor with the <a href="https://www.colorado.edu/cmci/infoscience">Department of Information Science</a> at the University of Colorado, Boulder and a PhD Candidate at the <a href="https://www.cics.umass.edu/">College of Information and Computer Sciences</a> at the University of Massachusetts, Amherst.
 

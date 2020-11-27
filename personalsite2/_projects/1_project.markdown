@@ -1,6 +1,6 @@
 ---
 layout: page
-title: phrasemachine
+title: Phrasemachine
 description: Practical software for efficient keyphrase extraction
 img: /assets/img/phrasemachine.png
 redirect: https://github.com/slanglab/phrasemachine
