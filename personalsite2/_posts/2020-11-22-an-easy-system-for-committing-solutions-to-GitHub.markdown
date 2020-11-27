@@ -5,9 +5,6 @@ date:   2020-11-22 13:40:53 -0400
 categories: teaching 
 ---
 
-### An easy system for committing solutions to GitHub
-#### How to post solutions to public repos without giving away the answer
-
 This semester, I found myself making a lot of solutions to problem sets and exams, which I organize in public GitHub repos. I wanted a way to store the solutions to these assignments in the repos.
 
 After a few months I found a solution that seemed to work well. The basic idea is to created a symlinked script on my local machine which encrypts solutions files so they can be committed. 

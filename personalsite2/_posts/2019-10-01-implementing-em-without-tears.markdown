@@ -5,7 +5,6 @@ date:   2019-10-01 13:40:53 -0400
 categories: EM 
 ---
 
-### Implementing EM without tears
 #### What to do when your EM code isn't working
 
 There are many great [books](https://www.cs.ubc.ca/~murphyk/MLbook/), [lectures](https://www.youtube.com/watch?v=AnbiNaVp3eQ) and [tutorials](https://s3-us-west-2.amazonaws.com/www.abehandler.com/static/em-mixtures.pdf) on the EM algorithm. These materials often derive an E step and an M step for some mixture model (e.g. mixture of Gaussians), before offering a theoretical view of the procedure using Jensen's inequality and KL divergence. These tutorials are great. But in order to *really* understand EM, you'll have to code an implementation yourself. This step is non-trivial: if you are still learning the math, it can be hard to spot bugs when your implementation doesn't work.
