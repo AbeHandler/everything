@@ -132,9 +132,11 @@
 
     {% if entry.bibtex %}
     <div class="bibtex hidden">
+      <p>
       {% highlight bibtex %}
-      <p>{{ entry.bibtex }}</p>
+      {{ entry.bibtex }}
       {% endhighlight %}
+      </p>
     </div>
     {% endif %}
   </div>

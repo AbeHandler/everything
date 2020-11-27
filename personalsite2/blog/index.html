@@ -15,13 +15,13 @@ pagination:
 
 <div class="post">
 
-    <!-- <h2>{{ site.blog_description }}</h2> -->
+     <h4>{{ site.blog_description }}</h4> 
 
 
   <ul class="post-list">
     {% for post in paginator.posts %}
       <li>
-        <h3><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
+        <h4><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
         <p class="post-meta">{{ post.date | date: '%B %-d, %Y' }}</p>
         <p>{{ post.description }}</p>
       </li>
