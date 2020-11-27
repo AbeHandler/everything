@@ -1,9 +1,10 @@
 ---
 layout: page
-title: project 4
-description: another without an image
+title: The Vault
+description: Before I became a PhD student I worked as data journalist, where I lead development of The Vault, a collection of applications which which helped citizens better find and make use of public records.
 img:
 importance: 3
+redirect: https://thelensnola.org/2014/06/12/the-lens-launches-the-vault-to-bring-greater-openness-to-government-contracting/
 ---
 
 Every project has a beautiful feature showcase page.

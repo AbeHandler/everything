@@ -1,9 +1,9 @@
 ---
 layout: page
-title: project 3
-description: a project that redirects to another website
-img: /assets/img/7.jpg
-redirect: https://unsplash.com
+title: wmasscovid
+description: Automatically updated COVID information for Western Massachusetts
+img: /assets/img/wmasscovid.png
+redirect: http://www.wmasscovid.com
 importance: 3
 ---
 

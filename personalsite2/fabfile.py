@@ -1,7 +1,7 @@
 from fabric.api import *
 
-#def build():
-#    local("bundle exec jekyll build")
+def build():
+    local("bundle exec jekyll build")
 
 def serve():
     local("bundle exec jekyll serve")

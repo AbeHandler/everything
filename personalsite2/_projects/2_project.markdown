@@ -1,8 +1,9 @@
 ---
 layout: page
-title: project 2
-description: a project with a background image
-img: /assets/img/3.jpg
+title: Live election maps
+description: First live-election maps in Louisiana (w/ <a href="https://github.com/ThomasThoren">Tom Thoren</a>)
+img: /assets/img/maps.png
+redirect: http://elections.thelensnola.org/
 importance: 2
 ---
 

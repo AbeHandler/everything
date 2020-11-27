@@ -1,9 +1,10 @@
 ---
 layout: page
-title: project 5
-description: a project with a background image
-img: /assets/img/1.jpg
+title: CanvasCLI
+description: An opinionated command-line interface for the Canvas learning management system
+img: 
 importance: 3
+redirect: https://github.com/AbeHandler/CanvasCLI
 ---
 
 Every project has a beautiful feature showcase page.

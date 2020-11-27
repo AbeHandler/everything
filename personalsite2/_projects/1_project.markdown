@@ -1,8 +1,9 @@
 ---
 layout: page
-title: project 1
-description: a project with a background image
-img: /assets/img/12.jpg
+title: phrasemachine
+description: Practical software for efficient keyphrase extraction
+img: /assets/img/phrasemachine.png
+redirect: https://github.com/slanglab/phrasemachine
 importance: 1
 ---
 

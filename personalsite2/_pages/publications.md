@@ -1,9 +1,9 @@
 ---
 layout: page
 permalink: /publications/
-title: publications
+title: Publications
 description: Conference and workshop papers in reverse chronological order.
-years: [2020,2019,2018,2017,2016,2015]
+years: [2019,2018,2017,2016,2015]
 nav: true
 ---
 
