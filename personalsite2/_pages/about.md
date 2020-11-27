@@ -14,8 +14,14 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com){:target="\_blank"}. You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+<h5>Research</h5>
 
-Put your address / P.O. box / other info right below your picture. You can also disable any these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+As a resesearcher, I am interested in user-facing natural language processing applications, especially new tools for searching, analyzing and making sense of large document collections.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/){:target="\_blank"} and [Academicons](https://jpswalsh.github.io/academicons/){:target="\_blank"}, like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+As part of this work, I design and build new user-centered interfaces with collaborators from HCI, develop new algorithms for efficient summarization (user-facing systems come with strict time and space constraints), and research new natural language processing techniques to support new ways of analyzing corpora. 
+
+<h5>Teaching</h5>
+In addition to my research interests, I am very excited to be working as a full-time instructor at the University of Colorado, Boulder. I am cautiously optimistic about the possibilities of online eductation, and very interested in technologies and methods for effective online pedagogy.
+
+<h5>Industry</h5>
+I started graduate school after working as a software developer and data journalist, and remain interested in applying computational methods in practical settings. I've worked as an intern for startups in finance and media, and like to listen to podcasts about the software industry to keep up.
