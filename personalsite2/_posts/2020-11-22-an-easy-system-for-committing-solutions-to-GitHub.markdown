@@ -15,15 +15,18 @@ After a few months I found a solution that seemed to work well. The basic idea i
 Here is how it works 
 
 {% highlight shell %}
-$ ls # secret_solutions.ipynb
-$ enc secret_solutions.ipynb. # my encrypt script
-$ ls secret_solutions.ipynb secret_solutions.ipynb.enc
+$ ls 
+secret_solutions.ipynb
+$ enc secret_solutions.ipynb # encrypt the file
+$ ls 
+secret_solutions.ipynb secret_solutions.ipynb.enc
 $ head -1 secret_solutions.ipynb.enc
 ք|�m@�!�3�����3+�~�V��j:����a a;}
-$ git add secret_solutions.ipynb.enc && git commit -m solutions && git push origin main 
+$ git add secret_solutions.ipynb.enc && git commit -m solutions && git push origin main  # commit solution
 $ rm secret_solutions.ipynb
-$ dec secret_solutions.ipynb  # my decrypt script
-$ ls secret_solutions.ipynb, secret_solutions.ipynb.enc
+$ dec secret_solutions.ipynb  # decrypt the file
+$ ls 
+secret_solutions.ipynb, secret_solutions.ipynb.enc
 {% endhighlight %}
 
 Here is how to set it up. I am assuming you have have installed openssl and set up a private key at ~/.ssh/id_rsa
