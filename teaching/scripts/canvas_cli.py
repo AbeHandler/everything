@@ -29,9 +29,11 @@ On my local machine, I "install" by symlinking to this script and aliasing it as
 import glob
 import time
 import os
+import re
 import sys
 import argparse
 import configparser
+from jinja2 import Template
 from canvasapi import Canvas
 from datetime import datetime
 from datetime import timedelta
@@ -47,6 +49,7 @@ def str2date(str_):
 
 
 def htmlpage2dates(html_str):
+    '''get the data date for each page'''
     soup = BeautifulSoup(html_str, 'html.parser')
 
     dates = []
@@ -59,6 +62,23 @@ def htmlpage2dates(html_str):
         except KeyError:
             pass
     return dates
+
+
+def maxweekposted(html_str):
+    '''Return max week posted on the canvas page'''
+    soup = BeautifulSoup(html_str, 'html.parser')
+    results = soup.findAll("h2", {"data-week" : re.compile(r".*")})
+    if len(results) == 0:  # no weeks posted
+        return 0
+    results.sort(key=lambda x:int(x.attrs["data-week"]), reverse=True)
+    return int(results[0].attrs["data-week"])
+
+
+def get_max_week(html_str, max_week):
+    '''Return max week posted on the canvas page'''
+    soup = BeautifulSoup(html_str, 'html.parser')
+    results = soup.findAll("h2", {"data-week" : max_week})
+    return results[0]
 
 
 def get_dates_for_course(ini_loc='2301F2020.ini'):
@@ -247,43 +267,32 @@ def comment_and_grade_no_submission(assignment_id, student):
     submission.edit(submission={'posted_grade':0}, comment={'text_comment':'no submission'})
 
 
+def add_week(course, course_no):
+    '''
+    example course_no = 2301
+
+    Adds a week to the main Canvas page
+    '''
+    course = canvas.get_course(CU2Canvas[course_no])
+    lecture_page = course.get_page(course_no)
+    last_date_on_page = max(htmlpage2dates(lecture_page.body))
+    dates_for_course = get_dates_for_course()
+
+    '''adds a week'''
+    template = Template('<h2 data-week="{{week}}"><strong>Week {{week}}</strong></h2>')
+    max_week = maxweekposted(lecture_page.body)
+    replace_week = template.render(week=max_week + 1) + "\n" + template.render(week=max_week) 
+    new_html = lecture_page.body.replace(template.render(week=max_week), replace_week)
+    lecture_page.edit(wiki_page={"body": new_html})
+
+
 if __name__ == "__main__":
     canvas = get_api()
-
 
     # Map CU course names to Canvas course names
     CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
 
-    # in progress
-    '''
-    course = canvas.get_course(CU2Canvas['2301'])
-    lecture_page = course.get_page("2301")
-
-    last_date_on_page = max(htmlpage2dates(lecture_page.body))
-
-    dates = get_dates_for_course()
-
-    print(last_date_on_page, dates)
-
-    import os; os._exit(0)
-    '''
-
-
     # pbpaste | python zoom_parser.py | python canvas_cli.py
-
-    '''
-    str_ = get_lecture_page_body(lecture_page)
-
-    lns = []
-    for o in list(sys.stdin):
-        lns.append(o)
-
-    str_ = "".join(lns) + str_
-
-    print(str_)
-
-    import os; os._exit(0)
-    '''
 
     # map course to in-class assignment groups
     COURSE2INCLASS = {"4604": "149100"}
