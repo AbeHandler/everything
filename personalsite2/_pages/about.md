@@ -16,7 +16,7 @@ social: true  # includes social icons at the bottom of the page
 
 <h5>Research</h5>
 
-As a resesearcher, I am interested in user-facing natural language processing applications, especially new tools for searching, analyzing and making sense of large document collections.
+As a researcher, I am interested in user-facing natural language processing applications, especially new tools for searching, analyzing and making sense of large document collections.
 
 As part of this work, I design and build [interfaces](https://arxiv.org/pdf/1708.01944.pdf) with collaborators from [HCI](https://www.cics.umass.edu/people/mahyar-narges), develop [algorithms](https://www.aclweb.org/anthology/D19-1612.pdf) for efficient summarization, and research [natural language processing techniques](https://www.aclweb.org/anthology/N18-1159.pdf) to support new ways of [analyzing text](https://www.aclweb.org/anthology/D19-5414.pdf). 
 
