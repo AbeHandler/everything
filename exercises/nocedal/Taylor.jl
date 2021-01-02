@@ -44,4 +44,4 @@ end
 end
 
 # r = 2.5:.1:3.5
-# plot(r, [Main.Taylor.trueF, Main.Taylor.zeroOrderFCurry(3.),Main.Taylor.firstOrderFCurry(3.),Main.Taylor.secondOrderFCurry(3.)], label=["true", "0th", "1st", "2nd"])
+# plot(r, [Main.Taylor.trueF, Main.Taylor.zeroOrderFCurry(3.),Main.Taylor.firstOrderFCurry(3.),Main.Taylor.secondOrderFCurry(3.)], label=["true"  "0th" "1st" "2nd"])
