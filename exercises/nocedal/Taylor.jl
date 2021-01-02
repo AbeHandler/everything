@@ -6,17 +6,18 @@ function trueF(x)
     return cos(1/x)
 end
 
-function firstOrderF(x, a::Float64)
-    # first order approximation of trueF at a
-    term1 = cos(1/a)
-    term2 = -sin(1/a) - a^-2
-    return term1 + term2
+function zeroOrderFCurry(a::Float64)
+    # A zeroth order approximation, using currying to make plotting easy
+    function firstOrderF(x)
+        # first order approximation of trueF at a
+        term1 = cos(1/a)
+        return term1
+    end
 end
 
 function firstOrderFCurry(a::Float64)
-    # use currying to make plotting easy
-
-    function firstOrderF(x)
+    # A zeroth order approximation, using currying to make plotting easy
+    function secondOrderF(x)
         # first order approximation of trueF at a
         a0 = cos(1/a)
         a1 = -sin(1/a) * (-a^-2)
@@ -24,14 +25,20 @@ function firstOrderFCurry(a::Float64)
     end
 end
 
-function zeroOrderFCurry(a::Float64)
-    # use currying to make plotting easy
-
-    function firstOrderF(x)
+function secondOrderFCurry(a::Float64)
+    # A zeroth order approximation, using currying to make plotting easy
+    function secondOrderF(x)
         # first order approximation of trueF at a
-        term1 = cos(1/a)
-        return term1
+        a0 = cos(1/a)
+        a1 = -sin(1/a) * (-a^-2)
+        gprime = -a^-2
+        fprimeprimegx = -cos(1/a)
+        fprimegx = -sin(1/a)
+        gprimeprime = 2 * (a^-3) 
+        a2 = gprime * fprimeprimegx + fprimegx * gprimeprime
+        return a0 + a1*(x - a) + a2*(x-a)^2
     end
 end
+
 
 end
