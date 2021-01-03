@@ -36,7 +36,10 @@ function secondOrderFCurry(a::Float64)
         fprimegx = -sin(1/a)
         gprimeprime = 2 * (a^-3) 
         a2 = gprime * fprimeprimegx + fprimegx * gprimeprime
-        return a0 + a1*(x - a) + a2*(x-a)^2
+        
+        # wolfram alpha
+        a2 = 2*a*sin(1/a) + cos(1/a)
+        return a0 + a1*(x - a) + (a2/4)*(x-a)^2
     end
 end
 
