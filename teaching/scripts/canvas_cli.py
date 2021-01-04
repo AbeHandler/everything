@@ -24,19 +24,25 @@ On my local machine, I "install" by symlinking to this script and aliasing it as
     - ln -s /Users/abramhandler/everything/teaching/scripts/canvas_cli.py ~/bin/canvas_cli.py 
     - In zshrc => alias canvas="canvas_cli.py"
 
+
+# Some API notes
+- update an assignment
+   - https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
+
 '''
 
 import glob
 import time
 import os
-import re
 import sys
 import argparse
 import configparser
+from copy import copy
 from jinja2 import Template
 from canvasapi import Canvas
 from datetime import datetime
 from datetime import timedelta
+from collections import defaultdict
 from bs4 import BeautifulSoup
 
 
@@ -48,40 +54,7 @@ def str2date(str_):
     return data_date
 
 
-def htmlpage2dates(html_str):
-    '''get the data date for each page'''
-    soup = BeautifulSoup(html_str, 'html.parser')
-
-    dates = []
-            
-    for i in soup.find_all('h3'):
-        try:
-            data_date = i.attrs["data-date"]
-            data_date = str2date(data_date) 
-            dates.append(data_date)
-        except KeyError:
-            pass
-    return dates
-
-
-def maxweekposted(html_str):
-    '''Return max week posted on the canvas page'''
-    soup = BeautifulSoup(html_str, 'html.parser')
-    results = soup.findAll("h2", {"data-week" : re.compile(r".*")})
-    if len(results) == 0:  # no weeks posted
-        return 0
-    results.sort(key=lambda x:int(x.attrs["data-week"]), reverse=True)
-    return int(results[0].attrs["data-week"])
-
-
-def get_max_week(html_str, max_week):
-    '''Return max week posted on the canvas page'''
-    soup = BeautifulSoup(html_str, 'html.parser')
-    results = soup.findAll("h2", {"data-week" : max_week})
-    return results[0]
-
-
-def get_dates_for_course(ini_loc='2301F2020.ini'):
+def get_dates_for_course(ini_loc='2301S2020.ini'):
     '''return all dates'''
     config = configparser.ConfigParser()
 
@@ -89,31 +62,83 @@ def get_dates_for_course(ini_loc='2301F2020.ini'):
 
     start = str2date(config['dates']["start"])
     end = str2date(config["dates"]["end"])
-
+    
     counter = start 
     delta = timedelta(days=1)
 
     MON = 0
     WED = 2
     FRI = 4
+    
     dates_for_course = []
+    
+    week = 1
 
     while counter < end:
         if counter.weekday() in [MON, WED, FRI]:
-            dates_for_course.append(counter)
-            # counter.strftime("%A %Y-%m-%d")
+            if counter.weekday() == MON:
+                week += 1
+            dates_for_course.append({"date": copy(counter), "week": week})
         counter += delta 
     return dates_for_course
 
 
+def get_weeks2dates(dates_for_course):
+
+    weeks2dates = defaultdict(list)
+
+    for d in dates_for_course:
+        weeks2dates[d["week"]].append(d['date'])
+
+    return weeks2dates
+
+
+def get_dates2weeks(dates_for_course):
+
+    dates2weeks = {}
+
+    for d in dates_for_course:
+        dates2weeks[d['date'].strftime("%Y%m%d")] = d["week"]
+
+    return dates2weeks
+
+
+def makeHTMLforSemester(ini_loc="2301S2021.ini"):
+    '''
+    print out HTML for a whole course to copy/paste into Canvas Pages
+
+    py canvas_cli.py -html -ini "2301S2021.ini" | pbcopy
+    '''
+    
+    dates_for_course = get_dates_for_course(ini_loc=ini_loc)
+
+    weeks2dates = get_weeks2dates(dates_for_course)
+
+    weeks = list(weeks2dates.keys())
+
+    template = Template('''<h3 data-date="{{week_start_date}}" style='display:none'> Week {{ week }}</h3>{% for row in dates %}\n<h4 data-date="{{row.strftime("%Y%m%d")}}" style='display:none'>{{row.strftime("%a %b %d")}}</h4>\n<ul data-date="{{row.strftime("%Y%m%d")}}" style='display:none'>\n{% for item in items %}<li style='display:none' data-date="{{row.strftime("%Y%m%d")}}" data-bullet="{{item | replace(" ", "-") }}">{{item}}</li>\n{% endfor %}</ul>{% endfor %}\n
+                        ''')
+    weeks.sort(reverse=True)
+
+    out = ""
+    
+    for week in weeks:
+        dates = weeks2dates[week]
+        dates.sort()
+        dates = [d for d in dates]
+        bullets = ["in-class code", "whiteboards", "recording"]
+        out = out + template.render(week=week, dates = dates, items=bullets, week_start_date=dates[0].strftime("%Y%m%d"))
+        
+    return out
+
+
 def init_local(course):
     for i in range(1,17):
-        str_ = os.environ['ROOT'] + '/everything/teaching/{}Fall2020/week{}'.format(course, i)
+        str_ = os.environ['ROOT'] + '/everything/teaching/{}S2020/week{}'.format(course, i)
         if not os.path.isdir(str_):
             os.mkdir(str_)
-            os.mkdir(str_ + "/" + "assignment_files")
-            os.mkdir(str_ + "/" + "quiz_files")
-            os.mkdir(str_ + "/" + "other_files")
+            for folder in FOLDERS:
+                os.mkdir(str_ + "/" + folder)
 
 
 def get_api():
@@ -126,13 +151,10 @@ def get_api():
     # Initialize a new Canvas object
     return Canvas(API_URL, API_KEY)
 
-# update an assignment
-# https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update
-
 
 def create_in_class_assignment(courseNo, due, name = None, points=3, published=False):
 
-    course = canvas.get_course(CU2Canvas[courseNo])
+    course = canvas.get_course(CUno2canvasno[courseNo])
 
     due = datetime.strptime(due, '%Y%m%d')
 
@@ -160,10 +182,8 @@ def init_course_files(course_number):
     for week in range(1, 17):
         print("[*] Init folders week {}".format(week))
         parent = "/week{}/".format(week)
-        course.create_folder(name='quiz_files', parent_folder_path=parent)
-        course.create_folder(name='assignment_files', parent_folder_path=parent)
-        course.create_folder(name='other_files', parent_folder_path=parent)
-
+        for folder in FOLDERS:
+            course.create_folder(name=folder, parent_folder_path=parent)
 
 def get_student_names2_ids(course_no):
     '''
@@ -204,7 +224,7 @@ def init_quizzes(course):
 
 def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10):
     '''
-    course = canvas.get_course(CU2Canvas["3401"])
+    course = canvas.get_course(CUno2canvasno["3401"])
     names = [o.replace('\n', "") for o in open("accomodations3401.txt")]
     names2ids_course = names2ids["3401"]
 
@@ -221,11 +241,11 @@ def set_extra_time_on_quizzes(course, names, names2ids_course, extra_minutes=10)
             quiz.set_extensions([{'user_id': id_, 'extra_time': extra_minutes}])
 
 
-def export_all(CU2Canvas):
+def export_all(CUno2canvasno):
     '''This will backup all courses on Canvas'''
-    for course in CU2Canvas:
+    for course in CUno2canvasno:
         print("[*] Exporting {} from Canvas".format(course))
-        course = canvas.get_course(CU2Canvas[course])
+        course = canvas.get_course(CUno2canvasno[course])
         course.export_content(export_type="common_cartridge")
 
 
@@ -266,58 +286,90 @@ def comment_and_grade_no_submission(assignment_id, student):
     print("- Setting {} score to zero".format(student))
     submission.edit(submission={'posted_grade':0}, comment={'text_comment':'no submission'})
 
+def make_link(title = "D19-5414.pdf"):
+    '''make a link to a file that can be pasted into Canvas'''
+    css_class = "instructure_file_link instructure_scribd_file"
+    title = title
+    href = "https://canvas.colorado.edu/courses/62535/files/27550350/preview"
+    endpoint = "https://canvas.colorado.edu/api/v1/courses/62535/files/27550350"
+    link_text = "in-class code"
+    t = Template('''<a class="{{css_class}}" title="{{title}}" href="{{href}}" target="_blank" rel="noopener" data-api-endpoint="{{endpoint}}" data-api-returntype="File">{{link_text}}</a>''')
+    return t.render(css_class=css_class, link_text=link_text, 
+                    title=title, href=href, endpoint=endpoint)
 
-def add_week(course, course_no):
+def show_before_date(canvas_page, in_date = '20210315'):
+    '''update a page to show elements w/ data-date before some input date'''
+
+    def isb4(input_date):
+        '''
+        Returns a function, f: date -> bool 
+        that is true if its input is less than input_date
+        Used for a lambda in bs4
+        '''
+        input_date = datetime.strptime(input_date, '%Y%m%d')
+        def hidden(t):
+            if 'data-date' not in t.attrs:
+                return False
+            if datetime.strptime(t.attrs['data-date'], '%Y%m%d') < input_date:
+                return True
+            else:
+                return False
+        return hidden
+
+    html = canvas_page.body
+    soup = BeautifulSoup(html, features="html.parser")
+
+    for header in soup.findAll(isb4(in_date)):
+        if(header.name == "li"):
+            header['style'] = "display:list-item"
+        else:
+            header['style'] = "display:block"
+
+    html = str(soup)
+
+    print("[*] Updating {} page to show before {}".format(args.course, in_date))
+
+    canvas_page.edit(wiki_page={"body": html})
+
+def get_week_folder(course_no, week_no):
+    '''Get the folder for a given week'''
+    course = canvas.get_course(CUno2canvasno[args.course])
+    for f in course.get_folders():
+        if f.name == "week{}".format(args.week):
+            return f
+
+def get_whiteboards_folder_for_week(week, course):
     '''
-    example course_no = 2301
+    Get the Canvas folder for whiteboards for some week
 
-    Adds a week to the main Canvas page
+    e.g. files/week16/whiteboards
     '''
-    course = canvas.get_course(CU2Canvas[course_no])
-    lecture_page = course.get_page(course_no)
-    last_date_on_page = max(htmlpage2dates(lecture_page.body))
-    dates_for_course = get_dates_for_course()
-
-    '''adds a week'''
-    template = Template('<h2 data-week="{{week}}"><strong>Week {{week}}</strong></h2>')
-    max_week = maxweekposted(lecture_page.body)
-    replace_week = template.render(week=max_week + 1) + "\n" + template.render(week=max_week) 
-    new_html = lecture_page.body.replace(template.render(week=max_week), replace_week)
-    lecture_page.edit(wiki_page={"body": new_html})
+    course = canvas.get_course(CUno2canvasno[course])
+    for f in course.get_folders():
+        folder_name = f.full_name.split(' ').pop()
+        if folder_name == "files/week{}/whiteboards".format(week):
+            return f
+    return None
 
 
 if __name__ == "__main__":
     canvas = get_api()
 
-    # Map CU course names to Canvas course names
-    CU2Canvas = {"4604": 62561, "sandbox": 62535, "2301": 62559, "3401": 62560}
-
-    # pbpaste | python zoom_parser.py | python canvas_cli.py
-
-    # map course to in-class assignment groups
-    COURSE2INCLASS = {"4604": "149100"}
+    FOLDERS = ['assignment_files', 'in_class_code', 'other_files', 'other_files', 'quiz_files', 'whiteboards']
 
     Course2Classtime = {"4604": "T12:40:00", "sandbox": "T12:40:00", "2301": "T10:30:00"}
 
-    names2ids = {}
-    for coursename, courseno in CU2Canvas.items():
-        names2ids[coursename] = get_student_names2_ids(CU2Canvas[coursename])
-
-    # TODO exports
-
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-c', '-course', '--course', default='sandbox', help='INFO course number, e.g. 4604')
+    parser.add_argument('-c', '-course', '--course', default=None, help='INFO course number, e.g. 4604')
 
-    parser.add_argument('-init_files', '--init_files', dest='init_files', default=False, action='store_true', help='Use this flag to init the course files on Canvas')
+    parser.add_argument('-init', '--init', dest='init', default=False, action='store_true', help='Use this flag to init the course files on Canvas')
 
     parser.add_argument('-q', '-quiz', '--quiz', dest='quiz', default=False, action='store_true', help='Use this flag to create a quiz')
 
     parser.add_argument('-set_extra_time_on_quizzes', dest='set_extra_time_on_quizzes', default=False, action='store_true', help='Use this flag to set extra time on all quizzes for students w/ accomodations')
 
     parser.add_argument('-a', '-assignment', '--assignment', dest='assignment', default=False, action='store_true', help='Use this flag to create an assignment')
-
-    parser.add_argument('-attachments', '--attachments', nargs='+', help='Input a list of globs; matching files will be uploaded', required=False)
 
     parser.add_argument('-d', '-due', '--due', help='pass a date in YYYYMMDD for the due date, e.g. 20200824')
 
@@ -335,6 +387,8 @@ if __name__ == "__main__":
 
     parser.add_argument('-z', '-zeros', '--zeros', action='store_true', help='assigns zeros to students who have not submitted', dest='zeros', default=False)
 
+    parser.add_argument('-html', action='store_true', help='print HTML for semester', dest='html', default=False)
+
     parser.add_argument('--assignmentid', dest="assignmentid", help='Assignment ID for no submission')
 
     parser.add_argument('-time_limit', '--time_limit', default=10, help='time limit, in minutes')
@@ -343,34 +397,96 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # test out overrides
+    if args.course is None:
+        print("[*] You must specify a course using the --course flag or an alias")
 
-    print(args)
+    SEMESTER = "S2021"
+    INI_LOC = args.course + SEMESTER + ".ini"
+
+    config = configparser.ConfigParser()
+
+    config.read(INI_LOC)
+
+    # Map CU course names to Canvas course names
+    CUno2canvasno = {config["course_info"]["course_name"]: int(config["course_info"]["canvas_no"])}
+
+    course_no = config["course_info"]["canvas_no"]
+
+    names2ids = {}
+    for coursename, courseno in CUno2canvasno.items():
+        names2ids[coursename] = get_student_names2_ids(CUno2canvasno[coursename])
+
+    folder = get_whiteboards_folder_for_week(args.week, args.course)
+
+    dates_for_course = get_dates_for_course(INI_LOC)
+
+    dates2weeks = get_dates2weeks(dates_for_course)
+
+    if args.html:
+        html = makeHTMLforSemester(ini_loc=INI_LOC) 
+        print(CUno2canvasno)
+        course = canvas.get_course(CUno2canvasno[args.course])
+        lecture_page = course.get_page(args.course)
+        
+        print("[*] Updating {} page".format(args.course))
+        lecture_page.edit(wiki_page={"body": html})
+
+        # show  before date
+        course = canvas.get_course(CUno2canvasno[args.course])
+        lecture_page = course.get_page(args.course)
+
+        show_before_date(canvas_page=lecture_page, in_date='20210801')
+
+        html = BeautifulSoup(lecture_page.body, features="html.parser")
+
+        for li in html.findAll("li"):
+
+            li.string = "" # remove inner text
+                        
+            week = dates2weeks[li.attrs["data-date"]]
+
+            ll = None
+
+            if li.attrs["data-bullet"] == "whiteboards":
+                whiteboards_folder = get_whiteboards_folder_for_week(week, args.course)
+                if whiteboards_folder is not None:
+                    for file in whiteboards_folder.get_files():
+                        expected_name = li.attrs["data-date"] + "whiteboards.pdf"
+                        print(file.display_name, expected_name, file.display_name == expected_name)
+                        # does a whiteboard. folder exist?
+                        # if so, make a link
+                        ll = BeautifulSoup( make_link(), features="html.parser")
+
+            if ll is not None:
+                li.insert(0, ll)
+
+        lecture_page.edit(wiki_page={"body": str(html)})
+        import os;os._exit(0)
 
     if args.zeros and args.assignmentid is not None:
         # py canvas_cli.py -c 2301 -zeros --assignmentid 871212
-        course = canvas.get_course(CU2Canvas[args.course])
+        course = canvas.get_course(CUno2canvasno[args.course])
         for student in get_no_submissions(course, args.assignmentid):
             comment_and_grade_no_submission(args.assignmentid, student)
         import os; os._exit(0)
 
 
     if(args.set_extra_time_on_quizzes):
-        course = canvas.get_course(CU2Canvas[args.course])
+        course = canvas.get_course(CUno2canvasno[args.course])
         names = [o.replace('\n', "") for o in open("accomodations{}.txt".format(args.course))]
         names2ids_course = names2ids[args.course]
         set_extra_time_on_quizzes(course, names, names2ids_course)
         import os; os._exit(0)
 
     if(args.export):
-        export_all(CU2Canvas)
+        export_all(CUno2canvasno)
         import os; os._exit(0)
 
     if(args.quiz):
         if args.due is None:
             print("[*] You must set a due date")
             import os;os._exit(0)
-        course = canvas.get_course(CU2Canvas[args.course])
+        course = canvas.get_course(CUno2canvasno[args.course])
         due = datetime.strptime(args.due, '%Y%m%d')
         if args.name is None:
             name = due.strftime("%b %d") + " quiz"
@@ -393,21 +509,16 @@ if __name__ == "__main__":
             print("[*] The argument inClass needs to match the format YYYYMMDD. Won't make assignment.")
         import os;os._exit(0)
 
-    if(args.init_files):
-        init_course_files(CU2Canvas[args.course])
+    if(args.init):
+        init_course_files(CUno2canvasno[args.course])
+        init_local()
         import os;os._exit(0)
 
     if args.upload is not None and args.sync is False:
         # py canvas_cli.py -u ../2301fall2020/week2/assignment_files/ -c 2301 -w 2
         print("*uploading")
 
-        def get_week_folder(course_no, week_no):
-            course = canvas.get_course(CU2Canvas[args.course])
-            for f in course.get_folders():
-                if f.name == "week{}".format(args.week):
-                    return f
-
-        folder = get_week_folder(CU2Canvas[args.course], args.week)
+        folder = get_week_folder(CUno2canvasno[args.course], args.week)
 
         for fn in glob.glob(args.upload + "/*"):
             folder.upload(fn)
@@ -416,13 +527,7 @@ if __name__ == "__main__":
 
         # $ canvas -w 3 -sync -c 2301
 
-        def get_week_folder(course_no, week_no):
-            course = canvas.get_course(CU2Canvas[args.course])
-            for f in course.get_folders():
-                if f.name == "week{}".format(args.week):
-                    return f
-
-        folder = get_week_folder(CU2Canvas[args.course], args.week)
+        folder = get_week_folder(CUno2canvasno[args.course], args.week)
 
         for subfolder in folder.get_folders():
             name = subfolder.name
