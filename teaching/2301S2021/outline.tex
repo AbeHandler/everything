@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+% = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+%
+% This is where the packages are declared
+
+\documentclass[]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+
+\begin{document}
+
+
+\title{INFO 2301: Quantitative Reasoning for Information Science}
+\author{Abe Handler \\ Department of Information Science \\ University of Colorado, Boulder}
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+An outline of what we've covered so far. You should be comfortable with everything in this document. 
+\end{abstract}
+
+\section{Sets}
+
+\begin{itemize}
+    \item A \textbf{set} is an unordered collection of items, without duplicates
+    \item The items in a set are often called ``elements''
+    \item We use capital letters to name sets
+    \item We show the elements in a set using curly brackets
+\end{itemize}
+
+\begin{exmp}
+Using postal code abbreviations, we can write the set of states which border Colorado as  $A$ = $\{UT, AZ, NM, OK, KS, NE, WY\}$
+\end{exmp}
+
+\begin{exmp}
+Because sets do not have order, if $ B= \{UT, AZ\}$ and $C=\{AZ, UT\}$, then $C=B$.
+\end{exmp}
+
+\begin{itemize}
+    \item If $a$ is an element in $X$ then, we use the notation $a \in X$ 
+    \item If $a \in X$ then we say that ``$a$ is in $X$''
+    \item We write this: \verb|$a \in X$|
+    \item If $a \notin X$ then we say that ``$a$ is not in $X$''
+    \item We write this: \verb|$a \notin X$|
+\end{itemize}
+
+\begin{exmp}
+Let $ C= \{UT, AZ\}$. Then $UT \in C$ and $FL \notin C$
+\end{exmp}
+
+\end{document}
