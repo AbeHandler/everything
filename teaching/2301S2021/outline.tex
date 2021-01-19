@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{dirtytalk}
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 
@@ -34,14 +35,19 @@ An outline of what we've covered so far. You should be comfortable with everythi
     \item The items in a set are often called ``elements''
     \item We use capital letters to name sets
     \item We show the elements in a set using curly brackets
+    \item A set can include any kind of element (e.g.\ strings, or kinds of apple)
 \end{itemize}
 
 \begin{exmp}
-Using postal code abbreviations, we can write the set of states which border Colorado as  $A$ = $\{UT, AZ, NM, OK, KS, NE, WY\}$
+We can write the integers between 0 and 3 (including 0 and 3) as $A$ = $\{0,1,2,3\}$
 \end{exmp}
 
 \begin{exmp}
-Because sets do not have order, if $ B= \{UT, AZ\}$ and $C=\{AZ, UT\}$, then $C=B$.
+Because sets do not have order, if $ B= \{0,1\}$ and $C=\{1,0\}$, then $C=B$.
+\end{exmp}
+
+\begin{exmp}
+A set of strings, $ P= \{ \text{\say{Denver},\say{Boulder},\say{Broomfield}} \}$
 \end{exmp}
 
 \begin{itemize}
@@ -53,7 +59,9 @@ Because sets do not have order, if $ B= \{UT, AZ\}$ and $C=\{AZ, UT\}$, then $C=
 \end{itemize}
 
 \begin{exmp}
-Let $ C= \{UT, AZ\}$. Then $UT \in C$ and $FL \notin C$
+Let $ C= \{1, 2\}$. Then $1 \in C$ and $6 \notin C$
 \end{exmp}
+
+\textit{If you spot any errors in this document, or if anything is needlessly confusing, please send me an email. I will assign extra credit.}
 
 \end{document}
