@@ -65,17 +65,25 @@ A set of strings, $ P= \{ \text{\say{Denver},\say{Boulder},\say{Broomfield}} \}$
 Let $ C= \{1, 2\}$. Then $1 \in C$ and $6 \notin C$
 \end{exmp}
 
-We use the notation $ A \subset B$ (written \verb|$ A  \subset B $|) to indicate that all members of set $A$ are also members of set $B$.
 
-\begin{exmp}
-Let $ A= \{1, 2\}$ and $B = \{1,2,5\}$. Then $A \subset B$
+\subsection{Subsets}
+
+If all elements of $A$ are elements of $B$ then we say that $A$ is a subset of $B$.  We use the notation $ A \subset B$ (written \verb|$ A  \subset B $|) to indicate that $A$ is a subset of $B$.
+
+\begin{exmp}\label{e:subset}
+Let $ A= \{2, 1\}$ and $B = \{1,2,5\}$. Then $A \subset B$
 \end{exmp}
 
-If every member of set $A$ is a member of set $B$ we we write (written \verb|$ A \subseteq B $|)
+In this class, when we use $ A \subset B$ we will assume that some elements of $B$ are not elements of $A$. So $A$ is a ``proper subset'' of $B$. For instance in Example \ref{e:subset} $A \subset B$ because $5 \in B$ and $5 \notin A$. If we want to allow for the possibility that $A=B$, we can use the notation $A \subseteq B$ (written \verb|$ A \subseteq B $|). 
 
 \begin{exmp}
-Let $ A= \{1, 2,3 \}$ and $B = \{1,2,3\}$. Then $A \subseteq B$
+Let $ A= \{1, 2,3 \}$ and $B = \{1,2,3\}$. Then $A \subseteq B$ but not $A \subset B$
 \end{exmp}
+
+\begin{exmp}
+Let $ A= \{1, 3 \}$ and $B = \{1,2,3\}$. Then $A \subseteq B$ and $A \subset B$
+\end{exmp}
+
 
 \textit{If you spot any errors in this document, or if anything is needlessly confusing, please send me an email. I will assign extra credit.}
 
