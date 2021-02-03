@@ -10,6 +10,17 @@ nav: true
 Note: CU Boulder asks instructors to post course materials to <a href="https://www.instructure.com/canvas/">Canvas</a>. You can find my copy of many course materials on my <a href="https://github.com/abehandler/everything">GitHub</a> account.
 <br/>
 
+
+<h5>Spring 2021</h5>
+
+<h6>INFO 2301: Quantitative Reasoning for Information Science (remote)</h6>
+
+<h6>INFO 3402: Information Exposition (remote) with co-instructor <a href="https://www.brianckeegan.com/">Brian Keegan</a></h6> 
+
+<h6>INFO 4700: Senior capstone (remote)</h6>
+
+<br> 
+
 <h5>Fall 2020</h5>
 
 <h6><a href="/assets/pdf/2301fall.pdf" target="_blank">INFO 2301</a>: Quantitative Reasoning for Information Science (remote)</h6>
