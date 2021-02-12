@@ -161,21 +161,27 @@ $\mathbf{x}=<3,4>$ and $\mathbf{y}=<-1,2>$  then  $\mathbf{x}+\mathbf{y}=<2,6>$
 Summation notation is important for vector operations, and in many other areas of math. 
 
 \begin{itemize}
-\item To indicate the sum a sequence of items, we write $\Sigma_{i=0}^Nx_i$ where $x_i$ is the $i$th item in a sequence. 
+\item To indicate the sum of a sequence of items, we write $\Sigma_{i=0}^Nx_i$ where $x_i$ is the $i$th item in a sequence. 
 \item You can read this as summing over a sequence of items, from item 0 to item $N$. 
 \item You can think of $i$ as an index into the sequence, in the same way you may think of $i$ as an index into an array. 
-\item We write this as \verb|$ \Sigma_i=0^Nx_i$|)
+\item Usually, in 2301, the sequence being indexed is positive integers: 1,2,3,4 ... etc. So $x_1$ is usually 1, $x_2$ is usually 2, etc. You can assume we are indexing into the positive integers unless otherwise specified.
+\item We write sigma notation in \LaTeX~as \verb|$ \Sigma_i=0^Nx_i $|
 \end{itemize}
 
 \begin{exmp}
-If we have a sequence $x=(3, 4, 5)$  then $\Sigma_{i=1}^{N=3} x_i = 3 + 4 + 5 = 12$
+You can also use summation notation without indexing into a sequence, e.g.\ $\Sigma_{n=1}^{N=3} (n+1) = (1+1) + (2+1) + (3 + 1) = 2 + 3 + 4$.
 \end{exmp}
 
 You can also use this notation to describe the sum of items in a sequence, after applying some operation.
 
 \begin{exmp}
-$\Sigma_i=1^5x_i^2 = 1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 1 + 4 + 9 + 16 + 25 = 55$
+If $x=[1,2,3,4,5]$ then $\Sigma^5_{i=1} x_i^2 = 1^2 + 2^2 + 3^2 + 4^2 + 5^2 = 1 + 4 + 9 + 16 + 25 = 55$
 \end{exmp}
+
+\begin{exmp}
+Note that you should read the $i$ as indexing into an array. So if you have an array $x=[2,3,4]$ then $\Sigma^3_{i=1} x_i = x_1 + x_2 + x_3 = 2 + 3 + 4$
+\end{exmp}
+
 
 \subsection{Euclidean norm}
 
