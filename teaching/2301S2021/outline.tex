@@ -192,4 +192,39 @@ If $ \mathbf{x}=<-2,2> $ then  $\vert \vert x \vert \vert_2$ = $\sqrt{-2^2 + 2^2
 
 \noindent Note: There are also other norms, which offer other ways of defining the size of a vector.
 
+\subsection{Normalizing a vector}
+
+To normalize a vector, divide each component by the (Euclidean) norm. This creates a new ``unit vector'' with a norm of 1.
+
+\begin{exmp}
+If $ \mathbf{x}=<-2,2> $ then  $\vert \vert x \vert \vert_2$ = $\sqrt{-2^2 + 2^2} = \sqrt{4 + 4}  = \sqrt{8}$. The unit vector of $ \mathbf{x}$ is $ \mathbf{\hat{x}}=<\frac{-2}{\sqrt{8}},\frac{2}{\sqrt{8}}> $. The Euclidean norm is $\sqrt{(\frac{-2}{\sqrt{8}})^2 + (\frac{2}{\sqrt{8}})^2}$ = $\sqrt{\frac{4}{8} + \frac{4}{8}}$ = $1$, so you know you have a unit vector. 
+\end{exmp}
+
+\subsubsection{You can normalize any vector}
+Here is an argument in 2D. It is easy to extend to any dimension. It is OK to skip this part if you want to just trust that you can always normalize. Assume we have a Euclidean norm of $N$. The following is true by definition in 2D.
+
+\begin{equation}
+a^2 + b^2 = N^2 
+\end{equation}
+
+Divide each side by $N^2$
+
+\begin{equation}
+\frac{a^2}{N^2} + \frac{b^2}{N^2} = 1
+\end{equation}
+
+Take the root of each side
+
+\begin{equation}
+\sqrt{\frac{a^2}{N^2} + \frac{b^2}{N^2}} = \sqrt{1}
+\end{equation}
+
+Simplify, recalling that the square root of 1 is 1.
+
+\begin{equation}
+\sqrt{(\frac{a}{N})^2 + (\frac{b}{N})^2} = 1
+\end{equation}
+
+Therefore, by definition, if you divide each component by $N$ you get a normalized vector.
+
 \end{document}
