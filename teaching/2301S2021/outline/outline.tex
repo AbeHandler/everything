@@ -10,9 +10,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{graphicx}
 \usepackage{dirtytalk}
 \usepackage{bm}
+\usepackage{subfig}
+\usepackage{graphicx}
+
+
+
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 
@@ -232,6 +236,16 @@ Therefore, by definition, if you divide each component by $N$ you get a normaliz
 
 There are two ways to think about the dot product. You can think about it geometrically (in pictures) or algebraically (in symbols). It's better to build geometric intuition than to plug and chug through the algebraic version, but both are important to know really well.
 
-Geometrically, the dot product between two vectors $\bm{a} \cdot \bm{b}$ (the symbol is written \verb|$ \cdot $|) is defined as the projection of $\bm{a}$ onto the unit vector of $\bm{b}$. You can think of the projection as the shadow $\bm{a}$ casts onto $\hat{\bm{b}}$ (i.e.\ the unit vector of $\bm{b}$).
+Geometrically, the dot product between two vectors $\bm{a} \cdot \bm{b}$ (the symbol is written \verb|$ \cdot $|) is defined as the projection of $\bm{a}$ onto the unit vector of $\bm{b}$. You can think of the projection as the shadow $\bm{a}$ casts onto $\hat{\bm{b}}$ (i.e.\ the unit vector of $\bm{b}$). When the angle between the vectors is acute, the dot product is positive. When it is obtuse the dot product is negative 
+
+
+\begin{figure}[hb]
+     \centering
+     \subfloat[][a]{\includegraphics[width=3cm]{dot_prod_acute}\label{<figure1>}}
+     \subfloat[][b]{\includegraphics[width=3cm]{dot_prod_perp}\label{<figure2>}}
+     \subfloat[][b]{\includegraphics[width=3cm]{dot_prod_oblique}\label{<figure2>}}
+     \caption{The dot product }
+     \label{steady_state}
+\end{figure}
 
 \end{document}
