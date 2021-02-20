@@ -199,14 +199,17 @@ If $ \mathbf{x}=<-2,2> $ then  $\vert \vert x \vert \vert_2$ = $\sqrt{-2^2 + 2^2
 
 \subsection{Normalizing a vector}
 
-To normalize a vector, divide each component by the (Euclidean) norm. This creates a new ``unit vector'' with a norm of 1.
+\begin{itemize}
+\item To normalize a vector, divide each component by the (Euclidean) norm. This creates a new ``unit vector'' with a norm of 1. 
+\item People sometimes write unit vectors with ``hats'' over them, e.g.  $\hat{\bm{b}}$ (written \verb|$ \hat{\boldsymbol{b}} $|, where \verb|$ \boldsymbol $| means to write the symbol in bold).
+\end{itemize}
 
 \begin{exmp}
 If $ \mathbf{x}=<-2,2> $ then  $\vert \vert x \vert \vert_2$ = $\sqrt{-2^2 + 2^2} = \sqrt{4 + 4}  = \sqrt{8}$. The unit vector of $ \mathbf{x}$ is $ \mathbf{\hat{x}}=<\frac{-2}{\sqrt{8}},\frac{2}{\sqrt{8}}> $. The Euclidean norm of the unit vector is $\sqrt{(\frac{-2}{\sqrt{8}})^2 + (\frac{2}{\sqrt{8}})^2}$ = $\sqrt{\frac{4}{8} + \frac{4}{8}}$ = $1$, so you know you have a unit vector. 
 \end{exmp}
 
 \subsubsection{You can normalize any vector}
-Here is an argument in 2D. It is easy to extend to any dimension. It is OK to skip this part if you want to just trust that you can always normalize. Assume we have a Euclidean norm of $N$. The following is true by definition in 2D.
+Any vector can be converted into a unit vector. Here is an argument for this claim in 2D. It is easy to extend to any dimension. It is OK to skip this part if you want to just trust that you can always normalize. Assume we have a Euclidean norm of $N$. The following is true by definition in 2D.
 
 \begin{equation}
 a^2 + b^2 = N^2 
@@ -236,16 +239,23 @@ Therefore, by definition, if you divide each component by $N$ you get a normaliz
 
 There are two ways to think about the dot product. You can think about it geometrically (in pictures) or algebraically (in symbols). It's better to build geometric intuition than to plug and chug through the algebraic version, but both are important to know really well.
 
-Geometrically, the dot product between two vectors $\bm{a} \cdot \bm{b}$ (the symbol is written \verb|$ \cdot $|) is defined as the projection of $\bm{a}$ onto the unit vector of $\bm{b}$. You can think of the projection as the shadow $\bm{a}$ casts onto $\hat{\bm{b}}$ (i.e.\ the unit vector of $\bm{b}$). When the angle between the vectors is acute, the dot product is positive. When it is obtuse the dot product is negative 
+\begin{itemize}
+\item Algebraically, the dot product is defined as $\bm{a} \cdot \bm{b}$  = $\sum_i \bm{a}_i \bm{b}_i$.
+\item Geometrically, the dot product is defined as $\bm{a} \cdot \bm{b}$  = $ \vert\vert  \bm{a}  \vert\vert \text{ }   \vert\vert  \bm{b}  \vert\vert \text{ }  \text{cos }  \theta $. This follows from the fact that the dot product between two vectors $\bm{a} \cdot \bm{b}$ (the dot symbol is written \verb|$ \cdot $|) is defined as the projection of $\bm{a}$ onto the unit vector of $\bm{b}$. (The lecture included a brief derivation.) You can think of the projection as the shadow $\bm{a}$ casts onto $\hat{\bm{b}}$ (i.e.\ the unit vector of $\bm{b}$). Another way to think about the dot product is the extent to which $\bm{a}$ and $\bm{b}$ point in the same direction, given that they might have different sizes (norms).
+When the angle between the vectors is acute, the dot product is positive. When it is obtuse the dot product is negative.
+\end{itemize}
 
-
-\begin{figure}[hb]
+\begin{figure}[h]
      \centering
      \subfloat[][a]{\includegraphics[width=3cm]{dot_prod_acute}\label{<figure1>}}
      \subfloat[][b]{\includegraphics[width=3cm]{dot_prod_perp}\label{<figure2>}}
      \subfloat[][b]{\includegraphics[width=3cm]{dot_prod_oblique}\label{<figure2>}}
-     \caption{The dot product }
+     \caption{The dot product is positive when the angle $\theta$ between $\bm{a}$  and $\hat{\bm{b}}$ is less than 90 degrees (left). It is zero when $\theta$ = $90^{\circ}$. It is negative when $\theta$ is greater than  $90^{\circ}$.}
      \label{steady_state}
 \end{figure}
+
+\begin{exmp}
+If $ \mathbf{x}=<-2,2> $ and then $ \mathbf{y}=<-1,7> $ then $\bm{x} \cdot \bm{y}$ =  $\sum_i \bm{x}_i \bm{y}_i$ = $-2 * -1 + 2 * 7$ = 2 + 14 = 16
+\end{exmp}
 
 \end{document}
