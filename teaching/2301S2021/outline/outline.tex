@@ -260,7 +260,7 @@ If $ \mathbf{x}=<-2,2> $ and then $ \mathbf{y}=<-1,7> $ then $\bm{x} \cdot \bm{y
 
 \section{Booleans}
 
-A Boolean variable can take on the value True or False. A Boolean expression is a collection of Boolean variables, joined by logical operators. 
+A Boolean variable can take on the value True or False. A Boolean expression is a collection of Boolean variables, joined by logical operators.
 
 \subsection{NOT}
 
@@ -268,5 +268,32 @@ The simplest Boolean operator is NOT. The NOT operator takes a single Boolean op
 
 \subsection{AND}
 The Boolean operator AND takes two Boolean variables as operands. The operator returns True if both variables are True. We write this $ A \wedge B$ (\verb|$ A \wedge B $|)
+
+\subsection{OR}
+The Boolean operator OR takes two Boolean variables as operands. The operator returns True if either variables is True. We write this $ A \vee B$ (\verb|$ A \ve B $|)
+
+\begin{exmp}
+If $A$=True and $B$=True then  $ A \wedge B$ is True
+\end{exmp}
+
+\begin{exmp}
+If $A$=True and $B$=False then  $ A \wedge B$ is False
+\end{exmp}
+
+\begin{exmp}
+If $A$=True and $B$=False then  $ A \vee B$ is False
+\end{exmp}
+
+\begin{exmp}
+If $A$=True and $B$=False then  $ A \wedge \neg B$ is True because $\neg B$ is True and the AND of two true variables is True
+\end{exmp}
+
+\subsection{Evaluation}
+
+Evaluating a Boolean expression means determining if the expression is True or False, based on the values of its variables. To evaluate a Boolean expression you should fill in the value of each variable and simplify.
+
+\begin{exmp}
+If $A$=True and $B$=False and $C$=True then  $ (A \vee B) \wedge C$ = $ (T \vee F) \wedge T$ = $ T \wedge T = T$  
+\end{exmp}
 
 \end{document}
