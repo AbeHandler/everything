@@ -300,7 +300,7 @@ If $A$=True and $B$=False and $C$=True then  $ (A \vee B) \wedge C$ = $ (T \vee 
 
 \subsection{The sample space}
 
-The sample space $\Omega$  (written \verb|$ \Omega $|) is the set of all outcomes of an experiment. An event $A$ is a subset of the sample space. 
+The sample space $\Omega$  (written \verb|$\Omega$|) is the set of all outcomes of an experiment. An event $A$ is a subset of the sample space. 
 
 \begin{exmp}
 If we toss a coin twice then $\Omega$=$\{HH, HT, TH, TT\}$
@@ -309,5 +309,22 @@ If we toss a coin twice then $\Omega$=$\{HH, HT, TH, TT\}$
 \begin{exmp}
 If we toss a coin twice then $\Omega$=$\{HH, HT, TH, TT\}.$ The event ``at least one tails'' is $A=\{HT, TH, TT\}$. Notice that $A \subset \Omega$.
 \end{exmp}
+
+\subsection{Probability distribution}
+
+A probability distribution is a function that maps events to real numbers between 0 and 1, and that satisfies the following three properties
+
+\begin{itemize}
+\item $p(A) \geq 0$ for all $A$
+\item $p(\Omega) = 1$
+\item If $A$ and $A^\prime$ are disjoint (i.e. their intersection is $\emptyset$) then $p(A \cup A^{\prime}) =  p(A) + p(A^{\prime})$
+\end{itemize}
+
+\begin{figure}[h]
+     \centering
+    	{\includegraphics[width=5cm]{prob_distro}}
+    \caption{An experiment flipping a fair coin twice. This probability distribution maps three events in $\Omega$ to a number between 0 and 1.}
+     \label{steady_state}
+\end{figure}
 
 \end{document}
