@@ -337,7 +337,15 @@ If you roll a fair 6-sided die, all outcomes are equally likely so the distribut
 
 \subsection{Independence}
 
-Two events $A$ and $B$ are independent if $P(AB)$ = $P(A)P(B)$. Intuitively, if the outcome of $A$ does not affect the outcome of $B$ then $A$ and $B$ are independent. For instance, if you flip a coin twice, then the value of the first flip does not affect the value of the second flip. Thus the flips are independent. On the other hand, your height and weight are likely not independent; if you are a taller person you likely have a larger weight than a shorter person. We say that these events are dependent (i.e.\ not independent).
+Two events $A$ and $B$ are independent if $P(A \cap B)$ = $P(A)P(B)$. Intuitively, if the outcome of $A$ does not affect the outcome of $B$ then $A$ and $B$ are independent. 
+
+\begin{exmp}
+If you flip a coin twice, then the value of the first flip does not effect the value of the second flip. Thus the flips are independent.
+\end{exmp} 
+
+\begin{exmp}
+On the other hand, your height and weight are likely not independent; if you are a taller person you likely have a larger weight than a shorter person. We say that these events are dependent (i.e.\ not independent).
+\end{exmp} 
 
 \begin{exmp}
 Let's say we toss a fair coin five times. What is the probability of getting at least 1 head? Well, because probability sums to 1, the probability of at least one head is 1 minus the probability of all tails. If the fail flips are independent, then this is 1 minus the probability of tails on the first flip times the probability of tails on the second flip times the probability of tails on the third flip. 
