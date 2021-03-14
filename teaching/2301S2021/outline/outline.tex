@@ -370,5 +370,28 @@ On the other hand, your height and weight are likely not independent; if you are
 Let's say we toss a fair coin five times. What is the probability of getting at least 1 head? Well, because probability sums to 1, the probability of at least one head is 1 minus the probability of all tails. If the fail flips are independent, then this is 1 minus the probability of tails on the first flip times the probability of tails on the second flip times the probability of tails on the third flip. 
 \end{exmp}
 
+\subsection{Conditional probability}
+
+\begin{itemize}
+\item The conditional probability of event $A$ is the probability of observing event $A$ given that you observed event $B$. 
+
+\item We write conditional probability using the notation $p(A|B)$ (i.e.\ \verb|$ p(A \vert B) $|). You should read this as the probability of $A$ given $B$.
+
+\item Formally, $p(A \vert B) = \frac{p(A \cap B)}{p(B)}$
+\end{itemize}
+
+
+\begin{exmp}
+For instance, in general, taller people tend to weigh more than shorter people. So if you know that someone weighs over 200 pounds, it's more likely that they will be over 6 feet tall (compared to a person who weighs less than 200 pounds). Thus, the probability of observing event $A$ (i.e.\ a person who is over 6 feet tall) is higher if you first observe event $B$ (i.e.\ observing a person who weighs more than 200 pounds).
+\end{exmp}
+
+\begin{figure}[h!]%
+    \centering
+    \subfloat[\centering The probability of observing two tails on two flips is .25]{{\includegraphics[width=5cm]{not_condition_onA.pdf} }}%
+    \qquad
+    \subfloat[\centering The probability of observing two tails, given that the first flip is T is .5]{{\includegraphics[width=5cm]{conditioned_onA.pdf} }}%
+    \caption{Probability of getting two tails on two flips of a fair coin. Note that the events are independent so $p($T $ \cap $ T$)$ $= p($T$)$p$($T$)$ and  p$($T $\vert$ T$)=$p$($T$)$}%
+    \label{fig:example}%
+\end{figure}
 
 \end{document}
