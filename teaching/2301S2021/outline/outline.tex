@@ -331,7 +331,7 @@ There are two interpretations of a probability distribution
 
 \begin{itemize}
 \item In the long run, if you keep running an experiment, the probability of a given event $A$ is the fraction of times you observe $A$, among all times you run the experiment. For instance, if you keep flipping a fair coin forever, you should expect that, in the long run, half of the time you will get heads. This is sometimes called the \textbf{frequentist} interpretation. 
-\item Another interpretation of a probability distribution is that the distribution reflects your subjective belief about what will happen if you run an experiment in the future. For instance, if you believe (based on observing data) that you will get heads about half of the time then $p(H)=.5$ (i.e.\ the probability of heads is 50\%) reflects your belief that about what will happen if you flip a coin. This perspective is sometimes called the \textbf{Bayesian} interpretation.
+\item Another interpretation of a probability distribution is that the distribution reflects your subjective belief about what will happen if you run an experiment in the future. For instance, if you believe (based on observing data) that you will get heads about half of the time the fact that $p(H)=.5$ (i.e.\ the probability of heads is 50\%) reflects your belief that about what will happen if you flip a coin. This perspective is sometimes called the \textbf{Bayesian} interpretation.
 \end{itemize}
 
 \subsection{The uniform distribution}
@@ -340,6 +340,18 @@ If all events are equally probable, we say that the distribution is uniform. If 
 
 \begin{exmp}
 If you roll a fair 6-sided die, all outcomes are equally likely so the distribution over outcomes is uniform. The probability of the event 1 is $p(\{1\})=\frac{1}{\vert \Omega \vert}$ = $\frac{1}{6}$.
+\end{exmp}
+
+\subsection{Determining a distribution from data (aka ``learning'')}
+
+In the previous examples, we have largely known how the data was generated. For instance, we know that a fair die will land on the number 3 roughly $\frac{1}{6}$ of the time (if we keep rolling the die forever). But usually in nature you \textit{don't} know how the data was generated. You just see data and you have to make an educated guess about how it was created. 
+
+If you have heard people mentioning \textbf{machine learning}, part of what they are talking about is a set of computational methods for reasoning about an (unobserved) probability distribution from observed data. Outside of computer science, you will also hear the process of reasoning about an unobserved distribution from data described as \textbf{statistical inference}.
+
+\begin{exmp}
+For example, say you observe 10 flips of a coin and get TTTTTHTTTT. Based on this data, do you think the probability distribution (i.e.\ the long run probabilities of getting heads or tails) is uniform? Well, there are two outcomes $\Omega=\{$H, T$\}$. If a distribution is uniform then we should expect that $p($H$) = \frac{1}{\vert \Omega \vert} =  \frac{1}{2}$ and $p($T$) = \frac{1}{\vert \Omega \vert} = \frac{1}{2}$. 
+
+In this example, in the observed data there are 10 flips and only 1 heads. It is possible get 9 out of 10 tails from a fair coin, but it is really unlikely. So you might make an educated guess that $p($H$) \neq \frac{1}{2}$ and that the distribution is not uniform. If you keep flipping the coin 10,000 times and see that only 1 out of 10 flips is heads, you can be pretty confident (but not totally certain) that the distribution is not uniform. 
 \end{exmp}
 
 \subsection{Independence}
