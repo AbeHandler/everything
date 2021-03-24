@@ -13,6 +13,7 @@
 \usepackage{dirtytalk}
 \usepackage{bm}
 \usepackage{subfig}
+\usepackage{amsfonts}
 \usepackage{graphicx}
 
 
@@ -393,5 +394,49 @@ For instance, in general, taller people tend to weigh more than shorter people. 
     \caption{Probability of getting two tails on two flips of a fair coin. Note that the events are independent so $p($T $ \cap $ T$)$ $= p($T$)$p$($T$)$ and  p$($T $\vert$ T$)=$p$($T$)$}%
     \label{fig:example}%
 \end{figure}
+
+\subsubsection{Independence revisited, after conditional probability} 
+
+Intuitively, if two events $A$ and $B$ are independent, then the value of $A$ does not affect the value of $B$. We can reconsider independence in light of conditional probability. $p(B|A)$ gives the probability of $B$ given $A$. If $A$ and $B$ are independent then we should not expect the value of $B$ to depend on $B$. We can show this in the math. 
+
+By definition:
+
+\begin{equation}
+p(B|A) = \frac{p(B \cap A)}{p(A)}
+\end{equation}
+
+If $B$ and $A$ are independent, then $p(B \cap A) = p(B)p(A)$. Thus we can rewrite the above:
+
+\begin{equation}
+p(B|A) = \frac{p(B)p(A)}{p(A)}
+\end{equation}
+
+The $p(A)$ terms cancel (these just represent numbers after all) so \underline{if} $A$ and $B$ are independent we have:
+
+\begin{equation}
+p(B|A) = p(B)
+\end{equation}
+
+Note that this is \underline{NOT} true if $A$ and $B$ are dependent (i.e.\ not independent).
+
+\subsection{Random variables}
+
+A random variable $X: \Omega \rightarrow \mathbb{R}$ is a function that maps each element in the sample space to a real number. Sometimes we abbreviate random variables as ``r.v."
+
+\begin{exmp}
+If you flip a coin twice, then $\Omega = \{HH, HT, TH, TT\}$. Let $X$ be a r.v.\ equal to the number of heads in a sequence. Thus $X$ maps $HH$ to the number 2. $X$ maps $TT$ to the number 0.
+\end{exmp} 
+
+\subsection{Expected value}
+
+The expected value of a random variable $X$ is the average value you would expect the variable $X$ to take. We write the expected value as $E[X]$. Intuitively, you can think of the expected value as what you should expect the value of $X$ to be. Formally, for a discrete r.v.\ (we will only focus on discrete variables in this class) the definition is: 
+
+\begin{equation}
+E[X] = \Sigma^X p(X) * X
+\end{equation}
+
+\begin{exmp}
+You bet a friend the Broncos will win on Sunday. If they win, you get \$100. If they lose, you pay \$50. There is a 25\% chance they win and a 75\% chance they lose. The expected value is .25 * -50 + .75 * 100 = 62.5. You should take the bet because you should expect to win \$62.5.
+\end{exmp} 
 
 \end{document}
