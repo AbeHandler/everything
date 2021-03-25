@@ -6,7 +6,7 @@ description: Links to syllabi and course materials.
 nav: true
 ---
 
-<h4>University of Colorado, Boulder</h4>
+<h4>University of Colorado, Boulder (Instructor)</h4>
 Note: CU Boulder asks instructors to post course materials to <a href="https://www.instructure.com/canvas/">Canvas</a>. You can find my copy of many course materials on my <a href="https://github.com/abehandler/everything">GitHub</a> account.
 <br/>
 
@@ -32,8 +32,7 @@ Note: CU Boulder asks instructors to post course materials to <a href="https://w
 
 
 <br/>
-<h4>University of Massachusetts, Amherst</h4>
-I taught several sections of a 1st-year seminar while a grad student.
+<h4>University of Massachusetts, Amherst (Graduate Instructor)</h4>
 
 <h5>Fall 2018</h5>
 
