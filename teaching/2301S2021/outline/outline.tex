@@ -432,11 +432,13 @@ If you flip a coin twice, then $\Omega = \{HH, HT, TH, TT\}$. Let $X$ be a r.v.\
 The expected value of a random variable $X$ is the average value you would expect the variable $X$ to take. We write the expected value as $E[X]$. Intuitively, you can think of the expected value as what you should expect the value of $X$ to be. Formally, for a discrete r.v.\ (we will only focus on discrete variables in this class) the definition is: 
 
 \begin{equation}
-E[X] = \Sigma^X p(X) * X
+E[X] = \Sigma^X p(x_i) * x_i
 \end{equation}
 
+\noindent where $p(x_i)$ is the probability of some outcome and $x_i$ is the value of that outcome.
+
 \begin{exmp}
-You bet a friend the Broncos will win on Sunday. If they win, you get \$100. If they lose, you pay \$50. There is a 25\% chance they win and a 75\% chance they lose. The expected value is .25 * -50 + .75 * 100 = 62.5. You should take the bet because you should expect to win \$62.5.
+A friend offers to bet on the Broncos game on Sunday. If they win, you get \$100. If they lose, you pay \$50. Say that based on the last three years of Broncos games there is a 25\% chance the Broncos win and a 75\% chance the Broncos lose. The expected value of the proposed bet is .25 * -50 + .75 * 100 = 62.5. You should take the bet because you should expect to win \$62.5.
 \end{exmp} 
 
 \end{document}
