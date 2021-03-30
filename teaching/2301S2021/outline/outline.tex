@@ -441,4 +441,56 @@ E[X] = \Sigma^X p(x_i) * x_i
 A friend offers to bet on the Broncos game on Sunday. If the Broncos win, you get \$100. If the Broncos lose, you pay \$50. Say that based on the last three years of Broncos games there is a 25\% chance the Broncos win and a 75\% chance the Broncos lose. The expected value of the proposed bet is .25 * -50 + .75 * 100 = 62.5. You should take the bet because you should expect to win \$62.5.
 \end{exmp} 
 
+\subsection{Variance}
+Some random variables take values that are spread out. Other random variables take values in a narrower range.
+
+\begin{exmp}
+House cats usually way between 5 and 20 pounds. Pet dogs usually weigh between 10 and 100 pounds. Say you have a sample of pet cats and dogs. If $X$ is a r.v.\ that maps a dog in a sample to its weight, and $Y$ is an r.v.\ that maps a cat in a sample to its weight, then $X$ is more spread out than $Y$.
+\end{exmp} 
+
+\begin{itemize}
+\item The variance offers a way to quantify how spread out a variable is. 
+\item A variance is an expected value. 
+\item Specifically, it is the expected value of how far a variable is from the mean.
+\item Formally, the variance of a discrete r.v.\ is $Var[X]=E[(X - E[X])^2] = \sum p(x_i) (X - E[x])^2$
+\end{itemize}
+
+\begin{exmp}
+You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across two tosses. The sample space is $\Omega=\{HH,HT,TH,HH\}$ and $p(X) = \frac{1}{4}$. Recall that $X$ is a function. So, for instance, $X(HH)=2$ and $X(HT)=1$. 
+\begin{itemize}
+\item Thus, $E[X] = \sum p(HH)X(HH) + p(HT)X(HT) +  p(TH)X(TH) + p(TT)X(TT)$
+\item If we plug in numbers for probabilities we get the following:
+  \begin{itemize}
+    \item[] $E[X] = \sum \frac{1}{4} X(HH) + \frac{1}{4} X(HT) +\frac{1}{4} X(TH)+ \frac{1}{4} X(TT)$
+   \end{itemize}
+\item If we plug in numbers for values of $X$ we get the following:
+  \begin{itemize}
+	\item[] $E[X] = \sum \frac{1}{4} * 2 + \frac{1}{4} * 1 +\frac{1}{4}* 1 + \frac{1}{4} * 0$
+   \end{itemize}
+\item If we simplify we get the following:
+  	\begin{itemize}
+		\item[] $E[X] = \sum .\frac{2}{4} + \frac{1}{4} +\frac{1}{4} = 1$
+	\end{itemize}
+\item $E[X]=1$ meaning that if we flip a coin twice, on average, we will get 1 head.
+\item Now that we know $E[X]$ we can ask: what is the variance?
+\item $Var[X] = \sum p(x_i) (X - E[x])^2$
+\item $Var[X] = \sum p(HH)(X(HH) -1)^2 + p(HT)(X(HT) -1)^2 +  p(TH)(X(TH) -1)^2 + p(TT)(X(TT) -1)^2$
+\item If we plug in numbers for probabilities we get the following:
+  \begin{itemize}
+    \item[] $Var[X] =  \sum \frac{1}{4} (X(HH) -1)^2 +  \frac{1}{4} (X(HT) -1)^2 +   \frac{1}{4}(X(TH) -1)^2 +  \frac{1}{4}(X(TT) -1)^2$
+   \end{itemize}
+\item If we plug in values for random variables, we get the following: 
+  \begin{itemize}
+   \item[] $Var[X] =  \sum \frac{1}{4} (2 -1)^2 +  \frac{1}{4} (1 -1)^2 +   \frac{1}{4}(1 -1)^2 +  \frac{1}{4}(0 -1)^2$
+   \end{itemize}
+\item If we simplify we get the following:
+ 	 \begin{itemize}
+   	\item[] $Var[X] =  \sum \frac{1}{4} (1)^2 +  \frac{1}{4} (0)^2 +   \frac{1}{4}(0)^2 +  \frac{1}{4}(-1)^2$
+   	\item[] $Var[X] =  \sum \frac{1}{4} * 1 +  \frac{1}{4} * 1$
+   	\item[] $Var[X] = \frac{1}{2}$
+   	\end{itemize}
+\end{itemize}
+	
+\end{exmp} 
+
 \end{document}
