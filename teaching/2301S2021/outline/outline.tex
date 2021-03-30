@@ -453,12 +453,19 @@ House cats usually way between 5 and 20 pounds. Pet dogs usually weigh between 1
 \item A variance is an expected value. 
 \item Specifically, it is the expected value of how far a variable is from the mean.
 \item Formally, the variance of a discrete r.v.\ is $Var[X]=E[(X - E[X])^2] = \sum p(x_i) (X - E[x])^2$
+\item The standard deviation $\sigma$ is the square root of the variance
+	\begin{itemize}
+	\item[] i.e.\ $\sqrt{Var(X)}=\sigma$
+ 	\end{itemize}
 \end{itemize}
 
 \begin{exmp}
-You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across two tosses. The sample space is $\Omega=\{HH,HT,TH,HH\}$ and $p(X) = \frac{1}{4}$. Recall that $X$ is a function. So, for instance, $X(HH)=2$ and $X(HT)=1$. 
+You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across two tosses. The sample space is $\Omega=\{HH,HT,TH,HH\}$ and $p(X) = \frac{1}{4}$. Recall that the r.v.\ $X$ is a function. So, for instance, $X(HH)=2$ and $X(HT)=1$. 
 \begin{itemize}
-\item Thus, $E[X] = \sum p(HH)X(HH) + p(HT)X(HT) +  p(TH)X(TH) + p(TT)X(TT)$
+\item Let's start by computing the expected value, which we need to calculate the variance. By definition, we get the following:
+	\begin{itemize}
+	\item[] $E[X] = \sum p(HH)X(HH) + p(HT)X(HT) +  p(TH)X(TH) + p(TT)X(TT)$
+	\end{itemize}
 \item If we plug in numbers for probabilities we get the following:
   \begin{itemize}
     \item[] $E[X] = \sum \frac{1}{4} X(HH) + \frac{1}{4} X(HT) +\frac{1}{4} X(TH)+ \frac{1}{4} X(TT)$
@@ -469,11 +476,12 @@ You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across 
    \end{itemize}
 \item If we simplify we get the following:
   	\begin{itemize}
-		\item[] $E[X] = \sum .\frac{2}{4} + \frac{1}{4} +\frac{1}{4} = 1$
+		\item[] $E[X] = \sum \frac{2}{4} + \frac{1}{4} +\frac{1}{4} + 0 = 1$
 	\end{itemize}
-\item $E[X]=1$ meaning that if we flip a coin twice, on average, we will get 1 head.
-\item Now that we know $E[X]$ we can ask: what is the variance?
+\item Thus $E[X]=1$, meaning that if we flip a coin twice, on average, we will get 1 head.
+\item Now that we know $E[X]$ we can ask: what is the variance? We start by applying the definition.
 \item $Var[X] = \sum p(x_i) (X - E[x])^2$
+\item Thus... 
 \item $Var[X] = \sum p(HH)(X(HH) -1)^2 + p(HT)(X(HT) -1)^2 +  p(TH)(X(TH) -1)^2 + p(TT)(X(TT) -1)^2$
 \item If we plug in numbers for probabilities we get the following:
   \begin{itemize}
@@ -489,7 +497,9 @@ You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across 
    	\item[] $Var[X] =  \sum \frac{1}{4} * 1 +  \frac{1}{4} * 1$
    	\item[] $Var[X] = \frac{1}{2}$
    	\end{itemize}
+\item The expected squared deviation from the mean (i.e.\ the variance) is $\frac{1}{2}$. This is a quantitative measure of how spread out $X$ is.
 \end{itemize}
+
 	
 \end{exmp} 
 
