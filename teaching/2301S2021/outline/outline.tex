@@ -500,7 +500,17 @@ You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across 
 \item The expected squared deviation from the mean (i.e.\ the variance) is $\frac{1}{2}$. This is a quantitative measure of how spread out $X$ is.
 \end{itemize}
 
-	
 \end{exmp} 
+
+\subsection{Bayes rule}
+
+Bayes rule tells you the probabilty of some event $B$, given that you know that some other event $A$ has happened. Usually when you apply Bayes rule you know how to compute $p(A|B)$ but not $p(B|A)$. Thus you apply the law of conditional probability like this: 
+
+\begin{align*}
+p(B \vert A) &= \frac{p(B \cap A)}{p(A)} && \text{law of conditional probability} \\
+       &= \frac{p(A \vert B)p(B)}{p(A)} && \text{via multiplication law}
+\end{align*}
+
+\noindent this gives Bayes rule $p(B \vert A) = \frac{p(A \vert B)p(B)}{p(A)}$. Note that $p(A) = \sum p(A|B^\prime)p(B^\prime)$, by the law of total probability.
 
 \end{document}
