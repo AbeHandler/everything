@@ -511,6 +511,9 @@ p(B \vert A) &= \frac{p(B \cap A)}{p(A)} && \text{law of conditional probability
        &= \frac{p(A \vert B)p(B)}{p(A)} && \text{via multiplication law}
 \end{align*}
 
-\noindent this gives Bayes rule $p(B \vert A) = \frac{p(A \vert B)p(B)}{p(A)}$. Note that $p(A) = \sum p(A|B^\prime)p(B^\prime)$, by the law of total probability.
+\noindent this gives Bayes rule $p(B \vert A) = \frac{p(A \vert B)p(B)}{p(A)}$. Note that $p(A) = \sum p(A|B^\prime)p(B^\prime)$, by the law of total probability. To remember Bayes rule, it helps to think of ``flipping the conditional'' from $p(A \vert B)$ to $p(B \vert A)$. 
+
+
+\textbf{Note:} In Bayesian statistics, the terms on the right have special names. $p(A)$ is called the ``evidence,'' $p(A \vert B)$ is called the likelihood and $p(B)$ is called the prior. 
 
 \end{document}
