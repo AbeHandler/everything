@@ -546,4 +546,27 @@ p(B \vert A) &= \frac{p(B \cap A)}{p(A)} && \text{law of conditional probability
 
 \textbf{Note:} In Bayesian statistics, the terms on the right have special names. $p(A)$ is called the \textit{evidence}, $p(A \vert B)$ is called the \textit{likelihood} and $p(B)$ is called the \textit{prior}. 
 
+\section{Permutations and combinations}
+
+\subsection{Permutations}
+
+Permutations enumerate the items in a set in a particular order. Recall that sets do not have order.
+
+\begin{exmp}
+Let $A$ be the set $\{45, 67, 99\}$. The set does not have an order. $67, 45, 99$ is a permutation of the set, which has an order.
+\end{exmp} 
+
+If there are $n$ items in a set and we permute $k$ of the items, there are $\frac{n!}{(n-k)!}$ possible permutations, where the explanation point denotes the factorial function. You can think of this as follows: there are $n$ options for the first item in the permutation, $n-1$ options for the second item in the permutation. In total there are $n * (n-1) * (n-2) ... (n - k + 1)$ permutations. In the formula $\frac{n!}{(n-k)!}$ the denominator cancels out the last $(n-k)$ terms of the $n!$ function.
+
+\begin{exmp}
+How many ways are there to pick a first place winner and a second place from 10 contestants? There are 10 people who can come in first place and for each of the 10 people, there are 9 who can come in second place. Thus there are $10*9=90$ permutations. We can also compute this via $\frac{n!}{(n-k)!}$ = $\frac{10!}{8!}$ = $90$ where $n$ is 10 and $k$ is 2. 
+\end{exmp} 
+
+\subsection{Combinations}
+Combinations enumerate the items in a set where order does not matter. 
+
+\begin{exmp}
+For instance, if you play the traditional lottery and your numbers come up, it does not matter which order you picked the numbers. You still win the lottery. 
+\end{exmp} 
+
 \end{document}
