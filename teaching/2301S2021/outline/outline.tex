@@ -562,11 +562,19 @@ If there are $n$ items in a set and we permute $k$ of the items, there are $\fra
 How many ways are there to pick a first place winner and a second place from 10 contestants? There are 10 people who can come in first place and for each of the 10 people, there are 9 who can come in second place. Thus there are $10*9=90$ permutations. We can also compute this via $\frac{n!}{(n-k)!}$ = $\frac{10!}{8!}$ = $90$ where $n$ is 10 and $k$ is 2. 
 \end{exmp} 
 
+We sometimes write the number of permutations as $P(n,k) = \frac{n!}{(n-k)!}$ which reads: how many ways are there to choose $k$ items from a set of size $n$, where order matters.
+
 \subsection{Combinations}
 Combinations enumerate the items in a set where order does not matter. 
 
 \begin{exmp}
 For instance, if you play the traditional lottery and your numbers come up, it does not matter which order you picked the numbers. You still win the lottery. 
+\end{exmp} 
+
+One way to think about counting combinations is to start with permutations and then remove duplicates. 
+
+\begin{exmp}
+How many ways are there to pick two winners from 10 contestants? Well you can pick one of the 10 people first, then pick one of nine people. However, if the order of the winners does not matter, then picking person $A$ and person $B$ is the same as picking person $B$ and then person $A$. Because the winners can be arranged in two ways, there are two times as many permutations as we need. Thus 
 \end{exmp} 
 
 \end{document}
