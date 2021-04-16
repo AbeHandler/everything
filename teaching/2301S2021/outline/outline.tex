@@ -419,7 +419,14 @@ p(B|A) = p(B)
 
 Note that this is \underline{NOT} true if $A$ and $B$ are dependent (i.e.\ not independent).
 
-\subsection{Law of total probability}
+\subsection{Multiplication rule for dependent events}
+
+Whenever we have two events $A$ and $B$ we multiply their probabilities to get the probability that $A$ occurs and $B$ occurs, written $p(A \cap B)$. 
+
+Assuming that $A$ and $B$ are dependent, then what is $p(A \cap B)$? One way to think about this is that first event $A$ happens then event $B$ happens and we need to multiply the probabilities of the events together to get the probability of both events. The probability of event $A$ can be written $p(A)$. The probability of event $B$ given that $A$ has already occurred can be written $p(B \vert A)$. Thus $p(A \cap B)$ = $p(A)p(B \vert A)$. This is sometimes called the multiplication rule for dependent events. What do you think the multiplication rule for independent events might be?
+
+%Because we multiply the probabilities of events, and because we write $p(B \vert A)$ to show the probability of $B$ given $A$, 
+
 
 The law of total probability states: 
 
