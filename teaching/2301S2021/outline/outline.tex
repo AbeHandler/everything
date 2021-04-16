@@ -423,14 +423,26 @@ Note that this is \underline{NOT} true if $A$ and $B$ are dependent (i.e.\ not i
 
 Whenever we have two events $A$ and $B$ we multiply their probabilities to get the probability that $A$ occurs and $B$ occurs, written $p(A \cap B)$. 
 
-Assuming that $A$ and $B$ are dependent, then what is $p(A \cap B)$? One way to think about this is that first event $A$ happens then event $B$ happens and we need to multiply the probabilities of the events together to get the probability of both events. The probability of event $A$ can be written $p(A)$. The probability of event $B$ given that $A$ has already occurred can be written $p(B \vert A)$. Thus $p(A \cap B)$ = $p(A)p(B \vert A)$. This is sometimes called the multiplication rule for dependent events. What do you think the multiplication rule for independent events might be?
+Assuming that $A$ and $B$ are dependent, then what is $p(A \cap B)$? One way to think about this is that first event $A$ happens then event $B$ happens and we need to multiply the probabilities of the events together to get the probability of both events, $p(A \cap B)$. The probability of event $A$ can be written $p(A)$. The probability of event $B$ given that $A$ has already occurred can be written $p(B \vert A)$. Thus $p(A \cap B)$ = $p(A)p(B \vert A)$. This is sometimes called the multiplication rule for dependent events. What do you think the multiplication rule for independent events might be?
 
 %Because we multiply the probabilities of events, and because we write $p(B \vert A)$ to show the probability of $B$ given $A$, 
 
+\subsection{Law of total probability}
 
-The law of total probability states: 
+If you have sets $B_1$, $B_2$ ... $B_N$ that are all disjoint (i.e.\ don't intersect) then the law of total probability states: 
 
 \[p(A) = \sum\limits_{n} p(A|B_n)p(B_n)\]
+
+The law of total probability 
+
+\begin{figure}[h]
+     \centering
+     \includegraphics[width=6cm]{total_probability}
+     \caption{The dot product.}\label{steady_state}
+\end{figure}
+
+
+
 
 \subsection{Random variables}
 
