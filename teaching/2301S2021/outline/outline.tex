@@ -568,15 +568,16 @@ We sometimes write the number of permutations as $P(n,k) = \frac{n!}{(n-k)!}$ wh
 Combinations enumerate the items in a set where order does not matter. 
 
 \begin{exmp}
-For instance, if you play the traditional lottery and your numbers come up, it does not matter which order you picked the numbers. You still win the lottery. 
+For instance, if you play the traditional lottery and your numbers come up, it does not matter which order you picked the numbers. You still win the lottery, regardless of the order in which you pick the numbers. 
 \end{exmp} 
 
-One way to think about counting combinations is to start with permutations and then remove duplicates.
+\noindent One way to think about counting combinations is to start by thinking of permutations, and then consider how to remove duplicates. For instance, if you have a permutation of $k$ items, there are $k!$ possible permutations of the $k$ items. So you need to divide the total number of permutations by $k!$.
+
 \begin{exmp}
-How many ways are there to pick two winners from 10 contestants? Well you can pick one of the 10 people first, then pick one of nine people. However, if the order of the winners does not matter, then picking person $A$ and person $B$ is the same as picking person $B$ and then person $A$. Because the winners can be arranged in two ways, there are two times as many permutations as we need. Thus we need to divide the number of permutations by two. 
+How many ways are there to pick two winners from 10 contestants? Well you can pick one of the 10 people first, then pick one of nine people second. However, in this case, the order of the winners does not matter. Thus picking person $A$ and person $B$ is the same as picking person $B$ and then person $A$. Because the winners can be arranged in two ways, there are two times as many permutations as we need. Thus we need to divide the number of permutations by two. 
 \end{exmp} 
 
-\noindent More formally, each combination of $k$ items can be written $k!$ ways. So we need to divide out $k!$ from our expression for permutations. Thus the number of combinations of length $k$ from a set of size $n$ is $C(n,k) = \frac{n!}{(n-k)!k!}$. Notice this is just $P(n,k)$ with $k!$ divided out (because each combination can be written $k!$ ways.
+\noindent More formally, each combination of $k$ items can be written $k!$ ways. So we need to divide out $k!$ from our expression for permutations. Thus the number of combinations of length $k$ from a set of size $n$ is $C(n,k) = \frac{n!}{(n-k)!k!}$. Notice this is just $P(n,k)$ with $k!$ divided out (because each combination can be written in $k!$ ways).
 
 
 \end{document}
