@@ -433,16 +433,21 @@ If you have sets $B_1$, $B_2$ ... $B_N$ that are all disjoint (i.e.\ don't inter
 
 \[p(A) = \sum\limits_{n} p(A|B_n)p(B_n)\]
 
-The law of total probability 
+The law of total probability is maybe best explained with a picture, as in Figure \ref{f:total_prob}.
 
-\begin{figure}[h]
+\begin{figure}[!ht]
      \centering
      \includegraphics[width=6cm]{total_probability}
-     \caption{The dot product.}\label{steady_state}
+     \caption{The law of total probability: $p(A) = p(A|B_1)p(B_1)$ + $p(A|B_2)p(B_2)$. The probability of the oval $A$ is equal to the probability of region $B_1$ times the probability of $A$ given that you are in the region $B_1$, plus the probability of region $B_2$ times the probability of $A$ given that you are in the region $B_2$. }\label{f:total_prob}
 \end{figure}
 
+\begin{exmp}
+Sixty percent of students in a district go to high school $A$ and forty percent of students in a district go to high school $B$. Ninety percent of students from high school $A$ graduate in 4 years and eighty percent of students form high school $B$ graduate in 4 years. What is the overall probability that a student from the district? From the law of total probability, the probability is $.6 * .9 + .4*.8$.
+\end{exmp} 
 
-
+\begin{exmp}
+An example from NLP. Say ten percent of stories on ESPN.com are about baseball and ninety percent of stories on ESPN.com are about football. One out of two stories about football includes the word ``touchdown'', and one out of one hundred stories about baseball includes the word ``touchdown''. You can apply the law of total probability to compute the overall probability of the word ``touchdown''. In NLP, this is called a \textit{mixture model} of text.
+\end{exmp} 
 
 \subsection{Random variables}
 
