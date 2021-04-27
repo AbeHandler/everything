@@ -624,9 +624,9 @@ We are now ready to define the binomial distribution. Let $X$ be a r.v.\ which c
 
 \section{Maximum likelihood estimation} 
 
-In problems in class, we sometimes assume that we know a r.v.\ takes some value with some probability. For instance, in Section \ref{s:binomial} we assume we know that some binary r.v.\ takes the value 1 with probability $p$. In the real world, we usually don't actually know the actual parameters of a distribution; we have to ``learn'' (see Section \ref{s:learning}) them. We often use the letter theta $\theta$ to denote the parameters we want to learn. 
+In problems in class, we sometimes assume that we know a r.v.\ takes some value with some probability. For instance, in Section \ref{s:binomial} we assume we know that some binary r.v.\ takes the value 1 with probability $p$. In the real world, we usually don't actually know the actual parameters of a distribution; we have to ``learn'' them (see Section \ref{s:learning}). We often use the letter theta $\theta$ to denote the parameters we want to learn. 
 
-One major use of Bayes rule\footnote{In machine learning at least; Bayes rule is used in many contexts.} is to estimate the probability of different parameters, given the data. The idea is that we observe the data $\mathcal{D}$ and we want to infer the possible parameters $ \theta$ which may have generated the data. We can do this with Bayes rule 
+One major use of Bayes rule\footnote{In machine learning at least; Bayes rule is used in many contexts.} is to estimate the probability of different parameters, given the data. The idea is that we observe the data $\mathcal{D}$ and we want to infer the possible parameters $ \theta$ which may have generated the data. We can do this with Bayes rule as follows
 
 
 \begin{equation}
@@ -636,7 +636,7 @@ p(\theta \vert \mathcal{D}) = \frac{p(\mathcal{D} \vert \theta) p(\theta)}{p(\ma
 \noindent where we use $\mathcal{D}$ to denote the data and $\theta$ to denote the parameters. 
 
 Recall that $p(\mathcal{D} \vert \theta)$ is called the likelihood (Section \ref{s:bayes}). Because we can not observe $\theta$, we need to make some guess or estimate about the value of the parameter, denoted  $\hat{\theta}$ (the ``hat'' over the theta emphasizes that we are estimating the value of $\theta$). What guess should we make? One option, 
-is to choose the \textbf{maximum likelihood estimate} so that we choose the value $\hat{\theta}_{MLE}$ that makes the likelihood of the observed data the highest.
+is to choose the \textbf{maximum likelihood estimate}. This chooses the value $\hat{\theta}_{MLE}$ that makes the likelihood of the observed data $\mathcal{D}$ the highest.
 \begin{exmp}
 A basketball player hits the first 3 of a total of 4 free throws in a game. Let $\theta$ be the true (and unknown) probability that the player will hit a free throw. Let $\hat{\theta}_1$ and $\hat{\theta}_{MLE}$ be two estimates of $\theta$. $p(\mathcal{D} \vert \theta_1)$ = $.2^3*.8$ and $p(\mathcal{D} \vert \theta_{MLE})$ = $.75^3*.25$, where $\mathcal{D}=111
 0$. Because $\theta_{MLE}$ is chosen to maximize the likelihood, $p(\mathcal{D} \vert \theta_{MLE}) > p(\mathcal{D} \vert \theta_1)$.
@@ -645,6 +645,6 @@ A basketball player hits the first 3 of a total of 4 free throws in a game. Let 
 
 
 \subsection{MAP estimation}
-An alternative to the MLE is MAP estimation, which selects the $\hat{\theta}$ which maximizes both the likelihood and the prior. Some people interpret the prior as a kind of regularization which discourages choosing some value of $\hat{\theta}_{MLE}$ which overfits the data. This is a little beyond the bounds of 2301.
+An alternative to the MLE is MAP estimation, which selects the $\hat{\theta}$ which maximizes both the likelihood and the prior. Some people interpret the prior as a kind of regularization. The value $\hat{\theta}_{MLE}$ may overfit the data, without the influence of the prior. This is a little beyond the bounds of 2301.
 
 \end{document}
