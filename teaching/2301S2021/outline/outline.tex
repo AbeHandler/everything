@@ -340,7 +340,7 @@ If all events are equally probable, we say that the distribution is uniform. If 
 If you roll a fair 6-sided die, all outcomes are equally likely so the distribution over outcomes is uniform. The probability of the event 1 is $p(\{1\})=\frac{1}{\vert \Omega \vert}$ = $\frac{1}{6}$.
 \end{exmp}
 
-\subsection{Determining a distribution from data (aka ``learning'')}
+\subsection{Determining a distribution from data (aka ``learning'')}\label{s:learning}
 
 In the previous examples, we have largely known how the data was generated. For instance, we know that a fair die will land on the number 3 roughly $\frac{1}{6}$ of the time (if we keep rolling the die forever). But usually in nature you \textit{don't} know how the data was generated. You just see data and you have to make an educated guess about how it was created. 
 
@@ -529,7 +529,7 @@ You flip a coin twice. Let $X$ be a r.v.\ mapping to the number of heads across 
 
 \end{exmp} 
 
-\subsection{Bayes rule}
+\subsection{Bayes rule}\label{s:bayes}
 
 Bayes rule tells you the probabilty of some event $B$, given that you know that some other event $A$ has happened. Usually when you apply Bayes rule you know how to compute $p(A|B)$ but not $p(B|A)$. Thus you apply the law of conditional probability like this: 
 
@@ -610,8 +610,26 @@ A vendor gets two good reviews and one bad review. Let 1 denote a good review an
      \caption{Possible ways to draw $k=2$ successes from $n=4$ trials. In total, there are $n \choose k$ possible ways to draw $k$ 1s from 4 slots. We only show 3 of the $n \choose k$ possibilities in this figure.}\label{f:binomial_slots}
 \end{figure}
 
-\subsection{The binomial distribution}
+\subsection{The binomial distribution}\label{s:binomial}
 
 We are now ready to define the binomial distribution. Let $X$ be a r.v.\ which counts the number of successes in $n$ trials. Then the probability of $k$ successes in $n$ trials is $ p(X=k) = {n \choose k} p^k (1-p)^{n-k}$. This is called the binomial distribution.
+
+\section{Maximum likelihood estimation} 
+
+In problems in class, we sometimes assume that we know a r.v.\ takes some value with some probability. For instance, in Section \ref{s:binomial} we assume we know that some binary r.v.\ takes the value 1 with probability $p$. In the real world, we usually don't actually know the actual distribution. We have to ``learn'' (see Section \ref{s:learning}) the parameters. We often use the letter theta $\theta$ to denote the parameters we want to learn. 
+
+One major use of Bayes rule\footnote{In machine learning at least; Bayes rule is used in many contexts.} is to estimate the probability of different parameters, given the data. The idea is that we observe the data $\mathcal{D}$ and we want to infer the possible parameters $ \theta$ which may have generated. We can do this with Bayes rule 
+
+
+\begin{equation}
+p(\theta \vert \mathcal{D}) = \frac{p(\mathcal{D} \vert \theta) p(\theta)}{p(\mathcal{D})}
+\end{equation}
+
+\noindent where we use $\mathcal{D}$ to denote the data. 
+
+Recall that $p(\mathcal{D} \vert \theta)$ is called the likelihood (Section \ref{s:bayes}). In \textbf{maximum likelihood estimation} we choose the value $\theta$ which maximizes the likelihood.
+
+\subsection{MAP estimation}
+An alternative to the MLE is MAP estimation, which selects the likelihood which maximizes both the likelihood and the prior. MAP estimation is beyond the bounds of 2301. Some people interpret the prior as a kind of regularization which discourages choosing some value of $\theta$ which overfits the data.
 
 \end{document}
