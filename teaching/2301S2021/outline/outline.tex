@@ -30,9 +30,6 @@
 
 \maketitle
 
-\begin{abstract}
-An outline of what we've covered so far. You should be comfortable with everything in this document. 
-\end{abstract}
 
 \section{Sets}
 
@@ -564,7 +561,7 @@ How many ways are there to pick a first place winner and a second place from 10 
 
 We sometimes write the number of permutations as $P(n,k) = \frac{n!}{(n-k)!}$ which reads: how many ways are there to choose $k$ items from a set of size $n$, where order matters.
 
-\subsection{Combinations}
+\subsection{Combinations}\label{s:combinations}
 Combinations enumerate the items in a set where order does not matter. 
 
 \begin{exmp}
@@ -579,5 +576,42 @@ How many ways are there to pick two winners from 10 contestants? Well you can pi
 
 \noindent More formally, each combination of $k$ items can be written $k!$ ways. So we need to divide out $k!$ from our expression for permutations. Thus the number of combinations of length $k$ from a set of size $n$ is $C(n,k) = \frac{n!}{(n-k)!k!}$. Notice this is just $P(n,k)$ with $k!$ divided out (because each combination can be written in $k!$ ways).
 
+We often write $C(n,k)$ as  ${n \choose x} $ and pronounce this ``$n$ choose $k$''.
+
+\section{Binomial distribution}
+ 
+ \subsection{Probability of a sequence}
+ 
+Say you have a binary r.v.\ $X$ that takes the value 1 with probability $p$, so that $p(X=1)=p$. We can compute the probability of $n$ such binary r.v.\  $X_0, X_1, X_2 ... X_N$ by multiplying the probability of each event.
+
+\begin{exmp}
+A vendor gets a good review with probability $p$. If the vendor gets two good reviews and then a bad review, the probability of this sequence is $p * p * (1-p)$. Note that the vendor always gets a good review or bad review, so if the probability of a good review is $p$ the probability of a bad review is $1-p$
+\end{exmp}
+
+More generally, if you observe a sequence of $n$ binary r.v.\  $X_0, X_1, X_2 ... X_N$ which take the value 1 with probability $p$, and you observe $k$ 1s, then the probability of the sequence will be $\prod p^k (1-p)^{n-k}$, because the probability of getting $k$ ones is $p^k$ and the probability of getting $n-k$ zeros is $(1-p)^{n-k}$. Note that if you observe $k$ 1s in $n$ trials then there must be $n-k$ zeros. 
+
+ \subsection{Number of ways to draw $k$ 1s}
+ 
+There are multiple ways to draw $k$ 1s from a sequence of $n$ observations. 
+
+\begin{exmp}
+A vendor gets two good reviews and one bad review. Let 1 denote a good review and 0 denote a bad review. Then there are three possible ways for the vendor to get two good reviews: 110, 101, 011.
+\end{exmp}
+
+\noindent More broadly, there are $n \choose k$ possible ways to draw $k$ 1s out of a sequence of $n$ trials (see Section \ref{s:combinations} for more on this notation). One way to think about this is that we have $n$ total slots (i.e.\ trials) and we want to select $k$ of those slots to fill with 1s. There are exactly $n \choose k$ possible ways to choose $k$ 1s from $n$ slots (Figure \ref{f:binomial_slots}). A few notes:
+\begin{itemize}
+\item Note that the probability of the $k$ successes is the same regardless of which $k$ slots are assigned successes (i.e.\ order does not matter, so use combinations).
+\item Note also that if we draw $k$ 1s (from any slots) the remaining $n-k$ slots will have to be 0s.
+\end{itemize}
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[width=5cm]{binomial_slots.pdf}
+     \caption{Possible ways to draw $k=2$ successes from $n=4$ trials. In total, there are $n \choose k$ possible ways to draw $k$ 1s from 4 slots. We only show 3 of the $n \choose k$ possibilities in this figure.}\label{f:binomial_slots}
+\end{figure}
+
+\subsection{The binomial distribution}
+
+We are now ready to define the binomial distribution. Let $X$ be a r.v.\ which counts the number of successes in $n$ trials. Then the probability of $k$ successes in $n$ trials is $ p(X=k) = {n \choose k} p^k (1-p)^{n-k}$. This is called the binomial distribution.
 
 \end{document}
