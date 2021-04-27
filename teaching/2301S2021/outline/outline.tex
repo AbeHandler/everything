@@ -352,6 +352,14 @@ For example, say you observe 10 flips of a coin and get TTTTTHTTTT. Based on thi
 In this example, in the observed data there are 10 flips and only 1 heads. It is possible to get 9 out of 10 tails from a fair coin, but it is really unlikely. So you might make an educated guess that $p($H$) \neq \frac{1}{2}$ and that the distribution is not uniform. If you were to keep flipping the coin 10,000 times and see that only 1 out of 10 flips is heads, you can be pretty confident (but not totally certain) that the distribution is not uniform. 
 \end{exmp}
 
+You can think of generating data $\mathcal{D}$ based on some (unseen) $\theta$ and then trying to infer an estimate of $\theta$ (denoted) $\hat{\theta}$ based on $\mathcal{D}$.
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[width=3cm]{schema.pdf}
+     \caption{We imagine that data $\mathcal{D}$ is generated from an unseen parameter $\theta$. Based on observed data $\mathcal{D}$ we try to infer or learn the value of the unseen $\theta$. }\label{f:gen_infer}
+\end{figure}
+
 \subsection{Independence}
 
 Two events $A$ and $B$ are independent if $P(A \cap B)$ = $P(A)P(B)$. Intuitively, if the outcome of $A$ does not affect the outcome of $B$ then $A$ and $B$ are independent. 
@@ -634,13 +642,6 @@ A basketball player hits the first 3 of a total of 4 free throws in a game. Let 
 0$. Because $\theta_{MLE}$ is chosen to maximize the likelihood, $p(\mathcal{D} \vert \theta_{MLE}) > p(\mathcal{D} \vert \theta_1)$.
 \end{exmp}
 
-You can think of generating data $\mathcal{D}$ based on some (unseen) $\theta$ and then trying to infer $\hat{\theta}$ based on $\mathcal{D}$.
-
-\begin{figure}[!ht]
-     \centering
-     \includegraphics[width=3cm]{schema.pdf}
-     \caption{We imagine that data $\mathcal{D}$ is generated from an unseen parameter $\theta$. Based on observed data $\mathcal{D}$ we try to infer or learn the value of the unseen $\theta$. }\label{f:gen_infer}
-\end{figure}
 
 
 \subsection{MAP estimation}
