@@ -608,16 +608,16 @@ More generally, if you observe a sequence of $n$ binary outcomes which take the 
 A vendor gets two good reviews and one bad review. Let 1 denote a good review and 0 denote a bad review. Then there are three possible ways for the vendor to get two good reviews: 110, 101, 011.
 \end{exmp}
 
-\noindent More broadly, there are $n \choose k$ possible ways to draw $k$ 1s out of a sequence of $n$ observations or trials (see Section \ref{s:combinations} for more on this notation). One way to think about this is that each trial is a slot, so we have a total of  $n$ slots. If we observe $k$ successes in $n$ trials, we want to then select $k$ of the slots to fill with 1s. There are exactly $n \choose k$ possible ways to choose $k$ 1s from $n$ slots (Figure \ref{f:binomial_slots}). A few notes:
+\noindent More broadly, there are $n \choose k$ possible ways to draw $k$ 1s out of a sequence of $n$ observations or trials (see Section \ref{s:combinations} for more on this notation). One way to see why this is true is to imagine that each trial is a slot, so we have a total of $n$ slots. If we observe $k$ successes in $n$ trials, we have to select $k$ of the slots to fill with 1s. There are exactly $n \choose k$ possible ways to choose $k$ 1s from $n$ slots (Figure \ref{f:binomial_slots}), in the same way that there  $n \choose k$ possible ways to choose $k$ members of a committee from a pool of $n$ candidates. A few notes:
 \begin{itemize}
-\item Note that the probability of the $k$ successes is the same regardless of which $k$ slots are assigned successes (i.e.\ order does not matter, so use combinations).
+\item Note that the probability of $k$ successes is the same regardless of which $k$ slots are assigned successes (i.e.\ order does not matter).
 \item Note also that if we draw $k$ 1s (from any slots) the remaining $n-k$ slots will have to be 0s.
 \end{itemize}
 
 \begin{figure}[!ht]
      \centering
      \includegraphics[width=5cm]{binomial_slots.pdf}
-     \caption{Possible ways to draw $k=2$ successes from $n=4$ trials. In total, there are $n \choose k$ possible ways to draw $k$ 1s from 4 slots. We only show 3 of the $n \choose k$ possibilities in this figure.}\label{f:binomial_slots}
+     \caption{A few possible ways to draw $k=2$ successes from $n=4$ trials. In total, there are $n \choose k$ possible ways to draw $k$ 1s from 4 slots. We only show 3 of the $n \choose k$ possibilities in this figure.}\label{f:binomial_slots}
 \end{figure}
 
 \subsection{The binomial distribution}\label{s:binomial}
