@@ -627,7 +627,14 @@ p(\theta \vert \mathcal{D}) = \frac{p(\mathcal{D} \vert \theta) p(\theta)}{p(\ma
 
 \noindent where we use $\mathcal{D}$ to denote the data. 
 
-Recall that $p(\mathcal{D} \vert \theta)$ is called the likelihood (Section \ref{s:bayes}). In \textbf{maximum likelihood estimation} we choose the value $\theta$ which maximizes the likelihood.
+Recall that $p(\mathcal{D} \vert \theta)$ is called the likelihood (Section \ref{s:bayes}). In \textbf{maximum likelihood estimation} we choose the value $\theta$ which maximizes the likelihood. We sometimes write the maximum likelihood estimate as $\hat{\theta}_{MLE}$ where the ``hat'' over the theta emphasizes that we are estimating the value of $\theta$.
+
+\begin{exmp}
+A basketball player hits the first 3 of a total of 4 free throws in a game. Let $\theta$ be the true (and unknown) probability that the player will hit a free throw. Let$\hat{\theta}_1$ and $\hat{\theta}_{MLE}$ be two estimates of $\theta$. $p(\mathcal{D} \vert \theta_1)$ = $.2^3*.8$ and $p(\mathcal{D} \vert \theta_{MLE})$ = $.75^3*.25$, where $\mathcal{D}=111
+0$
+\end{exmp}
+
+%$\theta_1$=.2 and $\theta_{MLE}=.75$
 
 \subsection{MAP estimation}
 An alternative to the MLE is MAP estimation, which selects the likelihood which maximizes both the likelihood and the prior. MAP estimation is beyond the bounds of 2301. Some people interpret the prior as a kind of regularization which discourages choosing some value of $\theta$ which overfits the data.
