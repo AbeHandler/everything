@@ -604,13 +604,11 @@ More generally, if you observe a sequence of $n$ binary outcomes which take the 
 
  \subsection{Number of ways to draw $k$ 1s}
  
-There are multiple ways to draw $k$ 1s from a sequence of $n$ observations. 
-
 \begin{exmp}
 A vendor gets two good reviews and one bad review. Let 1 denote a good review and 0 denote a bad review. Then there are three possible ways for the vendor to get two good reviews: 110, 101, 011.
 \end{exmp}
 
-\noindent More broadly, there are $n \choose k$ possible ways to draw $k$ 1s out of a sequence of $n$ trials (see Section \ref{s:combinations} for more on this notation). One way to think about this is that we have $n$ total slots (i.e.\ trials) and we want to select $k$ of those slots to fill with 1s. There are exactly $n \choose k$ possible ways to choose $k$ 1s from $n$ slots (Figure \ref{f:binomial_slots}). A few notes:
+\noindent More broadly, there are $n \choose k$ possible ways to draw $k$ 1s out of a sequence of $n$ observations or trials (see Section \ref{s:combinations} for more on this notation). One way to think about this is that each trial is a slot, so we have a total of  $n$ slots. If we observe $k$ successes in $n$ trials, we want to then select $k$ of the slots to fill with 1s. There are exactly $n \choose k$ possible ways to choose $k$ 1s from $n$ slots (Figure \ref{f:binomial_slots}). A few notes:
 \begin{itemize}
 \item Note that the probability of the $k$ successes is the same regardless of which $k$ slots are assigned successes (i.e.\ order does not matter, so use combinations).
 \item Note also that if we draw $k$ 1s (from any slots) the remaining $n-k$ slots will have to be 0s.
@@ -624,7 +622,7 @@ A vendor gets two good reviews and one bad review. Let 1 denote a good review an
 
 \subsection{The binomial distribution}\label{s:binomial}
 
-We are now ready to define the binomial distribution. Let $X$ be a r.v.\ which counts the number of successes in $n$ trials. Then the probability of $k$ successes in $n$ trials is $ p(X=k) = {n \choose k} p^k (1-p)^{n-k}$. This is called the binomial distribution.
+We are now ready to define the binomial distribution. Let $X$ be a r.v.\ which counts the number of successes in $n$ trials. Then the probability of $k$ successes in $n$ trials is $ p(X=k) = {n \choose k} p^k (1-p)^{n-k}$. This equation assigns some probability mass to all values of $k$ from 0 to $n$. Distributing probability mass in this way is called the \textbf{binomial distribution}.
 
 \section{Maximum likelihood estimation} 
 
