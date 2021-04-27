@@ -634,7 +634,14 @@ A basketball player hits the first 3 of a total of 4 free throws in a game. Let 
 0$
 \end{exmp}
 
-%$\theta_1$=.2 and $\theta_{MLE}=.75$
+You can think of generating data $\mathcal{D}$ based on some (unseen) $\theta$ and then trying to infer $\hat{\theta}$ based on $\mathcal{D}$.
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[width=3cm]{schema.pdf}
+     \caption{We imagine that data $\mathcal{D}$ is generated from an unseen parameter $\theta$. Based on observed data $\mathcal{D}$ we try to infer or learn the value of the unseen $\theta$. }\label{f:gen_infer}
+\end{figure}
+
 
 \subsection{MAP estimation}
 An alternative to the MLE is MAP estimation, which selects the likelihood which maximizes both the likelihood and the prior. MAP estimation is beyond the bounds of 2301. Some people interpret the prior as a kind of regularization which discourages choosing some value of $\theta$ which overfits the data.
