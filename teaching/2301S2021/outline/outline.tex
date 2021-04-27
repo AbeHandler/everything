@@ -590,13 +590,17 @@ We often write $C(n,k)$ as  ${n \choose x} $ and pronounce this ``$n$ choose $k$
  
  \subsection{Probability of a sequence}
  
-Say you have a binary r.v.\ $X$ that takes the value 1 with probability $p$, so that $p(X=1)=p$. We can compute the probability of $n$ such binary r.v.\  $X_0, X_1, X_2 ... X_N$ by multiplying the probability of each event.
+Say you have a sequence of independent binary outcomes that take the value 1 with probability $p$. We can compute the probability of a sequence of $n$ such binary outcomes by multiplying the probability of each independent outcome. Note that if a binary outcome is 1 with probability $p$ then it is 0 with probability $1-p$, as probability distributions must sum to 1.
 
 \begin{exmp}
-A vendor gets a good review with probability $p$. If the vendor gets two good reviews and then a bad review, the probability of this sequence is $p * p * (1-p)$. Note that the vendor always gets a good review or bad review, so if the probability of a good review is $p$ the probability of a bad review is $1-p$
+If a team wins a game with probability .7 then they will lose with probability .3, because probability distributions must sum to 1.
 \end{exmp}
 
-More generally, if you observe a sequence of $n$ binary r.v.\  $X_0, X_1, X_2 ... X_N$ which take the value 1 with probability $p$, and you observe $k$ 1s, then the probability of the sequence will be $\prod p^k (1-p)^{n-k}$, because the probability of getting $k$ ones is $p^k$ and the probability of getting $n-k$ zeros is $(1-p)^{n-k}$. Note that if you observe $k$ 1s in $n$ trials then there must be $n-k$ zeros. 
+\begin{exmp}
+A vendor gets a good review with probability $p$. If the vendor gets two good reviews and then a bad review, the probability of this sequence is $p * p * (1-p)$.
+\end{exmp}
+
+More generally, if you observe a sequence of $n$ binary outcomes which take the value 1 with probability $p$, and you observe a total of $k$ outcomes in the sequence that are equal to 1, then the probability of the sequence will be $p^k (1-p)^{n-k}$. This is because the probability of getting $k$ ones is $p^k$ and the probability of getting $n-k$ zeros is $(1-p)^{n-k}$. Note that if you observe $k$ 1s in $n$ trials then you must also observe $n-k$ zeros (because there are a total of $n$ observations).
 
  \subsection{Number of ways to draw $k$ 1s}
  
