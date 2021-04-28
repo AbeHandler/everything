@@ -5,7 +5,7 @@ date:   2021-04-28 13:40:53-0400
 categories: self-study 
 ---
 
-Many CU INFO majors ask me for resources for learning data science. Here is a list of some of my favorites. I've broken up this list into resources focused on [math and stats](#math-and-stats), [machine learning concepts](#machine-learning-concepts), and [programming](#programming-and-tools).
+Many CU INFO majors ask me for resources for studying data science on their own. Here is a list of some of my favorites. I've broken up this list into resources focused on [math and stats](#math-and-stats), [machine learning concepts](#machine-learning-concepts), and [programming](#programming-and-tools).
 
 ### Math and stats
 
