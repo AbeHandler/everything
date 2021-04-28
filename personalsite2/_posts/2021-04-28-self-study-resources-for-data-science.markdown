@@ -11,7 +11,7 @@ Many CU INFO majors ask me for resources for studying data science on their own.
 
 Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. Here are a few resources I have found helpful.
 
-- **[3blue1brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)** is an AMAZING math YouTuber. I learn a ton from his videos, and am inspired by the quality of his teaching. I also leaned on videos from **[mathematicalmonk](https://www.youtube.com/channel/UCcAtD_VYwcYwVbTdvArsm7w)** to build my quantitative background during my first year in grad school. I suggest poking around to find a teaching style that works for you. 
+- **[3blue1brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)** is an AMAZING math YouTuber. I learn a ton from his videos, and am inspired by the quality of his teaching. I also leaned on videos from **[mathematicalmonk](https://www.youtube.com/channel/UCcAtD_VYwcYwVbTdvArsm7w)** to build my quantitative background during my first year in grad school. There are tons of math YouTubers, and I suggest poking around to find a teaching style that works for you. 
 
 - Wasserman's **[All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)** is a great book that focuses on offering a terse and rigorous introduction to statistics. It will be a challenge to get started with this resource, but you will learn a lot if you put in the effort. (I think the title is a little bit of a joke. All of statistics can not fit in one book, but it is a good start.) 
 
