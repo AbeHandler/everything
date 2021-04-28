@@ -15,7 +15,7 @@ Data science is based on math and statistics, so it makes sense to spend time co
 
 - Wasserman's **[All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)** is a great book that focuses on offering a terse and rigorous introduction to statistics. It will be a challenge to get started with this resource, but you will learn a lot if you put in the effort. (I think the title is a little bit of a joke. All of statistics can not fit in one book, but it is a good start.) 
 
-- Zico Kolter has a good **[quick start](https://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf)** for linear algebra.
+- Zico Kolter has a good **[quick start](https://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf)** for linear algebra. I have not found a full linear algebra textbook I really like yet. (I've used books from Gilbert Strang and David Poole.)
 
 - I really like the book **[Computer Age Statistical Inference](https://web.stanford.edu/~hastie/CASI/)** to give an overall modern perspective on the history of stats, but I would not start with this resource.
 
