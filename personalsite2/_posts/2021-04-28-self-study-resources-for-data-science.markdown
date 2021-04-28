@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Data science self-study resources for INFO majors"
+title:  "Data science self-study resources"
 date:   2021-04-28 13:40:53-0400
 categories: self-study 
 ---
