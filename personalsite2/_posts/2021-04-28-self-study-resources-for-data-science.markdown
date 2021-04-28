@@ -29,7 +29,7 @@ Machine learning is either [the same thing](https://stats.stackexchange.com/ques
 
 ### Programming and tools
 
-There are thousands if not tens of thousands of books, tutorials and online courses for learning how to code. Someone even made a [game](https://vim-adventures.com/) that teaches you to use VIM. With that said, here are a few scattered thoughts on how to navigate the landscape. 
+There are tens if not hundreds of thousands of books, tutorials and online courses for learning how to code. Someone even made a [game](https://vim-adventures.com/) that teaches you to use the Vim text editor. With that said, here are a few scattered thoughts on how to navigate the landscape. 
 
 - **Basic stuff to learn.** Tools and languages change all the time, and I am not sure it makes too much sense to get too focused on any particular tool or language. But with that said you will need to show some fluency with current tools to get started in your career. It is a good idea to learn how to use **[PyTorch](https://pytorch.org/)** or **[tensorflow](https://www.tensorflow.org/)**, as well as to be comfortable with **[pandas](https://pandas.pydata.org/)** and **[scikit-learn](https://scikit-learn.org/stable/)**. I love the **[tidyverse](https://www.tidyverse.org/)** for exploratory data analysis for small datasets (its a collection of R packages), and some people like **[Julia](https://julialang.org/)** for writing faster code (Python can be slow). **[Altair](https://www.altair.com/)** is nice for data visualization in Python, but there are many competitors like **[matplotlib](https://matplotlib.org/)**.
 
