@@ -9,7 +9,7 @@ Many CU INFO majors ask me for resources for learning data science. Here is a li
 
 ### Math and stats
 
-Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. 
+Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. Here are a few resources I have found helpful.
 
 - **[3blue1brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)** is an AMAZING math YouTuber. I learn a ton from his videos, and am inspired by the quality of his teaching. I also leaned on videos from **[mathematicalmonk](https://www.youtube.com/channel/UCcAtD_VYwcYwVbTdvArsm7w)** to build my quantitative background during my first year in grad school. I suggest poking around to find a teaching style that works for you. 
 
@@ -17,7 +17,7 @@ Data science is based on math and statistics, so it makes sense to spend time co
 
 - Zico Kolter has a good **[quick start](https://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf)** for linear algebra.
 
-- I really like the [book](https://web.stanford.edu/~hastie/CASI/) **Computer Age Statistical Inference** to give an overall perspective on stats, but I would not start with this resource when you are getting started.
+- I really like the book **[Computer Age Statistical Inference](](https://web.stanford.edu/~hastie/CASI/)** to give an overall perspective on stats, but I would not start with this resource when you are getting started.
 
 ### Machine learning concepts
 
