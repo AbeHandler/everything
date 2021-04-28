@@ -9,11 +9,11 @@ Many CU INFO majors ask me for resources for learning data science. Here is a li
 
 ### Math and stats
 
-Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field changes all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. 
+Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. 
 
 - **[3blue1brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)** is an AMAZING math YouTuber. I learn a ton from his videos, and am inspired by the quality of his teaching. I also leaned on videos from **[mathematicalmonk](https://www.youtube.com/channel/UCcAtD_VYwcYwVbTdvArsm7w)** to build my quantitative background during my first year in grad school. I suggest poking around to find a teaching style that works for you. 
 
-- Wasserman's **[All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)**. This is a great book, that focuses on a terse and rigorous introduction to Statistics. It will be a challenge to get started with this resource, but you will learn a lot if you put in the effort. (I think the title is a little bit of a joke. All of statistics can not fit in one book, but it is a good start.) 
+- Wasserman's **[All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)** is a great book that focuses on offering a terse and rigorous introduction to Statistics. It will be a challenge to get started with this resource, but you will learn a lot if you put in the effort. (I think the title is a little bit of a joke. All of statistics can not fit in one book, but it is a good start.) 
 
 - Zico Kolter has a good **[quick start](https://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf)** for linear algebra.
 
