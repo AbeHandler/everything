@@ -17,7 +17,7 @@ Data science is based on math and statistics, so it makes sense to spend time co
 
 - Zico Kolter has a good **[quick start](https://www.cs.cmu.edu/~zkolter/course/15-884/linalg-review.pdf)** for linear algebra.
 
-- I really like the book **[Computer Age Statistical Inference](](https://web.stanford.edu/~hastie/CASI/)** to give an overall perspective on stats, but I would not start with this resource when you are getting started.
+- I really like the book **[Computer Age Statistical Inference](https://web.stanford.edu/~hastie/CASI/)** to give an overall perspective on stats, but I would not start with this resource when you are getting started.
 
 ### Machine learning concepts
 
