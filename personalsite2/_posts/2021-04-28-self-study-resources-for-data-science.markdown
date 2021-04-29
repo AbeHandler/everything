@@ -37,4 +37,4 @@ There are tens if not hundreds of thousands of books, tutorials and online cours
 
 ### NLP resources
 
-If you are interested in natural language processing specifically, I recommend **[Jacob Eisenstein's textbook](https://mitpress.mit.edu/books/introduction-natural-language-processing)**. If you don't want to buy a copy, you can download [the original lecture notes from GitHub](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf). You should also probably learn to use **[spacy](https://spacy.io/)** and **[Hugging Face Transformers](https://huggingface.co/transformers/)**.
+If you are interested in natural language processing specifically, I recommend **[Jacob Eisenstein's textbook](https://mitpress.mit.edu/books/introduction-natural-language-processing)**. If you don't want to buy a copy, you can download [the original lecture notes from GitHub](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf). You should also probably learn to use the **[spacy](https://spacy.io/)** and **[Hugging Face Transformers](https://huggingface.co/transformers/)** libraries.
