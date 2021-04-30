@@ -9,6 +9,7 @@ Research statement should introduce committee to the field. Like a job talk. The
 - Then comes research statement
 - Convince people that your prior work is important and has a good future in the field. Leave one page for a future vision. Talk about your PAST work; what you have done.
 - OK to brag about your work
+- Use whitespace, bolding, etc. to help people skim your statement. They read a lot of these
 
 #### LT
 - Don't focus on next year. What are you doing for the next five years? Where are you going for the long haul?
