@@ -18,15 +18,14 @@ p22. don't say enumerate. changed this to "search over".
 p22. Describe the algo more abstractly, then say K=2. OK. I describe it as searching over possible output and selecting the best. Then get into K=2 later b/c of latency
 
 # Questions 
-### p1
 
-current draft has comma before Amherst. I think this is standard convention. Hard to tell what this comment refers to.
+p1. current draft has comma before Amherst, which is I think what comment is about. If so this was fixed since the version you were looking at. Let me know if I misunderstood comment. 
 
 p15. Changed to => prior work in HCI (e.g.\ SMILY \cite{smiley}) assumes that in order to earn user trust, a system must both have the capacity to help the user and the integrity to adhere to principles which are important in a given domain.
 
-Curious appropriate way to cite Mayer trust triples, if at all. This is a management science article that is cited in HCI that says to gain trust (in organizations) you need to have capacity, benevolence and integrity. I cut the cite from the above. I think including the cite is maybe good b/c it draws connections w/ Mayer but if they read SMILY they will find Mayer that way.
+The version you were looking at cited an article from business literature from Mayer called "trust triples" that I sometimes see cited in HCI. I cut this cite. Curious appropriate way to cite Mayer trust triples, if at all. This article says to gain trust (in organizations) you need to have capacity, benevolence and integrity. I think including the cite is maybe good b/c it draws connections w/ Mayer? But also if they read SMILY they will find Mayer that way.
 
-p17. Just cite the R language? That seems too confusing. I am wary of citing "statistical models in S" b/c I can't actually track down a copy to know what it says. 
+p17. Just cite the R language? That seems too confusing. I am wary of citing "statistical models in S" b/c I can't actually track down a copy to know what it says. Perhaps just drop this. 
 
 p22. Cant read writing corresponding to "over three time steps" I crossed out the 'over 3 time steps'. I think comment says delete
 
@@ -38,3 +37,7 @@ coders reconcile differences through discussion) versus establishing reliability
 more coders independently apply the same code to a unit of text)." That distinction is not the main idea in the review of literature however. 
 
 p25 suggested deleted line. Don't understand reason for deletion.
+
+p29. Say is limitations that ??? this. Cant read ??? 
+
+
