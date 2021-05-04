@@ -28,5 +28,13 @@ Curious appropriate way to cite Mayer trust triples, if at all. This is a manage
 
 p17. Just cite the R language? That seems too confusing. I am wary of citing "statistical models in S" b/c I can't actually track down a copy to know what it says. 
 
-p22. Cant read writing corresponding to "over three time steps" I crossed out the 'over 3 time steps':15
+p22. Cant read writing corresponding to "over three time steps" I crossed out the 'over 3 time steps'. I think comment says delete
 
+p24. Cant fully read this comment but I think it suggests describing how expert interview relates to needfinding. Added a sentence to remind reader.
+
+p25. Can't fully read the comment here. The review of HCI literature cited in that paragraph says:  
+"These tensions may be explained by the subtle differences between agreement (where two or more
+coders reconcile differences through discussion) versus establishing reliability (where two or
+more coders independently apply the same code to a unit of text)." That distinction is not the main idea in the review of literature however. 
+
+p25 suggested deleted line. Don't understand reason for deletion.
