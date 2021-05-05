@@ -1,3 +1,3 @@
 conda activate misq
-export FLASK_APP=tmp.py
+export FLASK_APP=misq_app.py
 flask run
