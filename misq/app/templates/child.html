@@ -47,6 +47,7 @@
         
     <div class="col-md-6">
         Ontology overview goes here
+        <div id="vis"></div>
     </div>
   </div>
 
@@ -55,6 +56,10 @@
     $( ".entity" ).click(function() {
       alert( "You clicked an entity" );
     });
+
+    var a  = {{chart | safe}}
+
+    vegaEmbed('#vis', a);
 
     </script>
 {% endblock %}
