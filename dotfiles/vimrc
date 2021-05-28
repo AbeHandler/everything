@@ -1,0 +1,46 @@
+set wildmode=longest,list,full
+set wildmenu
+
+set mouse=a
+
+set tabstop=4       " The width of a TAB is set to 4.
+                    " Still it is a \t. It is just that
+                    " Vim will interpret it to be having
+                    " a width of 4.
+
+set shiftwidth=4    " Indents will have a width of 4
+
+set softtabstop=4   " Sets the number of columns for a TAB
+
+set expandtab       " Expand TABs to spaces
+
+filetype on            " enables filetype detection
+filetype plugin on     " enables filetype specific plugins
+
+set nofoldenable    " disable folding
+
+set number
+
+" vim-plug # https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged') " Reload .vimrc and :PlugInstall to install plugins.
+Plug 'lervag/vimtex'
+call plug#end()
+
+packadd! dracula
+syntax enable
+colorscheme dracula
+
+
+map qw 3w
+map qqw 6w
+map vb 3b
+map vvb 6b
+
+set number relativenumber
+set cursorline
+
+
+
+augroup TODO | au!
+    au BufRead,BufNew /Users/abramhandler/everythingprivate/tdl.txt nnoremap <buffer> dd :.write! >> /Users/abramhandler/everythingprivate/done.txt <CR>dd
+augroup END
