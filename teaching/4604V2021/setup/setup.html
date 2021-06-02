@@ -1,0 +1,12 @@
+<h4>Versions</h4>
+<p>In this class, I will assume you have a Python 3 environment (I'm on Python 3.8) with the following packages installed. If you use different versions of the packages, you might get different behavior from the examples in class and see unexpected errors. So it is a good idea to make sure we are all on the same version number. The easiest way to create an environment that can allow you to install these packages is with Anaconda.</p>
+<ul>
+    <li>numpy=1.20.3</li>
+    <li>pandas=1.2.4</li>
+    <li>jupyterlab=3.0.16</li>
+    <li>scikit-learn=0.24.2</li>
+    <li>scipy=1.6.3</li>
+</ul>
+<h4>Creating a conda environment</h4>
+<p>You are welcome to setup your local machine however you'd like. One easy way to install this software is to create a custom Conda environment. To do this you will first have to <a class="inline_disabled" href="https://docs.anaconda.com/anaconda/install/" target="_blank" rel="noopener">install Anaconda</a>. After you install Anaconda, from the terminal, run the following command. You should also be able to do this using the anaconda GUI.</p>
+<pre>$ conda create -n MLS21 python=3.8 scipy=1.6.3 pandas=1.2.4 scikit-learn=0.24.2 numpy=1.20.3 jupyterlab=3.0.16 -y -c conda-forge # create your virtual environment<br />$ conda activate MLS21  # activate your virtual environment <br />$ jupyter notebook # launch a notebook<br />$ conda deactivate MLS21 # deactivate your virtual environment when you are done</pre>
