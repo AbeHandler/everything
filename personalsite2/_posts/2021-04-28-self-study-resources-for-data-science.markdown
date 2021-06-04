@@ -5,11 +5,13 @@ date:   2021-04-28 13:40:53-0400
 categories: self-study 
 ---
 
-Many CU INFO majors ask me for resources for studying data science on their own. Here is a list of some of my favorites. I've broken up this list into resources focused on [math and stats](#math-and-stats), [machine learning concepts](#machine-learning-concepts), and [programming](#programming-and-tools). I also include a section for students interested in [natural language processing](#nlp-resources).
+Many CU INFO majors ask me for resources for studying data science on their own. Here is a list of some of my favorites. I've broken up this list into resources focused on [underlying math](#math-and-stats), [machine learning concepts](#machine-learning-concepts), and [programming](#programming-and-tools). I also include a section for students interested in [natural language processing](#nlp-resources).
 
-### Math and stats
+### Underlying math
 
-Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts (e.g. probability or linear algebra) will remain consistent. Here are a few resources I have found helpful.
+Data science is based on math and statistics, so it makes sense to spend time continually deepening your understanding of these fundamental ideas. Also, while the field will change all the time, the underlying quantitative concepts will remain consistent. 
+
+While more math is always helpful, when you are starting out, I would recommend making sure you are comfortable with the fundamentals of calculus, statistics and linear algebra. Here are a few resources I have found helpful.
 
 - **[3blue1brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)** is an AMAZING math YouTuber. I learn a ton from his videos, and am inspired by the quality of his teaching. I also leaned on videos from **[mathematicalmonk](https://www.youtube.com/channel/UCcAtD_VYwcYwVbTdvArsm7w)** to build my quantitative background during my first year in grad school. There are tons of math YouTubers, and I suggest poking around to find a teaching style that works for you. 
 
@@ -33,8 +35,9 @@ There are tens if not hundreds of thousands of books, tutorials and online cours
 
 - **Basic stuff to learn.** Tools and languages change all the time, and I am not sure it makes too much sense to get too focused on any particular technology of framework. However, you will need to show some fluency with current tools to get started in your career. It is a good idea to learn how to use **[PyTorch](https://pytorch.org/)** or **[tensorflow](https://www.tensorflow.org/)**, as well as to be comfortable with **[SQL](https://www.w3schools.com/sql/)**, **[numpy](https://numpy.org/)**, **[pandas](https://pandas.pydata.org/)** and **[scikit-learn](https://scikit-learn.org/stable/)**. I love the **[tidyverse](https://www.tidyverse.org/)** for exploratory data analysis for small datasets (it's a collection of R packages), and some people like **[Julia](https://julialang.org/)** for writing faster code (Python can be slow). **[Altair](https://altair-viz.github.io/)** is nice for data visualization in Python, but there are many competitors like **[matplotlib](https://matplotlib.org/)**. It's a good idea to get the hang of using **[GitHub](https://github.com/)**, and to be comfortable using the command line. There is an MIT course that focuses on filling in these sorts of **[programming-adjacent skills](https://missing.csail.mit.edu/)**,  with free materials posted online.
 
-- **Where to focus your effort.** There are so many tools and languages to learn, it can be hard to know where to focus. I can think of at least two strategies. 
+- **Where to focus your effort.** There are so many tools and languages to learn, it can be hard to know where to focus. I can think of at least two strategies:
     1. One good option is to just **follow your own curiosity**. Learn what you want to learn to answer the kinds of questions you want to answer and take on the kinds of projects you'd like to complete! 
+
     2. Alternately, I also think it also makes sense to **be a bit analytic** about what you study first. The **[programmer competency matrix](https://web.archive.org/web/20210417182641/https://sijinjoseph.com/programmer-competency-matrix/)** helped me a lot when I started working as a software developer without a CS degree. What I like about it is you can sort of see where you land on this matrix, and systematically fill gaps in your background. Of course, if you are interested in a particular role or job, definitely speak with people in that area to understand what you need to know.
 
 ### NLP resources
