@@ -1,3 +1,4 @@
+
 set wildmode=longest,list,full
 set wildmenu
 
@@ -24,18 +25,25 @@ set number
 " vim-plug # https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged') " Reload .vimrc and :PlugInstall to install plugins.
 Plug 'lervag/vimtex'
+Plug  'Houl/repmo-vim'
+Plug 'bkad/CamelCaseMotion'
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+Plug 'nvie/vim-flake8'
 call plug#end()
 
 packadd! dracula
 syntax enable
 colorscheme dracula
 
+let @p='idef '
 
 map qw 3w
 map qqw 6w
 map vb 3b
 map vvb 6b
-
+noremap 00 i<Return><Esc>
+imap jj <Esc>
 set number relativenumber
 set cursorline
 
@@ -44,3 +52,23 @@ set cursorline
 augroup TODO | au!
     au BufRead,BufNew /Users/abramhandler/everythingprivate/tdl.txt nnoremap <buffer> dd :.write! >> /Users/abramhandler/everythingprivate/done.txt <CR>dd
 augroup END
+
+set clipboard=unnamed
+
+" sneak command, lets you hit s to get to nexto ne
+let g:sneak#s_next = 1
+
+" camel case motions
+let g:camelcasemotion_key = '<leader>'
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
+
+" auto call flake8
+autocmd BufWritePost *.py call Flake8()
+set hlsearch
