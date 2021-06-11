@@ -3,9 +3,9 @@ def predict(x, w):
     for i in range(len(w)):
         dot += x[i] * w[i]
     if dot < 0:
-        return 0
-    else:
         return 1
+    else:
+        return -1
 
 def learn(features, labels, epochs, J, eta):
     '''
@@ -30,6 +30,12 @@ def learn(features, labels, epochs, J, eta):
         w.append(0)
 
     for epoch in range(epochs):
+
+        acc = 0 
+        for i, f in enumerate(features):
+            acc += int(predict(f, w) == labels[i])
+        print(acc/len(features), w)
+
         for index, feature_list in enumerate(features):
             yhat = predict(x=feature_list, w=w)
             y = labels[index]
@@ -37,13 +43,25 @@ def learn(features, labels, epochs, J, eta):
                 pass # do nothing
             else:
                 for j in range(J):
+                    # If predicted negative, but actual is positive...
+                    # we want dot product to go up
+                    # so we want w[j] to go up
+                    # if actual is positive y = 1
+                    # if have bug, yhat = 0
+
+                    # If predicted positive, but actual is negative.
+                    # we want dot product to go down
+                    # so we want w[j] to go down
+                    # y = -1
+                    # yhat = 1 
+                    # -1 - 1 = -2
                     w[j] += eta * ((y - yhat) * feature_list[j])
     return w
 
 if __name__ == "__main__":
     features = [[0, 1], [1, 0], [1, 1], [1, 0]]
     labels = [1,-1, 1, -1]
-    w = learn(features, labels, epochs=10, J=2, eta=.1)
+    w = learn(features, labels, epochs=10, J=2, eta=1)
     
     for i, f in enumerate(features):
         print(predict(f, w) == labels[i])
