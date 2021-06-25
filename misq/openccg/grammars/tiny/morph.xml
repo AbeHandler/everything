@@ -32,7 +32,7 @@ $Revision: 1.8 $, $Date: 2010/09/13 04:37:19 $
   <entry pos="Pro" word="they" stem="pro3n" macros="@3rd @pl @nom @pl-X"/>
   <entry pos="Pro" word="them" stem="pro3n" macros="@3rd @pl @acc @pl-X"/>
 
-  
+
   <!-- ========================== Nouns ============================ -->
   <entry pos="N" word="book" class="thing" macros="@sg @sg-X"/>
   <entry pos="N" word="books" stem="book" class="thing" macros="@pl @pl-X"/>
@@ -47,6 +47,7 @@ $Revision: 1.8 $, $Date: 2010/09/13 04:37:19 $
 
   <!-- Nouns abe -->
   <entry pos="N" word="Yan" stem="Yan" class="animate-being" macros="@nom @sg @sg-X"/>
+  <entry pos="N" word="NLG" class="thing" macros="@sg @sg-X"/>
 
   <!-- ======================== Adjectives ========================= -->
   <entry pos="Adj" word="blue"/>
