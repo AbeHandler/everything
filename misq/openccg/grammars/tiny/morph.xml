@@ -46,8 +46,8 @@ $Revision: 1.8 $, $Date: 2010/09/13 04:37:19 $
   <entry pos="N" word="teachers" stem="teacher" class="person" macros="@pl @pl-X"/>
 
   <!-- Nouns abe -->
-  <entry pos="N" word="Yan" stem="Yan" class="animate-being" macros="@nom @sg @sg-X"/>
-  <entry pos="N" word="NLG" class="thing" macros="@sg @sg-X"/>
+  <entry pos="N" word="Yan" stem="Yan" class="author" macros="@nom @sg @sg-X"/>
+  <entry pos="N" word="NLG" class="language_technology" macros="@sg @sg-X"/>
 
   <!-- ======================== Adjectives ========================= -->
   <entry pos="Adj" word="blue"/>
