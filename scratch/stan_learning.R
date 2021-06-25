@@ -1,3 +1,5 @@
+# https://nbviewer.jupyter.org/github/QuantEcon/QuantEcon.notebooks/blob/master/IntroToStan_basics_workflow.ipynb 
+
 options(jupyter.plot_mimetypes = "image/png")
 
 options(warn=-1, message =-1)
@@ -127,9 +129,11 @@ compiled_function <- stan_model(model_code = dgp_string)
 
 expose_stan_functions(compiled_function)
 
+theta = c(.5, .5)
+
 mus = c(-10, 10)
 
-N = 100
+N = 1000
 
 y_sim = sample_normal_rng(mus, theta, N)
 
@@ -142,3 +146,10 @@ data_list_2 <- list(N = N, y = y_sim)
 incorrect_fit <- stan(model_code = incorrect_model, data = data_list_2, cores = 1, chains = 2, iter = 2000)
 
 correct_fit <- stan(model_code = correct_model, data = data_list_2, cores = 1, chains = 2, iter = 2000)
+
+samples = extract(correct_fit, permuted = F, pars = c("mu", "sigma")) 
+
+clean_sample = samples %>% melt() %>% select(parameters, value)
+
+ggplot() + geom_density(data=clean_sample, aes(x = value), fill = "orange", alpha = 0.5) + 
+  facet_wrap(~ parameters, scales = "free") 
