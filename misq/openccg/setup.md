@@ -8,3 +8,4 @@ tccg> :2xml parses/she.xml # send parse to a file
 tccg> :r parses/she.xml # parse from file
 $ ./bin/ccg-realize parses/she.xml -g grammars/tiny/grammar.xml # we want the top level parse, $s$
 
+$ cd grammars/tiny && ./test.sh # make sure everything still parses
