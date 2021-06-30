@@ -1,0 +1,1 @@
+host -a www.abehandler.com ns-1032.awsdns-01.org
