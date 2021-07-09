@@ -1,10 +1,17 @@
+intro
+knn
+perceptron
+optimization
+logistic regression
+regularization
+svm
 Cross validation
 Data collection
 Non linear classification
-Feature engineering
-Evaluation
-Error analysis
-Ensembling
+feature_engineering
+evaluation
+error analysis
+ensembling
 Generative models
 Ethics
-Presentations
+presentations
